@@ -8,22 +8,36 @@
 
 /* Begin PBXBuildFile section */
 		F10E6F4220153401007AA679 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4120153401007AA679 /* AppDelegate.swift */; };
-		F10E6F4420153401007AA679 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4320153401007AA679 /* ViewController.swift */; };
+		F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4320153401007AA679 /* LogInViewController.swift */; };
 		F10E6F4720153401007AA679 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10E6F4520153401007AA679 /* Main.storyboard */; };
 		F10E6F4A20153401007AA679 /* My_Entertainments.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4820153401007AA679 /* My_Entertainments.xcdatamodeld */; };
 		F10E6F4C20153401007AA679 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F10E6F4B20153401007AA679 /* Assets.xcassets */; };
 		F10E6F4F20153401007AA679 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10E6F4D20153401007AA679 /* LaunchScreen.storyboard */; };
+		F10E6F57201535C3007AA679 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F10E6F56201535C2007AA679 /* GoogleService-Info.plist */; };
+		F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F58201553DA007AA679 /* SignUpViewController.swift */; };
+		F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F5D20159C31007AA679 /* ProtocolFile.swift */; };
+		F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5062016531500CEDA44 /* SearchViewController.swift */; };
+		F189C5092016532100CEDA44 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5082016532100CEDA44 /* ProfileViewController.swift */; };
+		F2B78ACEE4C4FA4C0D5FB5D1 /* Pods_My_Entertainments.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C7F1C40E083AFAE57BB13A /* Pods_My_Entertainments.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		58B52C0FF4EC7C215322765B /* Pods-My Entertainments.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Entertainments.release.xcconfig"; path = "Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments.release.xcconfig"; sourceTree = "<group>"; };
+		71C7F1C40E083AFAE57BB13A /* Pods_My_Entertainments.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Entertainments.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		922EC5430F09E6A604EBA2C0 /* Pods-My Entertainments.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Entertainments.debug.xcconfig"; path = "Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments.debug.xcconfig"; sourceTree = "<group>"; };
 		F10E6F3E20153401007AA679 /* My Entertainments.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Entertainments.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10E6F4120153401007AA679 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		F10E6F4320153401007AA679 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F10E6F4320153401007AA679 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		F10E6F4620153401007AA679 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F10E6F4920153401007AA679 /* My_Entertainments.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = My_Entertainments.xcdatamodel; sourceTree = "<group>"; };
 		F10E6F4B20153401007AA679 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F10E6F4E20153401007AA679 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F10E6F5020153401007AA679 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F10E6F56201535C2007AA679 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F10E6F58201553DA007AA679 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		F10E6F5D20159C31007AA679 /* ProtocolFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolFile.swift; sourceTree = "<group>"; };
+		F189C5062016531500CEDA44 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		F189C5082016532100CEDA44 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +45,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2B78ACEE4C4FA4C0D5FB5D1 /* Pods_My_Entertainments.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A2AFB5BEFF5F09C3A8B52102 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				922EC5430F09E6A604EBA2C0 /* Pods-My Entertainments.debug.xcconfig */,
+				58B52C0FF4EC7C215322765B /* Pods-My Entertainments.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F10E6F3520153401007AA679 = {
 			isa = PBXGroup;
 			children = (
 				F10E6F4020153401007AA679 /* My Entertainments */,
 				F10E6F3F20153401007AA679 /* Products */,
+				A2AFB5BEFF5F09C3A8B52102 /* Pods */,
+				F90CEA4EF5E1CC0A363FA57D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,15 +82,52 @@
 		F10E6F4020153401007AA679 /* My Entertainments */ = {
 			isa = PBXGroup;
 			children = (
+				F10E6F5B20159BEC007AA679 /* View */,
+				F10E6F5A20159BDB007AA679 /* Controller */,
+				F10E6F5C20159BFD007AA679 /* Supports */,
 				F10E6F4120153401007AA679 /* AppDelegate.swift */,
-				F10E6F4320153401007AA679 /* ViewController.swift */,
-				F10E6F4520153401007AA679 /* Main.storyboard */,
-				F10E6F4B20153401007AA679 /* Assets.xcassets */,
-				F10E6F4D20153401007AA679 /* LaunchScreen.storyboard */,
+				F10E6F5D20159C31007AA679 /* ProtocolFile.swift */,
 				F10E6F5020153401007AA679 /* Info.plist */,
-				F10E6F4820153401007AA679 /* My_Entertainments.xcdatamodeld */,
+				F10E6F4B20153401007AA679 /* Assets.xcassets */,
 			);
 			path = "My Entertainments";
+			sourceTree = "<group>";
+		};
+		F10E6F5A20159BDB007AA679 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F10E6F4320153401007AA679 /* LogInViewController.swift */,
+				F10E6F58201553DA007AA679 /* SignUpViewController.swift */,
+				F189C5062016531500CEDA44 /* SearchViewController.swift */,
+				F189C5082016532100CEDA44 /* ProfileViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		F10E6F5B20159BEC007AA679 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				F10E6F4520153401007AA679 /* Main.storyboard */,
+				F10E6F4D20153401007AA679 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		F10E6F5C20159BFD007AA679 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				F10E6F56201535C2007AA679 /* GoogleService-Info.plist */,
+				F10E6F4820153401007AA679 /* My_Entertainments.xcdatamodeld */,
+			);
+			path = Supports;
+			sourceTree = "<group>";
+		};
+		F90CEA4EF5E1CC0A363FA57D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				71C7F1C40E083AFAE57BB13A /* Pods_My_Entertainments.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -74,9 +137,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F10E6F5320153401007AA679 /* Build configuration list for PBXNativeTarget "My Entertainments" */;
 			buildPhases = (
+				35C527F7181D4950E0139DC3 /* [CP] Check Pods Manifest.lock */,
 				F10E6F3A20153401007AA679 /* Sources */,
 				F10E6F3B20153401007AA679 /* Frameworks */,
 				F10E6F3C20153401007AA679 /* Resources */,
+				56EC7AA606060F5315F2BA21 /* [CP] Embed Pods Frameworks */,
+				65FBF497E66D8B2CC99F938F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -127,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F10E6F4F20153401007AA679 /* LaunchScreen.storyboard in Resources */,
+				F10E6F57201535C3007AA679 /* GoogleService-Info.plist in Resources */,
 				F10E6F4C20153401007AA679 /* Assets.xcassets in Resources */,
 				F10E6F4720153401007AA679 /* Main.storyboard in Resources */,
 			);
@@ -134,14 +201,80 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		35C527F7181D4950E0139DC3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-My Entertainments-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		56EC7AA606060F5315F2BA21 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		65FBF497E66D8B2CC99F938F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F10E6F3A20153401007AA679 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F10E6F4420153401007AA679 /* ViewController.swift in Sources */,
+				F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */,
+				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,
 				F10E6F4A20153401007AA679 /* My_Entertainments.xcdatamodeld in Sources */,
+				F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */,
+				F189C5092016532100CEDA44 /* ProfileViewController.swift in Sources */,
 				F10E6F4220153401007AA679 /* AppDelegate.swift in Sources */,
+				F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,6 +409,7 @@
 		};
 		F10E6F5420153401007AA679 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 922EC5430F09E6A604EBA2C0 /* Pods-My Entertainments.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -285,12 +419,13 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.garyguan.My-Entertainments";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		F10E6F5520153401007AA679 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 58B52C0FF4EC7C215322765B /* Pods-My Entertainments.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -300,7 +435,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.garyguan.My-Entertainments";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
