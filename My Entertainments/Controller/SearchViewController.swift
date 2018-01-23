@@ -13,20 +13,20 @@ import SwiftyJSON
 
 class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    var movies: [Movie] = [Movie]()
+    var movies = [Movie]()
 
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
-    let baseUrl = "http://www.omdbapi.com/?apikey=******&t="
+    let baseUrl = "http://www.omdbapi.com/?apikey=&t="
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "MOVIE"
+        setMovieTableViewSeperator()
         movieTableView.delegate = self
         movieTableView.dataSource = self
         movieSearchBar.delegate = self
-        movieTableView.separatorStyle = .none
         movieTableView.rowHeight = 199.5
-        navigationItem.title = "MOVIE"
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         movieTableView.addGestureRecognizer(tapGesture)
@@ -35,6 +35,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     @objc func tableViewTapped() {
         movieSearchBar.endEditing(true)
     }
+    
+    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         var name = searchBar.text!
@@ -46,7 +48,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
                 let movieData: JSON = JSON(response.result.value!)
                 self.updateMovies(with: movieData)
             } else {
-                print(response.debugDescription)
+                self.errorPop(errorMessage: "English supported only at this time :)")
             }
         }
     }
@@ -54,12 +56,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
     
     func updateMovies(with jsonData: JSON) {
         if jsonData["Response"] == "False" {
-            
-            let alert = UIAlertController(title: "No Result", message: "Any typo?", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-            
+            errorPop(errorMessage: "Any typo?")
         } else {
             let movie = Movie()
             movie.movieName = jsonData["Title"].stringValue
@@ -69,9 +66,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
             movie.movieRating = jsonData["imdbRating"].stringValue
             movie.movieImageUrl = jsonData["Poster"].stringValue
             movies.insert(movie, at: 0)
+            setMovieTableViewSeperator()
             movieTableView.reloadData()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -88,8 +85,27 @@ class SearchViewController: UIViewController, UISearchBarDelegate, UITableViewDe
         let path = movies[indexPath.row].movieImageUrl!
         let url = URL(string: path)
         let data = try? Data(contentsOf: url!)
-        cell.movieImageView.image = UIImage(data: data!)
+        if data == nil {
+            cell.movieImageView.image = UIImage(named: "noimg")
+        } else {
+            cell.movieImageView.image = UIImage(data: data!)
+        }
         return cell
+    }
+    
+    func errorPop(errorMessage: String) {
+        let alert = UIAlertController(title: "No Result", message: errorMessage, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func setMovieTableViewSeperator() {
+        if movies.count < 2 {
+            movieTableView.separatorStyle = .none
+        } else {
+            movieTableView.separatorStyle = .singleLine
+        }
     }
 }
 
