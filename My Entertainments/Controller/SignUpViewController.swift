@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import SVProgressHUD
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     var delegate: SignUpProtocol?
     
@@ -18,30 +18,37 @@ class SignUpViewController: UIViewController {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var retypePasswordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet var baseView: UIView!
+    var defaultframe: CGRect?
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        emailTextField.delegate = self
+        defaultframe = view.frame
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.view.endEditing(true)
+            self.view.frame = self.defaultframe!
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.5) {
+            var frame = self.view.frame
+            if frame.origin.y < 0 {
+                return
+            }
+            frame.origin.y -= 216
+            frame.size.height += 216
+            self.view.frame = frame
+            self.view.layoutIfNeeded()
+        }
     }
 
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     @IBAction func signUpOrGiveUp(_ sender: UIButton) {
         
         if sender.tag == 0 {
@@ -51,6 +58,7 @@ class SignUpViewController: UIViewController {
                 SVProgressHUD.dismiss()
                 if error == nil {
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
+                    
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .default, handler: nil)

@@ -16,7 +16,15 @@ class LogInViewController: UIViewController, SignUpProtocol {
     @IBOutlet weak var passwordTextField: UITextField!
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user == Auth.auth().currentUser {
+                self.performSegue(withIdentifier: "oldLogIn", sender: self)
+            }
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
