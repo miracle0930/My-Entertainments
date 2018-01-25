@@ -50,7 +50,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
 
     @IBAction func signUpOrGiveUp(_ sender: UIButton) {
-        
         if sender.tag == 0 {
             SVProgressHUD.show()
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: {
@@ -58,7 +57,6 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 SVProgressHUD.dismiss()
                 if error == nil {
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
-                    
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -66,17 +64,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     self.present(alert, animated: true, completion: nil)
                 }
             })
-            
         } else {
             dismiss(animated: true, completion: nil)
         }
-
-        
-        
     }
-    
-
-    
-
     
 }

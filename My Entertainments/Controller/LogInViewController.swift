@@ -18,11 +18,10 @@ class LogInViewController: UIViewController, SignUpProtocol {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
-        Auth.auth().addStateDidChangeListener { (auth, user) in
-            if user == Auth.auth().currentUser {
-                self.performSegue(withIdentifier: "oldLogIn", sender: self)
-            }
+        if Auth.auth().currentUser != nil {
+            self.performSegue(withIdentifier: "oldLogIn", sender: self)
+        } else {
+            
         }
         
     }
@@ -46,9 +45,11 @@ class LogInViewController: UIViewController, SignUpProtocol {
             }
             SVProgressHUD.dismiss()
         }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         self.view.endEditing(true)
     }
     
