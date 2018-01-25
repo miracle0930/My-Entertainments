@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import CoreData
 
 class LogInViewController: UIViewController, SignUpProtocol {
 
@@ -18,10 +19,23 @@ class LogInViewController: UIViewController, SignUpProtocol {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        if Auth.auth().currentUser != nil {
-            self.performSegue(withIdentifier: "oldLogIn", sender: self)
-        } else {
-            
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = appDelegate.persistentContainer.viewContext
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            if result.count != 0 {
+                let currentUser = result.first as! NSManagedObject
+                let login = currentUser.value(forKey: "login") as! Bool
+                let username = currentUser.value(forKey: "username") as! String
+                let password = currentUser.value(forKey: "password") as! String
+                if login {
+                    self.loginApp(username: username, password: password)
+                }
+            }
+        } catch {
+            print("error")
         }
         
     }
@@ -34,7 +48,13 @@ class LogInViewController: UIViewController, SignUpProtocol {
     @IBAction func logInPressed(_ sender: UIButton) {
         
         SVProgressHUD.show()
-        Auth.auth().signIn(withEmail: emailTextField.text!, password: passwordTextField.text!) { (user, error) in
+        loginApp(username: emailTextField.text!, password: passwordTextField.text!)
+        SVProgressHUD.dismiss()
+
+    }
+    
+    func loginApp(username: String, password: String) {
+        Auth.auth().signIn(withEmail: username, password:password) { (user, error) in
             if error == nil {
                 self.performSegue(withIdentifier: "oldLogIn", sender: self)
             } else {
@@ -43,9 +63,7 @@ class LogInViewController: UIViewController, SignUpProtocol {
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)
             }
-            SVProgressHUD.dismiss()
         }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

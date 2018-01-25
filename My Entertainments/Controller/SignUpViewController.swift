@@ -9,6 +9,7 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import CoreData
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -56,6 +57,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 (user, error) in
                 SVProgressHUD.dismiss()
                 if error == nil {
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    let context = appDelegate.persistentContainer.viewContext
+                    let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                    let currentUser = NSManagedObject(entity: entity!, insertInto: context)
+                    currentUser.setValue(self.emailTextField.text!, forKey: "username")
+                    currentUser.setValue(self.passwordTextField.text!, forKey: "password")
+                    currentUser.setValue(true, forKey: "login")
+                    do {
+                        try context.save()
+                    } catch {
+                        print("error")
+                    }
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)
