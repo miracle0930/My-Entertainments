@@ -28,7 +28,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="8rl-Gg-O3Q">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DEZ-Qy-AsO" userLabel="UpperView">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="241"/>
@@ -50,7 +50,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NnL-SZ-ARC" userLabel="LowerView">
-                                <rect key="frame" x="0.0" y="426" width="375" height="241"/>
+                                <rect key="frame" x="0.0" y="426" width="375" height="192"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ffl-Pg-wAz">
                                         <rect key="frame" x="120.5" y="77" width="134" height="32"/>
@@ -213,7 +213,7 @@
             </objects>
             <point key="canvasLocation" x="5100" y="-429.53523238380814"/>
         </scene>
-        <!--Profile-->
+        <!--Profile View Controller-->
         <scene sceneID="oqQ-TV-b2d">
             <objects>
                 <viewController id="F6n-e6-inJ" customClass="ProfileViewController" customModule="My_Entertainments" customModuleProvider="target" sceneMemberID="viewController">
@@ -223,11 +223,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="w1l-od-3B8"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Profile" image="profileIcon" selectedImage="profileIcon" id="fbt-YH-ibd"/>
+                    <navigationItem key="navigationItem" id="5c3-2y-g91">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="exit" style="plain" id="fGZ-it-Ky7">
+                            <color key="tintColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="logout:" destination="F6n-e6-inJ" id="I9D-tc-mq5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="userlogout" id="6Or-RQ-xL2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mmt-Y1-4hG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2729" y="2055"/>
+            <point key="canvasLocation" x="3825" y="2054"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="a8I-dG-Vkx">
@@ -380,7 +390,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="G8T-z3-GbA" kind="relationship" relationship="viewControllers" id="FJD-0X-sbW"/>
-                        <segue destination="F6n-e6-inJ" kind="relationship" relationship="viewControllers" id="eY8-oB-QFP"/>
+                        <segue destination="TqA-wf-UR3" kind="relationship" relationship="viewControllers" id="eY8-oB-QFP"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zws-eG-ghG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -396,7 +406,8 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="SdT-0v-MPO">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="darkTextColor"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </textAttributes>
@@ -410,13 +421,35 @@
             </objects>
             <point key="canvasLocation" x="4283.1999999999998" y="-428.18590704647681"/>
         </scene>
+        <!--Profile-->
+        <scene sceneID="uwP-dK-Z4I">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TqA-wf-UR3" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Profile" image="profileIcon" selectedImage="profileIcon" id="fbt-YH-ibd"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e0l-bp-o5z">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" cocoaTouchSystemColor="darkTextColor"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="F6n-e6-inJ" kind="relationship" relationship="rootViewController" id="t4y-ni-uwb"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NHs-D0-73b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2728" y="2054.5727136431788"/>
+        </scene>
     </scenes>
     <resources>
         <image name="background" width="320" height="480"/>
+        <image name="exit" width="32" height="32"/>
         <image name="profileIcon" width="32" height="32"/>
         <image name="searchIcon" width="32" height="32"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="oD6-fh-NBq"/>
+        <segue reference="6Or-RQ-xL2"/>
     </inferredMetricsTieBreakers>
 </document>

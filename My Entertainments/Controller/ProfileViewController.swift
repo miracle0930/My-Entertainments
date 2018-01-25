@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import CoreData
 
 class ProfileViewController: UIViewController {
 
@@ -21,5 +23,24 @@ class ProfileViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    @IBAction func logout(_ sender: UIBarButtonItem) {
+        do {
+            try Auth.auth().signOut()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+            request.returnsObjectsAsFaults = false
+            do {
+                let result = try context.fetch(request)
+                let currentUser = result.first as! NSManagedObject
+                currentUser.setValue(false, forKey: "login")
+            }
+            self.tabBarController?.tabBar.isHidden = true
+            performSegue(withIdentifier: "userlogout", sender: self)
+            
+        } catch {
+            print("error")
+        }
+    }
 }

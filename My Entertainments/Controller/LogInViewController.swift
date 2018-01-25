@@ -26,6 +26,7 @@ class LogInViewController: UIViewController, SignUpProtocol {
         do {
             let result = try context.fetch(request)
             if result.count != 0 {
+                print("result count = \(result.count)")
                 let currentUser = result.first as! NSManagedObject
                 let login = currentUser.value(forKey: "login") as! Bool
                 let username = currentUser.value(forKey: "username") as! String
@@ -43,6 +44,7 @@ class LogInViewController: UIViewController, SignUpProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
     }
 
     @IBAction func logInPressed(_ sender: UIButton) {
@@ -56,6 +58,21 @@ class LogInViewController: UIViewController, SignUpProtocol {
     func loginApp(username: String, password: String) {
         Auth.auth().signIn(withEmail: username, password:password) { (user, error) in
             if error == nil {
+                //
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                let context = appDelegate.persistentContainer.viewContext
+                let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+                request.returnsObjectsAsFaults = false
+                do {
+                    let result = try context.fetch(request)
+                    let currentUser = result.first as! NSManagedObject
+                    currentUser.setValue(true, forKey: "login")
+                    currentUser.setValue(self.emailTextField.text!, forKey: "username")
+                    currentUser.setValue(self.passwordTextField.text!, forKey: "password")
+                } catch {
+                    print("error")
+                }
+                //
                 self.performSegue(withIdentifier: "oldLogIn", sender: self)
             } else {
                 let alert = UIAlertController(title: "Log in Failed", message: "Please check your username or password.", preferredStyle: .alert)

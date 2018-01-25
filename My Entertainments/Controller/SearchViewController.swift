@@ -22,9 +22,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var movieTableView: UITableView!
     let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&t="
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        ref = Database.database().reference()
         navigationItem.title = "Search Movie"
         setMovieTableViewSeperator()
         movieTableView.delegate = self
@@ -34,7 +35,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         movieTableView.addGestureRecognizer(tapGesture)
-
+        ref = Database.database().reference()
+        DispatchQueue.global().sync {
+            getMovieFromDatabase()
+        }
     }
     
     @objc func tableViewTapped() {
@@ -55,6 +59,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 self.errorPop(errorMessage: "English supported only at this time :)")
             }
         }
+        searchBar.endEditing(true)
     }
     
     func updateMovies(with jsonData: JSON) {
@@ -62,7 +67,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             errorPop(errorMessage: "Any typo?")
         } else {
             let movie = Movie()
-            movie.movieName = jsonData["Title"].stringValue
+            var movieName = jsonData["Title"].stringValue
+            movieName = movieName.replacingOccurrences(of: ".", with: " ")
+            movieName = movieName.replacingOccurrences(of: "#", with: " ")
+            movieName = movieName.replacingOccurrences(of: "$", with: " ")
+            movieName = movieName.replacingOccurrences(of: "[", with: "{")
+            movieName = movieName.replacingOccurrences(of: "]", with: "}")
+            movie.movieName = movieName
             movie.movieReleased = jsonData["Released"].stringValue
             movie.movieGenre = jsonData["Genre"].stringValue
             movie.movieRated = jsonData["Rated"].stringValue
@@ -79,14 +90,38 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func addMovieToDatabase(movie: Movie) {
-        let movieInfo = [
-            "released": movie.movieReleased!,
-            "rated": movie.movieRated!,
-            "imageURL": movie.movieImageUrl!,
-            "rating": movie.movieRating!,
-            "genre": movie.movieGenre!
-        ]
-        self.ref.child("Users").child(Auth.auth().currentUser!.uid).child("Movies").child(movie.movieName!).setValue(movieInfo)
+        DispatchQueue.global().async {
+            let movieInfo = [
+                "released": movie.movieReleased!,
+                "rated": movie.movieRated!,
+                "imageURL": movie.movieImageUrl!,
+                "rating": movie.movieRating!,
+                "genre": movie.movieGenre!
+            ]
+            self.ref.child("Users").child(Auth.auth().currentUser!.uid).child("Movies").child(movie.movieName!).setValue(movieInfo)
+        }
+    }
+    
+    func getMovieFromDatabase() {
+        DispatchQueue.global().async {
+            let userId = Auth.auth().currentUser!.uid
+            self.ref.child("Users").child(userId).child("Movies").observeSingleEvent(of: .value) { (snapshot) in
+                let movieDataSet = JSON(snapshot.value!)
+                for movieData in movieDataSet {
+                    let movie = Movie()
+                    movie.movieName = movieData.0
+                    movie.movieGenre = movieData.1.dictionaryValue["genre"]?.stringValue
+                    movie.movieRated = movieData.1.dictionaryValue["rated"]?.stringValue
+                    movie.movieRating = movieData.1.dictionaryValue["rating"]?.stringValue
+                    movie.movieImageUrl = movieData.1.dictionaryValue["imageURL"]?.stringValue
+                    movie.movieReleased = movieData.1.dictionaryValue["released"]?.stringValue
+                    self.movies.append(movie)
+                    self.movieSet.insert(movie.movieName!)
+                }
+                self.movieTableView.reloadData()
+                self.setMovieTableViewSeperator()
+            }
+        }
     }
     
     func errorPop(errorMessage: String) {
@@ -107,7 +142,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.movieGenreLabel.text = "Genre: " + movies[indexPath.row].movieGenre!
         cell.movieRatedLabel.text = "Rated: " + movies[indexPath.row].movieRated!
         cell.movieRatingLabel.text = "IMDB Rating: " + movies[indexPath.row].movieRating!
-        let path = movies[indexPath.row].movieImageUrl!
+        let path = self.movies[indexPath.row].movieImageUrl!
         let url = URL(string: path)
         let data = try? Data(contentsOf: url!)
         if data == nil {
