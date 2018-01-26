@@ -31,8 +31,20 @@ class LogInViewController: UIViewController, SignUpProtocol {
                 let login = currentUser.value(forKey: "login") as! Bool
                 let username = currentUser.value(forKey: "username") as! String
                 let password = currentUser.value(forKey: "password") as! String
+                print(currentUser)
                 if login {
                     self.loginApp(username: username, password: password)
+                }
+            } else {
+                let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                let currentUser = NSManagedObject(entity: entity!, insertInto: context)
+                currentUser.setValue(self.emailTextField.text!, forKey: "username")
+                currentUser.setValue(self.passwordTextField.text!, forKey: "password")
+                currentUser.setValue(true, forKey: "login")
+                do {
+                    try context.save()
+                } catch {
+                    print("error")
                 }
             }
         } catch {
@@ -75,7 +87,8 @@ class LogInViewController: UIViewController, SignUpProtocol {
                 //
                 self.performSegue(withIdentifier: "oldLogIn", sender: self)
             } else {
-                let alert = UIAlertController(title: "Log in Failed", message: "Please check your username or password.", preferredStyle: .alert)
+                
+                let alert = UIAlertController(title: error.debugDescription, message: "Please check your username or password.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)

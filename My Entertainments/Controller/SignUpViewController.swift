@@ -57,36 +57,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 (user, error) in
                 SVProgressHUD.dismiss()
                 if error == nil {
-                    //
                     let appDelegate = UIApplication.shared.delegate as! AppDelegate
                     let context = appDelegate.persistentContainer.viewContext
                     let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
                     request.returnsObjectsAsFaults = false
                     do {
                         let result = try context.fetch(request)
-                        if result.count == 0 {
-                            let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
-                            let currentUser = NSManagedObject(entity: entity!, insertInto: context)
-                            currentUser.setValue(self.emailTextField.text!, forKey: "username")
-                            currentUser.setValue(self.passwordTextField.text!, forKey: "password")
-                            currentUser.setValue(true, forKey: "login")
-                            do {
-                                try context.save()
-                            } catch {
-                                print("error")
-                            }
-                        } else {
-                            let currentUser = result.first as! NSManagedObject
-                            currentUser.setValue(true, forKey: "login")
-                            currentUser.setValue(self.emailTextField.text!, forKey: "username")
-                            currentUser.setValue(self.passwordTextField.text!, forKey: "password")
-                        }
+                        let currentUser = result.first as! NSManagedObject
+                        currentUser.setValue(true, forKey: "login")
+                        currentUser.setValue(self.emailTextField.text!, forKey: "username")
+                        currentUser.setValue(self.passwordTextField.text!, forKey: "password")
+                        
                     } catch {
                         print(error)
                     }
-                    
-                    
-                    //
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)

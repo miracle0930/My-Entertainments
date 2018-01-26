@@ -15,4 +15,6 @@ class Movie {
     var movieRated: String?
     var movieRating: String?
     var movieGenre: String?
+    var searchContent: String?
+    var movieId: String?
 }

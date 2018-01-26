@@ -16,12 +16,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
     var movieSet = Set<String>()
+    var movieJsonDict = [String: JSON]()
     var ref: DatabaseReference!
+    var movieImageCache = NSCache<NSString, NSData>()
 
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
     let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&t="
-    
     
     
     override func viewDidLoad() {
@@ -34,13 +35,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.rowHeight = 199.5
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
-        movieTableView.addGestureRecognizer(tapGesture)
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         ref = Database.database().reference()
         DispatchQueue.global().sync {
             getMovieFromDatabase()
         }
     }
     
+    // MARK: - SearchBar Implements
     @objc func tableViewTapped() {
         movieSearchBar.endEditing(true)
     }
@@ -51,12 +55,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         name = name.trimmingCharacters(in: NSCharacterSet.whitespaces)
         name = name.replacingOccurrences(of: " ", with: "%20")
         let url = baseUrl + name
-        Alamofire.request(url, method: .get).responseJSON { (response) in
-            if response.result.isSuccess {
-                let movieData: JSON = JSON(response.result.value!)
-                self.updateMovies(with: movieData)
-            } else {
-                self.errorPop(errorMessage: "English supported only at this time :)")
+        if name != "" {
+            Alamofire.request(url, method: .get).responseJSON { (response) in
+                if response.result.isSuccess {
+                    let movieData: JSON = JSON(response.result.value!)
+                    self.updateMovies(with: movieData)
+                } else {
+                    self.errorPop(errorMessage: "English supported only at this time :)")
+                }
             }
         }
         searchBar.endEditing(true)
@@ -79,6 +85,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             movie.movieRated = jsonData["Rated"].stringValue
             movie.movieRating = jsonData["imdbRating"].stringValue
             movie.movieImageUrl = jsonData["Poster"].stringValue
+            movie.movieId = jsonData["imdbID"].stringValue
             if !movieSet.contains(movie.movieName!) {
                 addMovieToDatabase(movie: movie)
                 movieSet.insert(movie.movieName!)
@@ -89,6 +96,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
+    
+    // MARK: - Movie and Database Interaction
     func addMovieToDatabase(movie: Movie) {
         DispatchQueue.global().async {
             let movieInfo = [
@@ -96,7 +105,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 "rated": movie.movieRated!,
                 "imageURL": movie.movieImageUrl!,
                 "rating": movie.movieRating!,
-                "genre": movie.movieGenre!
+                "genre": movie.movieGenre!,
+                "imdbID": movie.movieId!
             ]
             self.ref.child("Users").child(Auth.auth().currentUser!.uid).child("Movies").child(movie.movieName!).setValue(movieInfo)
         }
@@ -115,6 +125,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                     movie.movieRating = movieData.1.dictionaryValue["rating"]?.stringValue
                     movie.movieImageUrl = movieData.1.dictionaryValue["imageURL"]?.stringValue
                     movie.movieReleased = movieData.1.dictionaryValue["released"]?.stringValue
+                    movie.movieId = movieData.1.dictionaryValue["imdbID"]?.stringValue
                     self.movies.append(movie)
                     self.movieSet.insert(movie.movieName!)
                 }
@@ -133,6 +144,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
 }
 
+// MARK: - TableView Delegate and Datasource Implements
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -143,14 +155,27 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.movieRatedLabel.text = "Rated: " + movies[indexPath.row].movieRated!
         cell.movieRatingLabel.text = "IMDB Rating: " + movies[indexPath.row].movieRating!
         let path = self.movies[indexPath.row].movieImageUrl!
-        let url = URL(string: path)
-        let data = try? Data(contentsOf: url!)
-        if data == nil {
+        downloadMovieCellImage(movieId: movies[indexPath.row].movieId!, movieCell: cell, imageUrl: path)
+        return cell
+    }
+    
+    func downloadMovieCellImage(movieId id: String, movieCell cell: MovieTableViewCell, imageUrl path: String) {
+        print(path)
+        if path == "N/A" {
+            print("I am N/A")
             cell.movieImageView.image = UIImage(named: "noimg")
         } else {
-            cell.movieImageView.image = UIImage(data: data!)
+            if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
+                print("also here")
+
+                cell.movieImageView.image = UIImage(data: cachedImage)
+            } else {
+                let url = URL(string: path)
+                let data = try? Data(contentsOf: url!)
+                cell.movieImageView.image = UIImage(data: data!)
+                movieImageCache.setObject(data! as NSData, forKey: id as NSString)
+            }
         }
-        return cell
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -163,6 +188,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             movieTableView.separatorStyle = .singleLine
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        print("here")
+        performSegue(withIdentifier: "movieDetail", sender: self)
+        
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        movieSearchBar.endEditing(true)
     }
     
 }

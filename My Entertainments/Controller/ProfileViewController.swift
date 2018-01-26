@@ -14,6 +14,7 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "Profile"
 
         // Do any additional setup after loading the view.
     }
@@ -30,7 +31,7 @@ class ProfileViewController: UIViewController {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             let context = appDelegate.persistentContainer.viewContext
             let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-            request.returnsObjectsAsFaults = false
+//            request.returnsObjectsAsFaults = false
             do {
                 let result = try context.fetch(request)
                 let currentUser = result.first as! NSManagedObject
