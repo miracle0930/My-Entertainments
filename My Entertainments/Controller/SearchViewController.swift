@@ -37,7 +37,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
-        
         ref = Database.database().reference()
         DispatchQueue.global().sync {
             getMovieFromDatabase()
@@ -160,14 +159,10 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func downloadMovieCellImage(movieId id: String, movieCell cell: MovieTableViewCell, imageUrl path: String) {
-        print(path)
         if path == "N/A" {
-            print("I am N/A")
             cell.movieImageView.image = UIImage(named: "noimg")
         } else {
             if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
-                print("also here")
-
                 cell.movieImageView.image = UIImage(data: cachedImage)
             } else {
                 let url = URL(string: path)
@@ -192,9 +187,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        print("here")
         performSegue(withIdentifier: "movieDetail", sender: self)
         
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destination = segue.destination as! MovieDetailTableTableViewController
+        if let indexPath = movieTableView.indexPathForSelectedRow {
+            destination.movieId = movies[indexPath.row].movieId!
+        }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

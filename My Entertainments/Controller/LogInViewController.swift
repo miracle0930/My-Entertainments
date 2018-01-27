@@ -26,12 +26,10 @@ class LogInViewController: UIViewController, SignUpProtocol {
         do {
             let result = try context.fetch(request)
             if result.count != 0 {
-                print("result count = \(result.count)")
                 let currentUser = result.first as! NSManagedObject
                 let login = currentUser.value(forKey: "login") as! Bool
                 let username = currentUser.value(forKey: "username") as! String
                 let password = currentUser.value(forKey: "password") as! String
-                print(currentUser)
                 if login {
                     self.loginApp(username: username, password: password)
                 }
