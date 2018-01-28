@@ -17,6 +17,7 @@
 		F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F58201553DA007AA679 /* SignUpViewController.swift */; };
 		F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F5D20159C31007AA679 /* ProtocolFile.swift */; };
 		F15EF68C201C4A4F0054683C /* MovieDetailTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableTableViewController.swift */; };
+		F15EF68E201CFA3F0054683C /* UserStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68D201CFA3F0054683C /* UserStatus.swift */; };
 		F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5062016531500CEDA44 /* SearchViewController.swift */; };
 		F189C5092016532100CEDA44 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5082016532100CEDA44 /* ProfileViewController.swift */; };
 		F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */; };
@@ -41,6 +42,7 @@
 		F10E6F58201553DA007AA679 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F10E6F5D20159C31007AA679 /* ProtocolFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolFile.swift; sourceTree = "<group>"; };
 		F15EF68B201C4A4F0054683C /* MovieDetailTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableTableViewController.swift; sourceTree = "<group>"; };
+		F15EF68D201CFA3F0054683C /* UserStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatus.swift; sourceTree = "<group>"; };
 		F189C5062016531500CEDA44 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F189C5082016532100CEDA44 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				F189C5102016DDA500CEDA44 /* Movie.swift */,
+				F15EF68D201CFA3F0054683C /* UserStatus.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,6 +314,7 @@
 				F10E6F4220153401007AA679 /* AppDelegate.swift in Sources */,
 				F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */,
 				F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */,
+				F15EF68E201CFA3F0054683C /* UserStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

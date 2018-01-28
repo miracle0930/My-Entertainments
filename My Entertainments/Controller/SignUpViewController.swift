@@ -9,7 +9,6 @@
 import UIKit
 import Firebase
 import SVProgressHUD
-import CoreData
 
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
@@ -20,6 +19,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var retypePasswordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     var defaultframe: CGRect?
+    let userDefault = UserDefaults.standard
+    
     
     
     override func viewDidLoad() {
@@ -57,20 +58,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 (user, error) in
                 SVProgressHUD.dismiss()
                 if error == nil {
-                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                    let context = appDelegate.persistentContainer.viewContext
-                    let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-                    request.returnsObjectsAsFaults = false
-                    do {
-                        let result = try context.fetch(request)
-                        let currentUser = result.first as! NSManagedObject
-                        currentUser.setValue(true, forKey: "login")
-                        currentUser.setValue(self.emailTextField.text!, forKey: "username")
-                        currentUser.setValue(self.passwordTextField.text!, forKey: "password")
-                        
-                    } catch {
-                        print(error)
-                    }
+                    self.userDefault.set(self.emailTextField.text!, forKey: "username")
+                    self.userDefault.set(self.passwordTextField.text!, forKey: "password")
+                    self.userDefault.set(true, forKey: "login")
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)
