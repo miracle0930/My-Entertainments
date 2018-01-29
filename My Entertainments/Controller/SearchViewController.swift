@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Firebase
-import FirebaseDatabase
+//import FirebaseDatabase
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     

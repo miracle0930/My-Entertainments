@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import SVProgressHUD
 
+
 class SignUpViewController: UIViewController, UITextFieldDelegate {
 
     var delegate: SignUpProtocol?
@@ -21,12 +22,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     var defaultframe: CGRect?
     let userDefault = UserDefaults.standard
     
+    var ref: DatabaseReference!
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
         defaultframe = view.frame
+        ref = Database.database().reference()
         
     }
     
@@ -58,9 +62,15 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 (user, error) in
                 SVProgressHUD.dismiss()
                 if error == nil {
+                    let userInfo = [
+                        "userNickname": self.nicknameTextField.text!,
+                        "userPhoto": "",
+                        "userIntro": ""
+                    ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")
                     self.userDefault.set(true, forKey: "login")
+                    self.ref.child("Users").child(user!.uid).child("Account").setValue(userInfo)
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)

@@ -42,13 +42,12 @@ class LogInViewController: UIViewController, SignUpProtocol {
 
     @IBAction func logInPressed(_ sender: UIButton) {
         
-        SVProgressHUD.show()
         loginApp(username: emailTextField.text!, password: passwordTextField.text!)
-        SVProgressHUD.dismiss()
 
     }
     
     func loginApp(username: String, password: String) {
+        SVProgressHUD.show()
         Auth.auth().signIn(withEmail: username, password: password) { (user, error) in
             if error == nil {
                 self.userDefault.set(username, forKey: "username")
@@ -62,6 +61,8 @@ class LogInViewController: UIViewController, SignUpProtocol {
                 self.present(alert, animated: true, completion: nil)
             }
         }
+        SVProgressHUD.dismiss()
+
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

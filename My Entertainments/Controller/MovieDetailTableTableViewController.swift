@@ -29,6 +29,11 @@ class MovieDetailTableTableViewController: UITableViewController {
         loadMovieInfo()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
+
+    
     func loadMovieInfo() {
         let url = baseUrl + movieId!
         Alamofire.request(url, method: .get).responseJSON { (response) in

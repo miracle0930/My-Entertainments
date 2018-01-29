@@ -9,21 +9,36 @@
 import UIKit
 import Firebase
 import CoreData
+import SwiftyJSON
 
-class ProfileViewController: UIViewController {
+
+class ProfileTableViewController: UITableViewController {
     
     let userDefault = UserDefaults.standard
+    
+    @IBOutlet var userPhoto: UIImageView!
+    @IBOutlet var userNickname: UILabel!
+    @IBOutlet var userEmail: UILabel!
+    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Profile"
-
-        // Do any additional setup after loading the view.
+        ref = Database.database().reference()
+        let user = Auth.auth().currentUser!
+        userEmail.text = "Email: " + user.email!
+        ref.child("Users").child(user.uid).observeSingleEvent(of: .value) { (snapshot) in
+            let userData = JSON(snapshot.value!)
+            self.userNickname.text = userData["Account"]["userNickname"].stringValue
+        }
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.tabBarController?.tabBar.isHidden = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
