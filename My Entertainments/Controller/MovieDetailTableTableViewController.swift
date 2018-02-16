@@ -45,7 +45,6 @@ class MovieDetailTableTableViewController: UITableViewController {
                 self.movieRating.text = "Rating: " + movieData["imdbRating"].stringValue
                 self.movieContent.text = movieData["Plot"].stringValue
                 self.getMovieImage(from: movieData["Poster"].stringValue)
-                print(self.movieContent.heightAnchor)
                 
             } else {
                 print("error")

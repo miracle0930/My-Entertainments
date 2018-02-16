@@ -20,35 +20,46 @@ class PhotoSetViewController: UIViewController, UIImagePickerControllerDelegate,
     let imagePicker = UIImagePickerController()
     let storageRef = Storage.storage().reference()
     let databaseRef = Database.database().reference()
-    let profileCahce = NSCache<NSString, NSData>()
+    let profileCahce = SharedImageCache.getSharedImageCache()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         imagePicker.delegate = self
+        userPhotoImageView.contentMode = .scaleAspectFit
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "more"), style: .plain, target: self, action: #selector(changePhoto))
         configureUserPhoto()
     }
     
     
-    
     func configureUserPhoto() {
-        DispatchQueue.global().async {
-            SVProgressHUD.show()
-            let profileRef = self.storageRef.child("entertainments/\(Auth.auth().currentUser!.uid)/profile")
+        SVProgressHUD.show()
+        let profileRef = self.storageRef.child("entertainments/\(Auth.auth().currentUser!.uid)/profile")
+        if let cachedImage = self.profileCahce.object(forKey: "profile" as NSString) as Data? {
+            self.userPhotoImageView.image = UIImage(data: cachedImage)
+        } else {
             profileRef.downloadURL { (url, error) in
                 if error == nil {
-                    
                     let placeholderImage = UIImage(named: "defaultphoto")
-                    self.userPhotoImageView.sd_setImage(with: url, placeholderImage: placeholderImage)
+                    self.userPhotoImageView.sd_setImage(with: url, placeholderImage: placeholderImage, completed: { (_, _, _, _) in
+                        self.saveProfilePhotoToCache()
+                    })
                     
                 } else {
                     print(error.debugDescription)
                 }
             }
-            SVProgressHUD.dismiss()
+        }
+        SVProgressHUD.dismiss()
+    }
+    
+    func saveProfilePhotoToCache() {
+        let profileImage = userPhotoImageView.image
+        if let imageData = UIImagePNGRepresentation(profileImage!) {
+            profileCahce.setObject(imageData as NSData, forKey: "profile" as NSString)
         }
     }
+    
     
     
     @objc func changePhoto() {
@@ -75,6 +86,7 @@ class PhotoSetViewController: UIViewController, UIImagePickerControllerDelegate,
         if let userPickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             userPhotoImageView.image = userPickedImage
             userPhotoImageView.reloadInputViews()
+            saveProfilePhotoToCache()
             let imageData = UIImageJPEGRepresentation(userPickedImage, 0.8)!
             let imagePath = "entertainments/\(Auth.auth().currentUser!.uid)/profile"
             let metadata = StorageMetadata()
@@ -94,8 +106,11 @@ class PhotoSetViewController: UIViewController, UIImagePickerControllerDelegate,
     }
     
     
+    
+    
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
+
     }
 
     override func didReceiveMemoryWarning() {

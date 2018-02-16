@@ -10,18 +10,22 @@ import UIKit
 
 class UserEditTableViewController: UITableViewController {
 
+    @IBOutlet var userProfileImageView: UIImageView!
+    let profileCache = SharedImageCache.getSharedImageCache()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        userProfileImageView.contentMode = .scaleAspectFit
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-//         self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
+        if let cachedImage = self.profileCache.object(forKey: "profile" as NSString) as Data? {
+            self.userProfileImageView.image = UIImage(data: cachedImage)
+        } else {
+            self.userProfileImageView.image = UIImage(named: "defaultphoto")
+        }
     }
     
     

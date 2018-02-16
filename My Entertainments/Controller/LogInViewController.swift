@@ -35,7 +35,6 @@ class LogInViewController: UIViewController, SignUpProtocol {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
     }
     
     
@@ -62,7 +61,6 @@ class LogInViewController: UIViewController, SignUpProtocol {
             }
         }
         SVProgressHUD.dismiss()
-
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

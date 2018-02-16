@@ -487,7 +487,7 @@
                     <connections>
                         <outlet property="userEmail" destination="Lw0-lU-KaC" id="Kxr-cq-Gfp"/>
                         <outlet property="userNickname" destination="cNM-Bx-Byb" id="Bjh-FT-EGv"/>
-                        <outlet property="userPhoto" destination="Fd3-xN-gcY" id="tfr-4l-2JT"/>
+                        <outlet property="userPhotoImageView" destination="Fd3-xN-gcY" id="NKC-qR-hK9"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="userlogout" id="5lE-Vq-w79"/>
                     </connections>
                 </tableViewController>
@@ -568,6 +568,7 @@
                         </connections>
                     </tableView>
                     <connections>
+                        <outlet property="userProfileImageView" destination="z4E-aL-0QH" id="8k2-CX-Mgt"/>
                         <segue destination="jyX-LX-97c" kind="show" identifier="goToPhotoSet" id="whg-lj-6hx"/>
                     </connections>
                 </tableViewController>
