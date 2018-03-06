@@ -11,7 +11,6 @@ import UIKit
 class UserEditTableViewController: UITableViewController {
 
     @IBOutlet var userProfileImageView: UIImageView!
-    let profileCache = SharedImageCache.getSharedImageCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +20,11 @@ class UserEditTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = true
-        if let cachedImage = self.profileCache.object(forKey: "profile" as NSString) as Data? {
-            self.userProfileImageView.image = UIImage(data: cachedImage)
-        } else {
-            self.userProfileImageView.image = UIImage(named: "defaultphoto")
-        }
+//        if let cachedImage = self.profileCache.object(forKey: "profile" as NSString) as Data? {
+//            self.userProfileImageView.image = UIImage(data: cachedImage)
+//        } else {
+//            self.userProfileImageView.image = UIImage(named: "defaultphoto")
+//        }
     }
     
     

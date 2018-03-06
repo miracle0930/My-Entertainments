@@ -11,6 +11,7 @@ import Firebase
 import SwiftyJSON
 import SDWebImage
 import SVProgressHUD
+import RealmSwift
 
 
 
@@ -20,7 +21,7 @@ class PhotoSetViewController: UIViewController, UIImagePickerControllerDelegate,
     let imagePicker = UIImagePickerController()
     let storageRef = Storage.storage().reference()
     let databaseRef = Database.database().reference()
-    let profileCahce = SharedImageCache.getSharedImageCache()
+    let realm = try! Realm()
 
     
     override func viewDidLoad() {
@@ -34,30 +35,32 @@ class PhotoSetViewController: UIViewController, UIImagePickerControllerDelegate,
     
     func configureUserPhoto() {
         SVProgressHUD.show()
-        let profileRef = self.storageRef.child("entertainments/\(Auth.auth().currentUser!.uid)/profile")
-        if let cachedImage = self.profileCahce.object(forKey: "profile" as NSString) as Data? {
-            self.userPhotoImageView.image = UIImage(data: cachedImage)
-        } else {
-            profileRef.downloadURL { (url, error) in
-                if error == nil {
-                    let placeholderImage = UIImage(named: "defaultphoto")
-                    self.userPhotoImageView.sd_setImage(with: url, placeholderImage: placeholderImage, completed: { (_, _, _, _) in
-                        self.saveProfilePhotoToCache()
-                    })
-                    
-                } else {
-                    print(error.debugDescription)
-                }
-            }
-        }
+//        let realmUserInfo = realm.objects(UserAccount.self).
+        
+        
+        
+//
+//        if let cachedImage = self.profileCahce.object(forKey: "profile" as NSString) as Data? {
+//            self.userPhotoImageView.image = UIImage(data: cachedImage)
+//        } else {
+//            profileRef.downloadURL { (url, error) in
+//                if error == nil {
+//                    let placeholderImage = UIImage(named: "defaultphoto")
+//                    self.userPhotoImageView.sd_setImage(with: url, placeholderImage: placeholderImage, completed: { (_, _, _, _) in
+//                        self.saveProfilePhotoToCache()
+//                    })
+//
+//                } else {
+//                    print(error.debugDescription)
+//                }
+//            }
+//        }
         SVProgressHUD.dismiss()
     }
     
     func saveProfilePhotoToCache() {
         let profileImage = userPhotoImageView.image
-        if let imageData = UIImagePNGRepresentation(profileImage!) {
-            profileCahce.setObject(imageData as NSData, forKey: "profile" as NSString)
-        }
+        
     }
     
     

@@ -20,7 +20,6 @@ class ProfileTableViewController: UITableViewController {
     @IBOutlet var userPhotoImageView: UIImageView!
     @IBOutlet var userNickname: UILabel!
     @IBOutlet var userEmail: UILabel!
-    let profileCache = SharedImageCache.getSharedImageCache()
     let storageRef = Storage.storage().reference()
     let databaseRef = Database.database().reference()
     
@@ -37,26 +36,7 @@ class ProfileTableViewController: UITableViewController {
     }
     
     func configureUserPhoto() {
-        let profileRef = self.storageRef.child("entertainments/\(Auth.auth().currentUser!.uid)/profile")
-        if let cachedImage = self.profileCache.object(forKey: "profile" as NSString) as Data? {
-            print("here")
-            self.userPhotoImageView.image = UIImage(data: cachedImage)
-        } else {
-            profileRef.downloadURL { (url, error) in
-                if error == nil {
-                    let placeholderImage = UIImage(named: "defaultphoto")
-                    self.userPhotoImageView.sd_setImage(with: url, placeholderImage: placeholderImage, completed: { (_, _, _, _) in
-                        let profileImage = self.userPhotoImageView.image
-                        if let imageData = UIImagePNGRepresentation(profileImage!) {
-                            self.profileCache.setObject(imageData as NSData, forKey: "profile" as NSString)
-                        }
-                    })
-                    
-                } else {
-                    print(error.debugDescription)
-                }
-            }
-        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

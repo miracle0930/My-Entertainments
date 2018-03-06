@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import RealmSwift
 
 class SharedImageCache: NSCache<NSString, NSData> {
     
-    static let sharedImageCache = SharedImageCache()
-    static func getSharedImageCache() -> SharedImageCache {
-        return sharedImageCache
-    }
+//    static let sharedImageCache = SharedImageCache()
+//    static func getSharedImageCache() -> SharedImageCache {
+//        return sharedImageCache
+//    }
+    
 
 }

@@ -9,20 +9,22 @@
 import UIKit
 import CoreData
 import Firebase
-import SDWebImage
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    
-    
-
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
         UINavigationBar.appearance().tintColor = UIColor.white
+        do {
+            _ = try Realm()
+        } catch {
+            print(error)
+        }
         return true
     }
 
@@ -38,20 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
-        let storageRef = Storage.storage().reference()
-        let profileRef = storageRef.child("entertainments/\(Auth.auth().currentUser!.uid)/profile")
-        profileRef.downloadURL { (url, error) in
-            if error == nil {
-                let _ = SDWebImageDownloader.shared().downloadImage(with: url, options: .continueInBackground, progress: nil, completed: { (image, data, error, true) in
-                        if let imageData = UIImagePNGRepresentation(image!) {
-                            SharedImageCache.getSharedImageCache().setObject(imageData as NSData, forKey: "profile" as NSString)
-                        }
-                })                
-            } else {
-                print(error.debugDescription)
-            }
-        }
-        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

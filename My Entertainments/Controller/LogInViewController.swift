@@ -9,16 +9,31 @@
 import UIKit
 import Firebase
 import SVProgressHUD
+import RealmSwift
 
-class LogInViewController: UIViewController, SignUpProtocol {
+class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet var userPhotoImageView: UIImageView!
+    
+    @IBOutlet var upperView: UIView!
     let userDefault = UserDefaults.standard
+    var defaultFrame: CGRect?
+    let realm = try! Realm()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        defaultFrame = upperView.frame
+        userPhotoImageView.layer.cornerRadius = 20
+        userPhotoImageView.layer.borderColor = UIColor.black.cgColor
+        userPhotoImageView.layer.borderWidth = 2
+        userPhotoImageView.backgroundColor = UIColor.white
+        userPhotoImageView.contentMode = .scaleAspectFit
+        userPhotoImageView.image = UIImage(named: "defaultphoto")
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
         userDefaultConfigure()
         
     }
@@ -64,9 +79,27 @@ class LogInViewController: UIViewController, SignUpProtocol {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        self.view.endEditing(true)
+        UIView.animate(withDuration: 0.5) {
+            self.view.endEditing(true)
+            self.upperView.frame = self.defaultFrame!
+            self.upperView.layoutIfNeeded()
+        }
     }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        UIView.animate(withDuration: 0.5) {
+            var frame = self.upperView.frame
+            if frame.origin.y < 0 {
+                return
+            }
+            frame.origin.y -= 100
+            frame.size.height += 100
+            self.upperView.frame = frame
+            self.upperView.layoutIfNeeded()
+        }
+    }
+    
+    
     
     @IBAction func signUpPressed(_ sender: UIButton) {
         
@@ -82,4 +115,5 @@ class LogInViewController: UIViewController, SignUpProtocol {
     }
     
 }
+
 
