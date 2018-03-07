@@ -26,7 +26,6 @@
 		F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */; };
 		F189C50E20168FEF00CEDA44 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */; };
 		F189C5112016DDA500CEDA44 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5102016DDA500CEDA44 /* Movie.swift */; };
-		F196B44C204F27C8009006C1 /* UserStoredData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F196B44B204F27C8009006C1 /* UserStoredData.swift */; };
 		F196B450204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */; };
 		F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */; };
 		F2B78ACEE4C4FA4C0D5FB5D1 /* Pods_My_Entertainments.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71C7F1C40E083AFAE57BB13A /* Pods_My_Entertainments.framework */; };
@@ -57,7 +56,6 @@
 		F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
 		F189C5102016DDA500CEDA44 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
-		F196B44B204F27C8009006C1 /* UserStoredData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoredData.swift; sourceTree = "<group>"; };
 		F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDefaultPhotosCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -155,7 +153,6 @@
 				F189C5102016DDA500CEDA44 /* Movie.swift */,
 				F1572FF5203610B90048C08A /* SharedCache.swift */,
 				F1572FF920378D230048C08A /* UserAccount.swift */,
-				F196B44B204F27C8009006C1 /* UserStoredData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,7 +338,6 @@
 				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,
 				F1572FF6203610B90048C08A /* SharedCache.swift in Sources */,
 				F15EF690201E7CC70054683C /* UserEditTableViewController.swift in Sources */,
-				F196B44C204F27C8009006C1 /* UserStoredData.swift in Sources */,
 				F15EF68C201C4A4F0054683C /* MovieDetailTableTableViewController.swift in Sources */,
 				F15EF692201E7FA30054683C /* PhotoSetViewController.swift in Sources */,
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,

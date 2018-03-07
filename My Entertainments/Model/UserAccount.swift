@@ -12,7 +12,8 @@ import RealmSwift
 
 class UserAccount: Object {
     @objc dynamic var username: String = ""
-    @objc dynamic var userIntro: String = ""
-    let userStoredDatas = List<UserStoredData>()
-    
+    @objc dynamic var userPhoto = Data()
+    @objc dynamic var userIntro = ""
+    var userStoredMovies = List<String>()
+    var userStoredMusics = List<String>()
 }

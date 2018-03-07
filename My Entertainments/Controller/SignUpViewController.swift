@@ -33,7 +33,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                          UIImage(named: "boy5"), UIImage(named: "girl5"), UIImage(named: "boy6"), UIImage(named: "girl6"),
                          UIImage(named: "boy7"), UIImage(named: "girl7"), UIImage(named: "boy8"), UIImage(named: "girl8")]
     var photosSelected = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    var ref: DatabaseReference!
+    var databaseRef: DatabaseReference!
+    var storageRef: StorageReference!
     
     
     
@@ -50,7 +51,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         defaultUpperViewFrame = upperView.frame
         defaultMiddleViewFrame = middleView.frame
     
-        ref = Database.database().reference()
+        databaseRef = Database.database().reference()
+        storageRef = Storage.storage().reference()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,40 +82,98 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             self.upperView.layoutIfNeeded()
         }
     }
-
     
+    func passwordCheck() -> Bool {
+        let password = passwordTextField.text!
+        let retype = retypePasswordTextField.text!
+        let alert = UIAlertController(title: "Sign up Failed", message: "", preferredStyle: .alert)
+        if password == "" {
+            alert.message = "Password can not be empty."
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+        }
+        if password != retype {
+            alert.message = "Password doesn't match."
+            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alert.addAction(action)
+            present(alert, animated: true, completion: nil)
+            return false
+        }
+        return true
+    }
     
+    func defaultPhotoCheck() -> Int {
+        for i in stride(from: 0, to: defaultPhotos.count, by: 1) {
+            if photosSelected[i] {
+                return i
+            }
+        }
+        let alert = UIAlertController(title: "Sign up Failed", message: "An initial photo must be selected.", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+        return -1
+    }
+    
+    func writeToRealm(id: String, image: UIImage) {
+        let imageData = UIImageJPEGRepresentation(image, 0.9)!
+        do {
+            try self.realm.write {
+                let userAccount = UserAccount()
+                userAccount.username = id
+                userAccount.userPhoto = imageData
+                self.realm.add(userAccount)
+                print(userAccount)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func writeToStorage(id: String, image: UIImage) {
+        let imageData = UIImageJPEGRepresentation(image, 0.9)!
+        let imagePath = "entertainments/\(id)/profile"
+        let metaData = StorageMetadata()
+        metaData.contentType = "image/jpg"
+        storageRef.child(imagePath).putData(imageData, metadata: metaData) { (metaData, error) in
+            if error == nil {
+                let downloadURL = metaData!.downloadURL()!.absoluteString
+                self.databaseRef.child("Users").child(id).child("Account").updateChildValues(["userPhoto": downloadURL])
+            } else {
+                print(error!)
+            }
+        }
+    }
 
     @IBAction func signUpOrGiveUp(_ sender: UIButton) {
         if sender.tag == 0 {
             SVProgressHUD.show()
+            if !passwordCheck() {
+                SVProgressHUD.dismiss()
+                return
+            }
+            let selectPhotoIndex = defaultPhotoCheck()
+            if selectPhotoIndex == -1 {
+                SVProgressHUD.dismiss()
+                return
+            }
+            let userPhoto = defaultPhotos[selectPhotoIndex]!
             Auth.auth().createUser(withEmail: emailTextField.text!, password: passwordTextField.text!, completion: {
                 (user, error) in
                 SVProgressHUD.dismiss()
                 if error == nil {
                     let userInfo = [
                         "userNickname": self.nicknameTextField.text!,
-                        "userPhoto": "",
                         "userIntro": ""
                     ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")
                     self.userDefault.set(true, forKey: "login")
-                    self.ref.child("Users").child(user!.uid).child("Account").setValue(userInfo)
-                    do {
-                        try self.realm.write {
-                            let userAccount = UserAccount()
-                            userAccount.username = user!.uid
-                            userAccount.userIntro = ""
-                            
-                        }
-                    } catch {
-                        print(error)
-                    }
+                    self.databaseRef.child("Users").child(user!.uid).child("Account").setValue(userInfo)
+                    self.writeToRealm(id: user!.uid, image: userPhoto)
+                    self.writeToStorage(id: user!.uid, image: userPhoto)
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
-                    
-                    
-                    
                 } else {
                     let alert = UIAlertController(title: "Sign up Failed", message: error?.localizedDescription, preferredStyle: .alert)
                     let action = UIAlertAction(title: "OK", style: .default, handler: nil)
