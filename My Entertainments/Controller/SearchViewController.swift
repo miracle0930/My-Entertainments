@@ -10,12 +10,12 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import Firebase
+import SVProgressHUD
 //import FirebaseDatabase
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
-    var movieJsonDict = [String: JSON]()
     var ref: DatabaseReference!
     var movieImageCache = NSCache<NSString, NSData>()
 
@@ -31,6 +31,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.dataSource = self
         movieSearchBar.delegate = self
         movieTableView.rowHeight = 100
+//        movieTableView.backgroundColor = UIColor.lightGray
+//        movieTableView.sectionIndexBackgroundColor = UIColor.clear
         movieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
@@ -47,6 +49,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        SVProgressHUD.show()
         var name = searchBar.text!
         name = name.trimmingCharacters(in: NSCharacterSet.whitespaces)
         name = name.replacingOccurrences(of: " ", with: "%20")
@@ -57,6 +60,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                     let movieData: JSON = JSON(response.result.value!)
                     self.updateMovies(with: movieData)
                 } else {
+                    SVProgressHUD.dismiss()
                     self.errorPop(errorMessage: "English supported only at this time :)")
                 }
             }
@@ -64,7 +68,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         searchBar.endEditing(true)
     }
     
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        movies = [Movie]()
+        movieTableView.reloadData()
+    }
+    
     func updateMovies(with jsonData: JSON) {
+        movies = [Movie]()
         if jsonData["Response"] == "False" {
             errorPop(errorMessage: "Any typo?")
         } else {
@@ -84,6 +94,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             }
         }
         movieTableView.reloadData()
+        SVProgressHUD.dismiss()
+
     }
     
     
@@ -102,12 +114,13 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
-        cell.movieNameLabel.text = movies[indexPath.section].movieName
-        cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
         cell.layer.cornerRadius = 10
         cell.layer.borderWidth = 1
-        cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.selectionStyle = .none
+        cell.backgroundView = UIImageView(image: UIImage(named: "cellBackground"))
         cell.layer.masksToBounds = true
+        cell.movieNameLabel.text = movies[indexPath.section].movieName
+        cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
         let path = self.movies[indexPath.section].movieImageUrl!
         downloadMovieCellImage(movieId: movies[indexPath.section].movieId!, movieCell: cell, imageUrl: path)
         return cell
@@ -133,8 +146,16 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        
+        return 5
     }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: movieTableView.bounds.size.width, height: 5))
+        headerView.backgroundColor = UIColor.clear
+        return headerView
+    }
+    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return movies.count
