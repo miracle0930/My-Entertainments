@@ -27,15 +27,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Search Movie"
-        setMovieTableViewSeperator()
         movieTableView.delegate = self
         movieTableView.dataSource = self
         movieSearchBar.delegate = self
         movieTableView.rowHeight = 100
+        movieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
+        movieTableView.addGestureRecognizer(tapGesture)
+        view.backgroundColor = UIColor.clear
         ref = Database.database().reference()
     }
     
@@ -68,7 +69,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             errorPop(errorMessage: "Any typo?")
         } else {
             for (_, movieData) : (String, JSON) in jsonData["Search"] {
-                print(movieData)
                 let movie = Movie()
                 var movieName = movieData["Title"].stringValue
                 movieName = movieName.replacingOccurrences(of: ".", with: " ")
@@ -102,10 +102,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
-        cell.movieNameLabel.text = movies[indexPath.row].movieName
+        cell.movieNameLabel.text = movies[indexPath.section].movieName
         cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
-        let path = self.movies[indexPath.row].movieImageUrl!
-        downloadMovieCellImage(movieId: movies[indexPath.row].movieId!, movieCell: cell, imageUrl: path)
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 1
+        cell.layer.backgroundColor = UIColor.clear.cgColor
+        cell.layer.masksToBounds = true
+        let path = self.movies[indexPath.section].movieImageUrl!
+        downloadMovieCellImage(movieId: movies[indexPath.section].movieId!, movieCell: cell, imageUrl: path)
         return cell
     }
     
@@ -125,15 +129,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return movies.count
+        return 1
     }
     
-    func setMovieTableViewSeperator() {
-        if movies.count < 2 {
-            movieTableView.separatorStyle = .none
-        } else {
-            movieTableView.separatorStyle = .singleLine
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return movies.count
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -145,7 +149,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destination = segue.destination as! MovieDetailTableTableViewController
         if let indexPath = movieTableView.indexPathForSelectedRow {
-            destination.movieId = movies[indexPath.row].movieId!
+            destination.movieId = movies[indexPath.section].movieId!
         }
     }
     

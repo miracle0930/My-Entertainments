@@ -22,11 +22,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var retypePasswordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet var userDefaultPhotosCollectionView: UICollectionView!
-    @IBOutlet var middleView: UIView!
-    @IBOutlet var upperView: UIView!
+
     
-    var defaultUpperViewFrame: CGRect?
-    var defaultMiddleViewFrame: CGRect?
+
     let userDefault = UserDefaults.standard
     let defaultPhotos = [UIImage(named: "boy1"), UIImage(named: "girl1"), UIImage(named: "boy2"), UIImage(named: "girl2"),
                          UIImage(named: "boy3"), UIImage(named: "girl3"), UIImage(named: "boy4"), UIImage(named: "girl4"),
@@ -46,42 +44,32 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         userDefaultPhotosCollectionView.delegate = self
         userDefaultPhotosCollectionView.dataSource = self
         userDefaultPhotosCollectionView.register(UINib(nibName: "UserDefaultPhotosCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "userDefaultPhotoCell")
-        emailTextField.delegate = self
-        
-        defaultUpperViewFrame = upperView.frame
-        defaultMiddleViewFrame = middleView.frame
-    
+
         databaseRef = Database.database().reference()
         storageRef = Storage.storage().reference()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: 0.5) {
-            self.view.endEditing(true)
-            self.upperView.frame = self.defaultUpperViewFrame!
-            self.middleView.frame = self.defaultMiddleViewFrame!
-            self.upperView.layoutIfNeeded()
-            self.middleView.layoutIfNeeded()
+        self.view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= 100
+        }
+        
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y += 100
         }
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.5) {
-            var upperViewFrame = self.upperView.frame
-            var middleViewFrame = self.middleView.frame
-            if middleViewFrame.origin.y < 0 {
-                return
-            }
-            upperViewFrame.origin.y -= 150
-            upperViewFrame.size.height += 150
-            middleViewFrame.origin.y -= 150
-            middleViewFrame.size.height += 150
-            self.middleView.frame = middleViewFrame
-            self.upperView.frame = upperViewFrame
-            self.middleView.layoutIfNeeded()
-            self.upperView.layoutIfNeeded()
-        }
-    }
+    
     
     func passwordCheck() -> Bool {
         let password = passwordTextField.text!

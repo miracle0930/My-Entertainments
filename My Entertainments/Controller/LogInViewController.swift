@@ -16,25 +16,39 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet var userPhotoImageView: UIImageView!
-    @IBOutlet var upperView: UIView!
+    
     
     let userDefault = UserDefaults.standard
-    var defaultFrame: CGRect?
     let realm = try! Realm()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        defaultFrame = upperView.frame
         userPhotoImageView.layer.cornerRadius = 20
         userPhotoImageView.layer.borderColor = UIColor.black.cgColor
         userPhotoImageView.layer.borderWidth = 2
         userPhotoImageView.backgroundColor = UIColor.white
         userPhotoImageView.image = UIImage(named: "defaultphoto")
-        emailTextField.delegate = self
-        passwordTextField.delegate = self
         userDefaultConfigure()
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        if self.view.frame.origin.y == 0 {
+            self.view.frame.origin.y -= 100
+        }
+    
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        if self.view.frame.origin.y != 0 {
+            self.view.frame.origin.y += 100
+        }
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     func userDefaultConfigure() {
@@ -77,26 +91,8 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
         SVProgressHUD.dismiss()
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        UIView.animate(withDuration: 0.5) {
-            self.upperView.endEditing(true)
-            self.upperView.frame = self.defaultFrame!
-            self.upperView.layoutIfNeeded()
-        }
-    }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        UIView.animate(withDuration: 0.5) {
-            var frame = self.upperView.frame
-            if frame.origin.y < 0 {
-                return
-            }
-            frame.origin.y -= 100
-            frame.size.height += 100
-            self.upperView.frame = frame
-            self.upperView.layoutIfNeeded()
-        }
-    }
+    
     
     
     

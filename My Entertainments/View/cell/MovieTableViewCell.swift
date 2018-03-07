@@ -13,9 +13,6 @@ class MovieTableViewCell: UITableViewCell {
     @IBOutlet var movieImageView: UIImageView!
     @IBOutlet var movieNameLabel: UILabel!
     @IBOutlet var movieReleasedLabel: UILabel!
-    @IBOutlet var movieRatedLabel: UILabel!
-    @IBOutlet var movieRatingLabel: UILabel!
-    @IBOutlet var movieGenreLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -24,8 +21,6 @@ class MovieTableViewCell: UITableViewCell {
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
     
 }
