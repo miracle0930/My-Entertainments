@@ -16,8 +16,8 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet var userPhotoImageView: UIImageView!
-    
     @IBOutlet var upperView: UIView!
+    
     let userDefault = UserDefaults.standard
     var defaultFrame: CGRect?
     let realm = try! Realm()
@@ -30,7 +30,6 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
         userPhotoImageView.layer.borderColor = UIColor.black.cgColor
         userPhotoImageView.layer.borderWidth = 2
         userPhotoImageView.backgroundColor = UIColor.white
-        userPhotoImageView.contentMode = .scaleAspectFit
         userPhotoImageView.image = UIImage(named: "defaultphoto")
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -80,7 +79,7 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         UIView.animate(withDuration: 0.5) {
-            self.view.endEditing(true)
+            self.upperView.endEditing(true)
             self.upperView.frame = self.defaultFrame!
             self.upperView.layoutIfNeeded()
         }

@@ -15,14 +15,13 @@ import Firebase
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
-    var movieSet = Set<String>()
     var movieJsonDict = [String: JSON]()
     var ref: DatabaseReference!
     var movieImageCache = NSCache<NSString, NSData>()
 
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
-    let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&t="
+    let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&s="
     
     
     override func viewDidLoad() {
@@ -32,15 +31,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.delegate = self
         movieTableView.dataSource = self
         movieSearchBar.delegate = self
-        movieTableView.rowHeight = 199.5
+        movieTableView.rowHeight = 100
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         ref = Database.database().reference()
-        DispatchQueue.global().sync {
-            getMovieFromDatabase()
-        }
     }
     
     // MARK: - SearchBar Implements
@@ -71,69 +67,27 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         if jsonData["Response"] == "False" {
             errorPop(errorMessage: "Any typo?")
         } else {
-            let movie = Movie()
-            var movieName = jsonData["Title"].stringValue
-            movieName = movieName.replacingOccurrences(of: ".", with: " ")
-            movieName = movieName.replacingOccurrences(of: "#", with: " ")
-            movieName = movieName.replacingOccurrences(of: "$", with: " ")
-            movieName = movieName.replacingOccurrences(of: "[", with: "{")
-            movieName = movieName.replacingOccurrences(of: "]", with: "}")
-            movie.movieName = movieName
-            movie.movieReleased = jsonData["Released"].stringValue
-            movie.movieGenre = jsonData["Genre"].stringValue
-            movie.movieRated = jsonData["Rated"].stringValue
-            movie.movieRating = jsonData["imdbRating"].stringValue
-            movie.movieImageUrl = jsonData["Poster"].stringValue
-            movie.movieId = jsonData["imdbID"].stringValue
-            if !movieSet.contains(movie.movieName!) {
-                addMovieToDatabase(movie: movie)
-                movieSet.insert(movie.movieName!)
-                movies.insert(movie, at: 0)
-                setMovieTableViewSeperator()
-                movieTableView.reloadData()
+            for (_, movieData) : (String, JSON) in jsonData["Search"] {
+                print(movieData)
+                let movie = Movie()
+                var movieName = movieData["Title"].stringValue
+                movieName = movieName.replacingOccurrences(of: ".", with: " ")
+                movieName = movieName.replacingOccurrences(of: "#", with: " ")
+                movieName = movieName.replacingOccurrences(of: "$", with: " ")
+                movieName = movieName.replacingOccurrences(of: "[", with: "{")
+                movieName = movieName.replacingOccurrences(of: "]", with: "}")
+                movie.movieName = movieName
+                movie.movieReleased = movieData["Year"].stringValue
+                movie.movieImageUrl = movieData["Poster"].stringValue
+                movie.movieId = movieData["imdbID"].stringValue
+                movies.append(movie)
             }
         }
+        movieTableView.reloadData()
     }
     
     
     // MARK: - Movie and Database Interaction
-    func addMovieToDatabase(movie: Movie) {
-        DispatchQueue.global().async {
-            let movieInfo = [
-                "released": movie.movieReleased!,
-                "rated": movie.movieRated!,
-                "imageURL": movie.movieImageUrl!,
-                "rating": movie.movieRating!,
-                "genre": movie.movieGenre!,
-                "imdbID": movie.movieId!
-            ]
-            self.ref.child("Users").child(Auth.auth().currentUser!.uid).child("Movies").child(movie.movieName!).setValue(movieInfo)
-        }
-    }
-    
-    func getMovieFromDatabase() {
-        DispatchQueue.global().async {
-            let userId = Auth.auth().currentUser!.uid
-            self.ref.child("Users").child(userId).child("Movies").observeSingleEvent(of: .value) { (snapshot) in
-                let movieDataSet = JSON(snapshot.value!)
-                for movieData in movieDataSet {
-                    let movie = Movie()
-                    movie.movieName = movieData.0
-                    movie.movieGenre = movieData.1.dictionaryValue["genre"]?.stringValue
-                    movie.movieRated = movieData.1.dictionaryValue["rated"]?.stringValue
-                    movie.movieRating = movieData.1.dictionaryValue["rating"]?.stringValue
-                    movie.movieImageUrl = movieData.1.dictionaryValue["imageURL"]?.stringValue
-                    movie.movieReleased = movieData.1.dictionaryValue["released"]?.stringValue
-                    movie.movieId = movieData.1.dictionaryValue["imdbID"]?.stringValue
-                    self.movies.append(movie)
-                    self.movieSet.insert(movie.movieName!)
-                }
-                self.movieTableView.reloadData()
-                self.setMovieTableViewSeperator()
-            }
-        }
-    }
-    
     func errorPop(errorMessage: String) {
         let alert = UIAlertController(title: "No Result", message: errorMessage, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
@@ -150,9 +104,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
         cell.movieNameLabel.text = movies[indexPath.row].movieName
         cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
-        cell.movieGenreLabel.text = "Genre: " + movies[indexPath.row].movieGenre!
-        cell.movieRatedLabel.text = "Rated: " + movies[indexPath.row].movieRated!
-        cell.movieRatingLabel.text = "IMDB Rating: " + movies[indexPath.row].movieRating!
         let path = self.movies[indexPath.row].movieImageUrl!
         downloadMovieCellImage(movieId: movies[indexPath.row].movieId!, movieCell: cell, imageUrl: path)
         return cell
