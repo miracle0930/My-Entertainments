@@ -18,7 +18,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var movies = [Movie]()
     var ref: DatabaseReference!
     var movieImageCache = NSCache<NSString, NSData>()
+    var sideMenuShowUp = false
 
+    @IBOutlet var sideMenuView: UIView!
+    @IBOutlet var sideMenuLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var sideMenuTrailingConstraint: NSLayoutConstraint!
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
     let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&s="
@@ -31,20 +35,45 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.dataSource = self
         movieSearchBar.delegate = self
         movieTableView.rowHeight = 100
-//        movieTableView.backgroundColor = UIColor.lightGray
-//        movieTableView.sectionIndexBackgroundColor = UIColor.clear
         movieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
         tapGesture.cancelsTouchesInView = false
         movieTableView.addGestureRecognizer(tapGesture)
         view.backgroundColor = UIColor.clear
+        sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
+        sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
         ref = Database.database().reference()
     }
+    
+    @IBAction func callSideMenu(_ sender: UIBarButtonItem) {
+        if sideMenuShowUp {
+            sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
+            sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
+        } else {
+            self.sideMenuTrailingConstraint.constant = -150
+            self.sideMenuLeadingConstraint.constant = -150
+        }
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+        sideMenuShowUp = !sideMenuShowUp
+    }
+    
+    func hideSideMenu() {
+        sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
+        sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
+        UIView.animate(withDuration: 0.5) {
+            self.view.layoutIfNeeded()
+        }
+        sideMenuShowUp = false
+    }
+    
     
     // MARK: - SearchBar Implements
     @objc func tableViewTapped() {
         movieSearchBar.endEditing(true)
+        hideSideMenu()
     }
     
     
@@ -67,12 +96,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
         searchBar.endEditing(true)
     }
-    
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        movies = [Movie]()
-        movieTableView.reloadData()
-    }
-    
+
     func updateMovies(with jsonData: JSON) {
         movies = [Movie]()
         if jsonData["Response"] == "False" {
@@ -134,9 +158,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
                 cell.movieImageView.image = UIImage(data: cachedImage)
             } else {
                 let url = URL(string: path)
-                let data = try? Data(contentsOf: url!)
-                cell.movieImageView.image = UIImage(data: data!)
-                movieImageCache.setObject(data! as NSData, forKey: id as NSString)
+                if let data = try? Data(contentsOf: url!) {
+                    cell.movieImageView.image = UIImage(data: data)
+                    movieImageCache.setObject(data as NSData, forKey: id as NSString)
+                } else {
+                    cell.movieImageView.image = UIImage(named: "noimg")
+                }
             }
         }
     }
@@ -146,7 +173,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        
         return 5
     }
     

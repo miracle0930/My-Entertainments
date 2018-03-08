@@ -60,9 +60,14 @@ class MovieDetailTableTableViewController: UITableViewController {
                 movieImage.image = UIImage(data: cachedImage)
             } else {
                 let url = URL(string: path)
-                let data = try? Data(contentsOf: url!)
-                movieImage.image = UIImage(data: data!)
-                movieImageCache.setObject(data! as NSData, forKey: movieId! as NSString)
+                if let data = try? Data(contentsOf: url!) {
+                    movieImage.image = UIImage(data: data)
+                    movieImageCache.setObject(data as NSData, forKey: movieId! as NSString)
+                } else {
+                    movieImage.image = UIImage(named: "noimg")
+
+                }
+                
             }
         }
     }
