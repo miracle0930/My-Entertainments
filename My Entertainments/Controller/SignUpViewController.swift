@@ -165,7 +165,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 if error == nil {
                     let userInfo = [
                         "userNickname": self.nicknameTextField.text!,
-                        "userIntro": ""
+                        "userIntro": "I love movies!"
                     ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")

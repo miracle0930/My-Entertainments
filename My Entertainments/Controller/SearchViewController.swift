@@ -16,7 +16,8 @@ import RealmSwift
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
-    var ref: DatabaseReference!
+    var databaseRef: DatabaseReference!
+    var storageRef: StorageReference!
     var movieImageCache = NSCache<NSString, NSData>()
     var sideMenuShowUp = false
     var currentUser: UserAccount?
@@ -48,7 +49,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         navigationItem.title = "Search Movie"
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
         movieSearchBar.delegate = self
-        ref = Database.database().reference()
+        databaseRef = Database.database().reference()
+        storageRef = Storage.storage().reference()
         configureMovieTableView()
         configureSideMenuView()
         
@@ -61,12 +63,46 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         userPhotoTrailingConstraint.constant = (screenWidth / 2 - userPhotoImageView.frame.width) / 2
         userInfoTrailingConstraint.constant = (screenWidth / 2 - userInfoView.frame.width) / 2
         userButtonTrailingConstraint.constant = (screenWidth / 2 - userButtonView.frame.width) / 2
-        userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
         userPhotoImageView.layer.cornerRadius = 10
         userPhotoImageView.layer.borderWidth = 1
         userPhotoImageView.layer.masksToBounds = true
-        userNameLabel.text = currentUser!.userNickname
-        userIntroTextView.text = currentUser!.userIntro
+        if let user = currentUser {
+            userPhotoImageView.image = UIImage(data: user.userPhoto)
+            userNameLabel.text = user.userNickname
+            userIntroTextView.text = user.userIntro
+        } else {
+            // When a new app installed, new data stored in local Realm, so we need to download data from firebase and store into Realm
+            let user = Auth.auth().currentUser!
+            var imageData: Data?
+            databaseRef.child("Users").child(user.uid).child("Account").observeSingleEvent(of: .value, with: { (snapshot) in
+                let value = JSON(snapshot.value!)
+                self.userNameLabel.text = value["userNickname"].stringValue
+                self.userIntroTextView.text = value["userIntro"].stringValue
+                let imagePath = value["userPhoto"].stringValue
+                let pathReference = Storage.storage().reference(forURL: imagePath)
+                pathReference.downloadURL(completion: { (url, error) in
+                    if let _ = error {
+                        return
+                    } else {
+                        self.userPhotoImageView.sd_setImage(with: url, completed: { (image, _, _, _) in
+                            imageData = UIImageJPEGRepresentation(image!, 1)!
+                            do {
+                                try self.realm.write {
+                                    let userAccount = UserAccount()
+                                    userAccount.userId = Auth.auth().currentUser!.uid
+                                    userAccount.userNickname = self.userNameLabel.text!
+                                    userAccount.userIntro = self.userIntroTextView.text
+                                    userAccount.userPhoto = imageData!
+                                    self.realm.add(userAccount)
+                                }
+                            } catch {
+                                print(error)
+                            }
+                        })
+                    }
+                })
+            })
+        }
         self.view.layoutIfNeeded()
     }
     

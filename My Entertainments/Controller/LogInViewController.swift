@@ -25,6 +25,8 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
         super.viewDidLoad()
         userPhotoImageView.layer.cornerRadius = 10
         userPhotoImageView.layer.masksToBounds = true
+        userPhotoImageView.layer.borderWidth = 1
+        userPhotoImageView.layer.backgroundColor = UIColor.white.cgColor
         userDefaultConfigure()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
@@ -63,7 +65,9 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
         self.tabBarController?.tabBar.isHidden = true
         if let id = userDefault.string(forKey: "userId") {
             currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: id)
-            userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
+            if let user = currentUser {
+                userPhotoImageView.image = UIImage(data: user.userPhoto)
+            }
         } else {
             userPhotoImageView.image = UIImage(named: "defaultphoto")
         }
