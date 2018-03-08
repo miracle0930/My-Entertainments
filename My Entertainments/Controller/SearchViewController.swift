@@ -71,7 +71,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             userNameLabel.text = user.userNickname
             userIntroTextView.text = user.userIntro
         } else {
-            // When a new app installed, new data stored in local Realm, so we need to download data from firebase and store into Realm
+            // When a new app installed, no data stored in local Realm, so we need to download data from firebase and store into Realm
             let user = Auth.auth().currentUser!
             var imageData: Data?
             databaseRef.child("Users").child(user.uid).child("Account").observeSingleEvent(of: .value, with: { (snapshot) in
