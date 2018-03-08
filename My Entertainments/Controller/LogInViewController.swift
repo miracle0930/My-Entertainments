@@ -16,23 +16,20 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet var userPhotoImageView: UIImageView!
-    
-    
     let userDefault = UserDefaults.standard
     let realm = try! Realm()
+    var currentUser: UserAccount?
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        userPhotoImageView.layer.cornerRadius = 20
-        userPhotoImageView.layer.borderColor = UIColor.black.cgColor
-        userPhotoImageView.layer.borderWidth = 2
-        userPhotoImageView.backgroundColor = UIColor.white
-        userPhotoImageView.image = UIImage(named: "defaultphoto")
+        userPhotoImageView.layer.cornerRadius = 10
+        userPhotoImageView.layer.masksToBounds = true
         userDefaultConfigure()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
+    
     
     @objc func keyboardWillShow(notification: NSNotification) {
         if self.view.frame.origin.y == 0 {
@@ -63,6 +60,13 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        self.tabBarController?.tabBar.isHidden = true
+        if let id = userDefault.string(forKey: "userId") {
+            currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: id)
+            userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
+        } else {
+            userPhotoImageView.image = UIImage(named: "defaultphoto")
+        }
     }
     
     
@@ -79,6 +83,7 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
             if error == nil {
                 self.userDefault.set(username, forKey: "username")
                 self.userDefault.set(password, forKey: "password")
+                self.userDefault.set(user!.uid, forKey: "userId")
                 self.userDefault.set(true, forKey: "login")
                 self.performSegue(withIdentifier: "oldLogIn", sender: self)
             } else {
@@ -90,11 +95,6 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
         }
         SVProgressHUD.dismiss()
     }
-    
-    
-    
-    
-    
     
     @IBAction func signUpPressed(_ sender: UIButton) {
         

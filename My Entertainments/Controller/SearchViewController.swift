@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 import Firebase
 import SVProgressHUD
-//import FirebaseDatabase
+import RealmSwift
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
@@ -19,54 +19,138 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var ref: DatabaseReference!
     var movieImageCache = NSCache<NSString, NSData>()
     var sideMenuShowUp = false
+    var currentUser: UserAccount?
+    var tapGesture: UITapGestureRecognizer?
 
+
+    let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&s="
+    let realm = try! Realm()
+    let userDefault = UserDefaults.standard
+    
+    @IBOutlet weak var movieSearchBar: UISearchBar!
+    @IBOutlet weak var movieTableView: UITableView!
+    
     @IBOutlet var sideMenuView: UIView!
     @IBOutlet var sideMenuLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var sideMenuTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var movieSearchBar: UISearchBar!
-    @IBOutlet weak var movieTableView: UITableView!
-    let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&s="
-    
+    @IBOutlet var userPhotoImageView: UIImageView!
+    @IBOutlet var userPhotoTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var userButtonView: UIStackView!
+    @IBOutlet var userInfoTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var userInfoView: UIStackView!
+    @IBOutlet var userButtonTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var userIntroTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.clear
         navigationItem.title = "Search Movie"
+        currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
+        movieSearchBar.delegate = self
+        ref = Database.database().reference()
+        configureMovieTableView()
+        configureSideMenuView()
+        
+    }
+    
+    func configureSideMenuView() {
+        let screenWidth = UIScreen.main.bounds.width
+        sideMenuTrailingConstraint.constant = -screenWidth
+        sideMenuLeadingConstraint.constant = -screenWidth
+        userPhotoTrailingConstraint.constant = (screenWidth / 2 - userPhotoImageView.frame.width) / 2
+        userInfoTrailingConstraint.constant = (screenWidth / 2 - userInfoView.frame.width) / 2
+        userButtonTrailingConstraint.constant = (screenWidth / 2 - userButtonView.frame.width) / 2
+        userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
+        userPhotoImageView.layer.cornerRadius = 10
+        userPhotoImageView.layer.borderWidth = 1
+        userPhotoImageView.layer.masksToBounds = true
+        userNameLabel.text = currentUser!.userNickname
+        userIntroTextView.text = currentUser!.userIntro
+        self.view.layoutIfNeeded()
+    }
+    
+    func configureMovieTableView() {
         movieTableView.delegate = self
         movieTableView.dataSource = self
-        movieSearchBar.delegate = self
         movieTableView.rowHeight = 100
         movieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
         movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
-        tapGesture.cancelsTouchesInView = false
-        movieTableView.addGestureRecognizer(tapGesture)
-        view.backgroundColor = UIColor.clear
-        sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
-        sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
-        ref = Database.database().reference()
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
+        tapGesture!.cancelsTouchesInView = false
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureDetected))
+        swipeLeft.direction = .left
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureDetected))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(tapGesture!)
+        view.addGestureRecognizer(swipeLeft)
+        view.addGestureRecognizer(swipeRight)
+
+    }
+    
+    @objc func swipeGestureDetected(gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .left:
+            hideSideMenu()
+            sideMenuShowUp = false
+            break
+        case .right:
+            showSideMenu()
+            sideMenuShowUp = true
+            break
+        default:
+            return
+        }
     }
     
     @IBAction func callSideMenu(_ sender: UIBarButtonItem) {
         if sideMenuShowUp {
-            sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
-            sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
+            hideSideMenu()
         } else {
-            self.sideMenuTrailingConstraint.constant = -150
-            self.sideMenuLeadingConstraint.constant = -150
-        }
-        UIView.animate(withDuration: 0.5) {
-            self.view.layoutIfNeeded()
+            showSideMenu()
         }
         sideMenuShowUp = !sideMenuShowUp
     }
     
     func hideSideMenu() {
-        sideMenuTrailingConstraint.constant = -sideMenuView.frame.width
-        sideMenuLeadingConstraint.constant = -sideMenuView.frame.width
-        UIView.animate(withDuration: 0.5) {
+        sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width
+        sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width
+        tapGesture!.cancelsTouchesInView = false
+        UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
-        sideMenuShowUp = false
+    }
+    
+    func showSideMenu() {
+        self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 2
+        self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 2
+        tapGesture!.cancelsTouchesInView = true
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    
+    @IBAction func sideMenuButtonPressed(_ sender: UIButton) {
+        switch sender.tag {
+        case 0:
+            break
+        case 1:
+            movies = [Movie]()
+            movieTableView.reloadData()
+            break
+        case 2:
+            do {
+                try Auth.auth().signOut()
+                userDefault.set(false, forKey: "login")
+                performSegue(withIdentifier: "userlogout", sender: self)
+            } catch {
+                print("error")
+            }
+            break
+        default:
+            return
+        }
     }
     
     
@@ -194,9 +278,11 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destination = segue.destination as! MovieDetailTableTableViewController
-        if let indexPath = movieTableView.indexPathForSelectedRow {
-            destination.movieId = movies[indexPath.section].movieId!
+        if segue.identifier == "movieDetail" {
+            let destination = segue.destination as! MovieDetailTableTableViewController
+            if let indexPath = movieTableView.indexPathForSelectedRow {
+                destination.movieId = movies[indexPath.section].movieId!
+            }
         }
     }
     

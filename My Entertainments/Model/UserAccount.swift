@@ -11,9 +11,15 @@ import RealmSwift
 
 
 class UserAccount: Object {
-    @objc dynamic var username: String = ""
-    @objc dynamic var userPhoto = Data()
+    @objc dynamic var userId = UUID().uuidString
+    @objc dynamic var userNickname = ""
     @objc dynamic var userIntro = ""
+    @objc dynamic var userPhoto = Data()
     var userStoredMovies = List<String>()
     var userStoredMusics = List<String>()
+    
+    override static func primaryKey() -> String? {
+        return "userId"
+    }
+    
 }

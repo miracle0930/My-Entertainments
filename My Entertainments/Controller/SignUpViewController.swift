@@ -69,23 +69,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
-    
     func passwordCheck() -> Bool {
         let password = passwordTextField.text!
         let retype = retypePasswordTextField.text!
-        let alert = UIAlertController(title: "Sign up Failed", message: "", preferredStyle: .alert)
         if password == "" {
-            alert.message = "Password can not be empty."
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
-        }
-        if password != retype {
-            alert.message = "Password doesn't match."
-            let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(action)
-            present(alert, animated: true, completion: nil)
+            signUpFailed(msg: "Password can not be empty :)")
+            return false
+        } else if password != retype {
+            signUpFailed(msg: "Password doesn't match :)")
             return false
         }
         return true
@@ -97,19 +88,36 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 return i
             }
         }
-        let alert = UIAlertController(title: "Sign up Failed", message: "An initial photo must be selected.", preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(action)
-        present(alert, animated: true, completion: nil)
+        signUpFailed(msg: "An initial photo must be selected :)")
         return -1
     }
     
+    func nicknameCheck() -> Bool {
+        if nicknameTextField.text! == "" {
+            signUpFailed(msg: "Pick a nickname for you :)")
+            return false
+        }
+        return true
+    }
+    
+    
+    func signUpFailed(msg: String) {
+        let alert = UIAlertController(title: "Sign up Failed", message: msg, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
+    
     func writeToRealm(id: String, image: UIImage) {
-        let imageData = UIImageJPEGRepresentation(image, 0.9)!
+        let imageData = UIImageJPEGRepresentation(image, 1)!
         do {
             try self.realm.write {
                 let userAccount = UserAccount()
-                userAccount.username = id
+                userAccount.userId = id
+                userAccount.userNickname = self.nicknameTextField.text!
+                userAccount.userIntro = "I love movies!"
                 userAccount.userPhoto = imageData
                 self.realm.add(userAccount)
                 print(userAccount)
@@ -120,7 +128,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     }
     
     func writeToStorage(id: String, image: UIImage) {
-        let imageData = UIImageJPEGRepresentation(image, 0.9)!
+        let imageData = UIImageJPEGRepresentation(image, 1)!
         let imagePath = "entertainments/\(id)/profile"
         let metaData = StorageMetadata()
         metaData.contentType = "image/jpg"
@@ -137,6 +145,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
     @IBAction func signUpOrGiveUp(_ sender: UIButton) {
         if sender.tag == 0 {
             SVProgressHUD.show()
+            if !nicknameCheck() {
+                SVProgressHUD.dismiss()
+                return
+            }
             if !passwordCheck() {
                 SVProgressHUD.dismiss()
                 return
@@ -157,6 +169,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                     ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")
+                    self.userDefault.set(user!.uid, forKey: "userId")
                     self.userDefault.set(true, forKey: "login")
                     self.databaseRef.child("Users").child(user!.uid).child("Account").setValue(userInfo)
                     self.writeToRealm(id: user!.uid, image: userPhoto)
