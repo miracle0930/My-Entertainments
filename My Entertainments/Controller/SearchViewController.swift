@@ -12,6 +12,7 @@ import SwiftyJSON
 import Firebase
 import SVProgressHUD
 import RealmSwift
+import SDWebImage
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
