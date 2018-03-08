@@ -91,7 +91,7 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
                 self.userDefault.set(true, forKey: "login")
                 self.performSegue(withIdentifier: "oldLogIn", sender: self)
             } else {
-                let alert = UIAlertController(title: error.debugDescription, message: "Please check your username or password.", preferredStyle: .alert)
+                let alert = UIAlertController(title: error!.localizedDescription, message: "Please check your username or password.", preferredStyle: .alert)
                 let action = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(action)
                 self.present(alert, animated: true, completion: nil)

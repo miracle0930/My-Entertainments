@@ -32,14 +32,14 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="LogInViewController" customModule="My_Entertainments" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="background" translatesAutoresizingMaskIntoConstraints="NO" id="8rl-Gg-O3Q">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NnL-SZ-ARC" userLabel="LowerView">
-                                <rect key="frame" x="0.0" y="313" width="375" height="241"/>
+                                <rect key="frame" x="0.0" y="426" width="375" height="241"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ffl-Pg-wAz">
                                         <rect key="frame" x="120.5" y="77" width="134" height="32"/>
@@ -86,7 +86,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1b-rI-zF7" userLabel="UpperView">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="313"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="426"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email..." textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ey8-Fq-Fjn">
                                         <rect key="frame" x="48" y="342" width="280" height="30"/>
@@ -160,7 +160,7 @@
                         <outlet property="passwordTextField" destination="kaX-vv-u76" id="rjl-4A-Nef"/>
                         <outlet property="userPhotoImageView" destination="jqH-3M-9eB" id="1qN-2t-TcP"/>
                         <segue destination="S8u-bR-b2s" kind="show" identifier="newUserSignUp" id="5bl-2g-SAV"/>
-                        <segue destination="lgq-yn-1Xt" kind="show" identifier="oldLogIn" id="FjX-2Y-hFS"/>
+                        <segue destination="lgq-yn-1Xt" kind="presentation" identifier="oldLogIn" id="FjX-2Y-hFS"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -377,7 +377,7 @@
                         <outlet property="userPhotoImageView" destination="4dI-fk-yv4" id="OhH-pj-GOt"/>
                         <outlet property="userPhotoTrailingConstraint" destination="E58-Gl-hW2" id="VKg-tx-TKa"/>
                         <segue destination="H7J-9r-sQV" kind="show" identifier="movieDetail" id="Oyn-8j-R9k"/>
-                        <segue destination="BYZ-38-t0r" kind="show" identifier="userlogout" id="UiQ-Z7-cJH"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="userlogout" id="UiQ-Z7-cJH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8qT-c5-k6g" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -948,7 +948,7 @@
                         <outlet property="retypePasswordTextField" destination="DLx-59-Sfe" id="Ghw-Vi-UpA"/>
                         <outlet property="userDefaultPhotosCollectionView" destination="B6u-W5-ewm" id="YbY-kO-uwb"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="stopSignUp" id="tMu-hJ-hqY"/>
-                        <segue destination="lgq-yn-1Xt" kind="show" identifier="newLogIn" id="oD6-fh-NBq"/>
+                        <segue destination="lgq-yn-1Xt" kind="presentation" identifier="newLogIn" id="oD6-fh-NBq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xSk-HU-COD" userLabel="First Responder" sceneMemberID="firstResponder"/>
