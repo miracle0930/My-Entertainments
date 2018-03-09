@@ -55,7 +55,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         storageRef = Storage.storage().reference()
         configureMovieTableView()
         configureSideMenuView()
-        
     }
     
     func configureSideMenuView() {
@@ -215,6 +214,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             Alamofire.request(url, method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
                     let movieData: JSON = JSON(response.result.value!)
+                    if page > movieData["total_pages"].intValue {
+                        return
+                    }
                     self.updateMovies(with: movieData)
                     self.page += 1
                 } else {
@@ -321,18 +323,12 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        
-        let end = movies.count - 7
-        if indexPath.section == end {
-            loadMovies(page: page)
-        }
-    }
-    
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return movies.count
     }
+    
+
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -351,7 +347,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         movieSearchBar.endEditing(true)
+        let height = scrollView.frame.size.height
+        let contentYoffset = scrollView.contentOffset.y
+        let distanceFromBottom = scrollView.contentSize.height - contentYoffset
+        if distanceFromBottom < height {
+            loadMovies(page: page)
+        }
     }
+    
+    
     
 }
 
