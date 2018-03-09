@@ -271,18 +271,44 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func setImageToCacheWithCompletionHandler(data: NSData, key: NSString, completion: () -> Void) {
+        movieImageCache.setObject(data, forKey: key)
+        completion()
+    }
+    
     func downloadMovieCellImage(movieId id: String, movieCell cell: MovieTableViewCell, imageUrl path: String) {
-        if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
-            cell.movieImageView.image = UIImage(data: cachedImage)
-        } else {
-            let url = URL(string: path)
-            if let data = try? Data(contentsOf: url!) {
-                cell.movieImageView.image = UIImage(data: data)
-                movieImageCache.setObject(data as NSData, forKey: id as NSString)
-            } else {
-                cell.movieImageView.image = UIImage(named: "noimg")
+        
+        DispatchQueue.global().async {
+            if self.movieImageCache.object(forKey: id as NSString) as Data! == nil {
+                let url = URL(string: path)
+                if let data = try? Data(contentsOf: url!) {
+                    self.setImageToCacheWithCompletionHandler(data: data as NSData, key: id as NSString, completion: {
+                        DispatchQueue.main.sync {
+                            self.movieTableView.reloadData()
+                        }
+                    })
+                }
             }
         }
+        
+        if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data? {
+            cell.movieImageView.image = UIImage(data: cachedImage)
+        } else {
+            cell.movieImageView.image = UIImage(named: "noimg")
+        }
+        
+        
+//        if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
+//            cell.movieImageView.image = UIImage(data: cachedImage)
+//        } else {
+//            let url = URL(string: path)
+//            if let data = try? Data(contentsOf: url!) {
+//                cell.movieImageView.image = UIImage(data: data)
+//                movieImageCache.setObject(data as NSData, forKey: id as NSString)
+//            } else {
+//                cell.movieImageView.image = UIImage(named: "noimg")
+//            }
+//        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

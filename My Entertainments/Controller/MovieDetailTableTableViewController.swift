@@ -58,7 +58,6 @@ class MovieDetailTableTableViewController: UITableViewController {
                     self.casts.append(cast)
                     self.castCollectionView.reloadData()
                     SVProgressHUD.dismiss()
-
                 }
             } else {
                 print("error")
@@ -158,20 +157,43 @@ extension MovieDetailTableTableViewController: UICollectionViewDelegate, UIColle
         return 1
     }
     
+    func setImageToCacheWithCompletionHandler(data: NSData, key: NSString, completion: () -> Void) {
+        castImageCache.setObject(data as NSData, forKey: key)
+        completion()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "castCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
         cell.movieOrCastNameLabel.text = casts[indexPath.row].castName
-        if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data?{
-            cell.movieOrCastImageView.image = UIImage(data: cachedImage)
-        } else {
-            let url = URL(string: casts[indexPath.row].castImageUrl!)
-            if let data = try? Data(contentsOf: url!) {
-                cell.movieOrCastImageView.image = UIImage(data: data)
-                castImageCache.setObject(data as NSData, forKey: casts[indexPath.row].castId! as NSString)
-            } else {
-                cell.movieOrCastImageView.image = UIImage(named: "noimg")
+        DispatchQueue.global().async {
+            if self.castImageCache.object(forKey: self.casts[indexPath.row].castId! as NSString) as Data! == nil {
+                let url = URL(string: self.casts[indexPath.row].castImageUrl!)
+                if let data = try? Data(contentsOf: url!) {
+                    self.setImageToCacheWithCompletionHandler(data: data as NSData, key: self.casts[indexPath.row].castId! as NSString, completion: {
+                        DispatchQueue.main.sync {
+                            self.castCollectionView.reloadData()
+                        }
+                    })
+                }
             }
         }
+        if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data? {
+            cell.movieOrCastImageView.image = UIImage(data: cachedImage)
+        } else {
+            cell.movieOrCastImageView.image = UIImage(named: "noimg")
+        }
+        
+//        if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data?{
+//            cell.movieOrCastImageView.image = UIImage(data: cachedImage)
+//        } else {
+//            let url = URL(string: casts[indexPath.row].castImageUrl!)
+//            if let data = try? Data(contentsOf: url!) {
+//                cell.movieOrCastImageView.image = UIImage(data: data)
+//                castImageCache.setObject(data as NSData, forKey: casts[indexPath.row].castId! as NSString)
+//            } else {
+//                cell.movieOrCastImageView.image = UIImage(named: "noimg")
+//            }
+//        }
         cell.movieOrCastImageView.layer.cornerRadius = 10
         cell.movieOrCastImageView.layer.borderWidth = 1
         cell.movieOrCastImageView.layer.masksToBounds = true
