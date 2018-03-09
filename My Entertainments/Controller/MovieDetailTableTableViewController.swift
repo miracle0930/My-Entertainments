@@ -28,6 +28,7 @@ class MovieDetailTableTableViewController: UITableViewController {
     var similarImageCache = NSCache<NSString, NSData>()
     var casts = [Cast]()
     var similars = [SimilarMovie]()
+    var page = 1
 
     @IBOutlet var castTableViewCell: UITableViewCell!
     @IBOutlet var similarTableViewCell: UITableViewCell!
@@ -36,7 +37,7 @@ class MovieDetailTableTableViewController: UITableViewController {
         super.viewDidLoad()
         loadMovieInfo()
         loadCastInfo()
-        loadSimilarMovieInfo()
+        loadSimilarMovieInfo(page: page)
         let castLayout = UICollectionViewFlowLayout()
         castLayout.scrollDirection = .horizontal
         castCollectionView.collectionViewLayout = castLayout
@@ -56,8 +57,8 @@ class MovieDetailTableTableViewController: UITableViewController {
         self.tabBarController?.tabBar.isHidden = false
     }
     
-    func loadSimilarMovieInfo() {
-        let url = "https://api.themoviedb.org/3/movie/\(movieId!)/similar?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&page=1"
+    func loadSimilarMovieInfo(page: Int) {
+        let url = "https://api.themoviedb.org/3/movie/\(movieId!)/similar?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&page=\(page)"
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let rawSimilarData: JSON = JSON(response.result.value!)
@@ -68,6 +69,9 @@ class MovieDetailTableTableViewController: UITableViewController {
                     self.similarTableViewCell.contentView.subviews.first?.backgroundColor = UIColor.clear
                     return
                 }
+                if self.page > rawSimilarData["total_pages"].intValue {
+                    return
+                }
                 for (_, similarData) : (String, JSON) in rawSimilarData["results"] {
                     let similarMovie = SimilarMovie()
                     similarMovie.similarName = similarData["title"].stringValue
@@ -75,6 +79,7 @@ class MovieDetailTableTableViewController: UITableViewController {
                     similarMovie.similarImageUrl = "https://image.tmdb.org/t/p/w154\(similarData["poster_path"].stringValue)"
                     self.similars.append(similarMovie)
                 }
+                self.page += 1
                 self.similarCollectionView.reloadData()
                 self.similarCollectionView.collectionViewLayout.invalidateLayout()
             } else {
@@ -89,7 +94,7 @@ class MovieDetailTableTableViewController: UITableViewController {
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let rawCastData: JSON = JSON(response.result.value!)
-                if rawCastData["casts"].count == 0 {
+                if rawCastData["cast"].count == 0 {
                     self.castTableViewCell.backgroundView = UIImageView(image: UIImage(named: "notAvailable"))
                     self.castTableViewCell.backgroundView!.contentMode = .scaleAspectFit
                     self.castTableViewCell.contentView.backgroundColor = UIColor.clear
@@ -264,6 +269,18 @@ extension MovieDetailTableTableViewController: UICollectionViewDelegate, UIColle
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 133, height: 240)
     }
+    
+    override func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == similarCollectionView {
+            let width = scrollView.frame.size.width
+            let contentXoffset = scrollView.contentOffset.x
+            let distanceFromRight = scrollView.contentSize.width - contentXoffset
+            if distanceFromRight < width {
+                loadSimilarMovieInfo(page: page)
+            }
+        }
+    }
+    
     
     
 }
