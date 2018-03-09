@@ -138,28 +138,35 @@ class MovieDetailTableTableViewController: UITableViewController {
     }
     
     func getMovieImage(posterUrl: String, backdropUrl: String) {
-        
-        if let cachedImage = movieImageCache.object(forKey: movieId! as NSString) as Data?{
-            movieImage.image = UIImage(data: cachedImage)
-        } else {
-            let url = URL(string: posterUrl)
-            if let data = try? Data(contentsOf: url!) {
-                movieImage.image = UIImage(data: data)
-                movieImageCache.setObject(data as NSData, forKey: movieId! as NSString)
-            } else {
-                movieImage.image = UIImage(named: "noimg")
+        DispatchQueue.global().async {
+            if self.movieImageCache.object(forKey: self.movieId! as NSString) as Data! == nil {
+                let url = URL(string: posterUrl)
+                if let data = try? Data(contentsOf: url!) {
+                    self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: self.movieId! as NSString, completion: {
+                        DispatchQueue.main.sync {
+                            if let cachedImage = self.movieImageCache.object(forKey: self.movieId! as NSString) as Data? {
+                                self.movieImage.image = UIImage(data: cachedImage)
+                            } else {
+                                self.movieImage.image = UIImage(named: "noimg")
+                            }
+                        }
+                    })
+                }
             }
         }
-        if let cachedImage = movieImageCache.object(forKey: "\(movieId!)/backdrop" as NSString) as Data? {
-            tableView.backgroundView = UIImageView(image: UIImage(data: cachedImage))
-            tableView.backgroundView!.contentMode = .scaleAspectFill
-            
-        } else {
-            let url = URL(string: backdropUrl)
-            if let data = try? Data(contentsOf: url!) {
-                tableView.backgroundView = UIImageView(image: UIImage(data: data))
-                tableView.backgroundView!.contentMode = .scaleAspectFill
-                movieImageCache.setObject(data as NSData, forKey: "\(movieId!)/backdrop" as NSString)
+        DispatchQueue.global().async {
+            if self.movieImageCache.object(forKey: "\(self.movieId!)/backdrop" as NSString) as Data! == nil {
+                let url = URL(string: backdropUrl)
+                if let data = try? Data(contentsOf: url!) {
+                    self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: "\(self.movieId!)/backdrop" as NSString, completion: {
+                        DispatchQueue.main.sync {
+                            if let cachedImage = self.movieImageCache.object(forKey: "\(self.movieId!)/backdrop" as NSString) as Data? {
+                                self.tableView.backgroundView = UIImageView(image: UIImage(data: cachedImage))
+                                self.tableView.backgroundView!.contentMode = .scaleAspectFill
+                            }
+                        }
+                    })
+                }
             }
         }
     }
