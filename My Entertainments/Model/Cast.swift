@@ -12,5 +12,4 @@ class Cast {
     var castName: String?
     var castImageUrl: String?
     var castId: String?
-    
 }

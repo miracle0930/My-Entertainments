@@ -10,8 +10,8 @@ import UIKit
 
 class MovieAndCastCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet var movieOrCastImageView: UIImageView!
-    @IBOutlet var movieOrCastNameLabel: UILabel!
+    @IBOutlet var movieAndCastImageView: UIImageView!
+    @IBOutlet var movieAndCastNameLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

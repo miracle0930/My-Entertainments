@@ -51,8 +51,8 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <connections>
-                <outlet property="movieOrCastImageView" destination="MEX-4G-RYb" id="hc7-7O-9Sr"/>
-                <outlet property="movieOrCastNameLabel" destination="SiO-fK-diB" id="uSF-wh-vgz"/>
+                <outlet property="movieAndCastImageView" destination="MEX-4G-RYb" id="Cby-X6-bzp"/>
+                <outlet property="movieAndCastNameLabel" destination="SiO-fK-diB" id="Pdd-je-zmA"/>
             </connections>
             <point key="canvasLocation" x="33.5" y="65"/>
         </collectionViewCell>

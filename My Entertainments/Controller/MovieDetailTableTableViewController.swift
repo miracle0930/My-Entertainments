@@ -22,27 +22,54 @@ class MovieDetailTableTableViewController: UITableViewController {
     @IBOutlet var movieRuntime: UILabel!
     @IBOutlet var movieStatus: UILabel!
     @IBOutlet var castCollectionView: UICollectionView!
+    @IBOutlet var similarCollectionView: UICollectionView!
     var movieImageCache = NSCache<NSString, NSData>()
     var castImageCache = NSCache<NSString, NSData>()
+    var similarImageCache = NSCache<NSString, NSData>()
     var casts = [Cast]()
+    var similars = [SimilarMovie]()
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        SVProgressHUD.show()
         loadMovieInfo()
         loadCastInfo()
+        loadSimilarMovieInfo()
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         castCollectionView.collectionViewLayout = layout
+        similarCollectionView.collectionViewLayout = layout
         castCollectionView.delegate = self
         castCollectionView.dataSource = self
+        similarCollectionView.delegate = self
+        similarCollectionView.dataSource = self
         castCollectionView.register(UINib(nibName: "MovieAndCastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "castCollectionViewCell")
+        similarCollectionView.register(UINib(nibName: "MovieAndCastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "similarCollectionViewCell")
         tableView.backgroundColor = UIColor.clear
     }
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+    }
+    
+    func loadSimilarMovieInfo() {
+        let url = "https://api.themoviedb.org/3/movie/\(movieId!)/similar?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&page=1"
+        Alamofire.request(url, method: .get).responseJSON { (response) in
+            if response.result.isSuccess {
+                let rawSimilarData: JSON = JSON(response.result.value!)
+                for (_, similarData) : (String, JSON) in rawSimilarData["results"] {
+                    let similarMovie = SimilarMovie()
+                    similarMovie.similarName = similarData["title"].stringValue
+                    similarMovie.similarId = similarData["id"].stringValue
+                    similarMovie.similarImageUrl = "https://image.tmdb.org/t/p/w154\(similarData["poster_path"].stringValue)"
+                    self.similars.append(similarMovie)
+                    self.similarCollectionView.reloadData()
+                }
+            } else {
+                print("error")
+            }
+        }
+        
     }
     
     func loadCastInfo() {
@@ -57,7 +84,6 @@ class MovieDetailTableTableViewController: UITableViewController {
                     cast.castImageUrl = "https://image.tmdb.org/t/p/w154\(castData["profile_path"].stringValue)"
                     self.casts.append(cast)
                     self.castCollectionView.reloadData()
-                    SVProgressHUD.dismiss()
                 }
             } else {
                 print("error")
@@ -111,8 +137,6 @@ class MovieDetailTableTableViewController: UITableViewController {
                 movieImageCache.setObject(data as NSData, forKey: "\(movieId!)/backdrop" as NSString)
             }
         }
-        
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -138,11 +162,9 @@ class MovieDetailTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        if indexPath.section == 0 || indexPath.section == 1{
-            cell.layer.cornerRadius = 10
-            cell.layer.borderWidth = 2
-            cell.backgroundColor = UIColor(red: 40, green: 49, blue: 73, alpha: 1)
-        }
+        cell.layer.cornerRadius = 10
+        cell.layer.borderWidth = 2
+        cell.backgroundColor = UIColor(red: 40, green: 49, blue: 73, alpha: 1)
         return cell
     }
 }
@@ -150,54 +172,73 @@ class MovieDetailTableTableViewController: UITableViewController {
 extension MovieDetailTableTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return casts.count
+        if collectionView == castCollectionView {
+            return casts.count
+        } else {
+            return similars.count
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func setImageToCacheWithCompletionHandler(data: NSData, key: NSString, completion: () -> Void) {
-        castImageCache.setObject(data as NSData, forKey: key)
+    func setImageToCacheWithCompletionHandler(cache: NSCache<NSString, NSData>, data: NSData, key: NSString, completion: () -> Void) {
+        cache.setObject(data as NSData, forKey: key)
         completion()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "castCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
-        cell.movieOrCastNameLabel.text = casts[indexPath.row].castName
-        DispatchQueue.global().async {
-            if self.castImageCache.object(forKey: self.casts[indexPath.row].castId! as NSString) as Data! == nil {
-                let url = URL(string: self.casts[indexPath.row].castImageUrl!)
-                if let data = try? Data(contentsOf: url!) {
-                    self.setImageToCacheWithCompletionHandler(data: data as NSData, key: self.casts[indexPath.row].castId! as NSString, completion: {
-                        DispatchQueue.main.sync {
-                            self.castCollectionView.reloadData()
-                        }
-                    })
+        
+        if collectionView == castCollectionView {
+            let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "castCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
+            cell.movieAndCastNameLabel.text = casts[indexPath.row].castName!
+            DispatchQueue.global().async {
+                if self.castImageCache.object(forKey: self.casts[indexPath.row].castId! as NSString) as Data! == nil {
+                    let url = URL(string: self.casts[indexPath.row].castImageUrl!)
+                    if let data = try? Data(contentsOf: url!) {
+                        self.setImageToCacheWithCompletionHandler(cache: self.castImageCache, data: data as NSData, key: self.casts[indexPath.row].castId! as NSString, completion: {
+                            DispatchQueue.main.sync {
+                                self.castCollectionView.reloadData()
+                            }
+                        })
+                    }
                 }
             }
-        }
-        if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data? {
-            cell.movieOrCastImageView.image = UIImage(data: cachedImage)
+            if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data? {
+                cell.movieAndCastImageView.image = UIImage(data: cachedImage)
+            } else {
+                cell.movieAndCastImageView.image = UIImage(named: "noimg")
+            }
+            cell.movieAndCastImageView.layer.cornerRadius = 10
+            cell.movieAndCastImageView.layer.borderWidth = 1
+            cell.movieAndCastImageView.layer.masksToBounds = true
+            return cell
         } else {
-            cell.movieOrCastImageView.image = UIImage(named: "noimg")
+            let cell = similarCollectionView.dequeueReusableCell(withReuseIdentifier: "similarCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
+            cell.movieAndCastNameLabel.text = similars[indexPath.row].similarName!
+            DispatchQueue.global().async {
+                if self.similarImageCache.object(forKey: self.similars[indexPath.row].similarId! as NSString) as Data! == nil {
+                    let url = URL(string: self.similars[indexPath.row].similarImageUrl!)
+                    if let data = try? Data(contentsOf: url!) {
+                        self.setImageToCacheWithCompletionHandler(cache: self.similarImageCache, data: data as NSData, key: self.similars[indexPath.row].similarId! as NSString, completion: {
+                            DispatchQueue.main.sync {
+                                self.similarCollectionView.reloadData()
+                            }
+                        })
+                    }
+                }
+            }
+            if let cachedImage = similarImageCache.object(forKey: similars[indexPath.row].similarId! as NSString) as Data? {
+                cell.movieAndCastImageView.image = UIImage(data: cachedImage)
+            } else {
+                cell.movieAndCastImageView.image = UIImage(named: "noimg")
+            }
+            cell.movieAndCastImageView.layer.cornerRadius = 10
+            cell.movieAndCastImageView.layer.borderWidth = 1
+            cell.movieAndCastImageView.layer.masksToBounds = true
+            return cell
         }
-        
-//        if let cachedImage = castImageCache.object(forKey: casts[indexPath.row].castId! as NSString) as Data?{
-//            cell.movieOrCastImageView.image = UIImage(data: cachedImage)
-//        } else {
-//            let url = URL(string: casts[indexPath.row].castImageUrl!)
-//            if let data = try? Data(contentsOf: url!) {
-//                cell.movieOrCastImageView.image = UIImage(data: data)
-//                castImageCache.setObject(data as NSData, forKey: casts[indexPath.row].castId! as NSString)
-//            } else {
-//                cell.movieOrCastImageView.image = UIImage(named: "noimg")
-//            }
-//        }
-        cell.movieOrCastImageView.layer.cornerRadius = 10
-        cell.movieOrCastImageView.layer.borderWidth = 1
-        cell.movieOrCastImageView.layer.masksToBounds = true
-        return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

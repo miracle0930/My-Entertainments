@@ -22,6 +22,7 @@
 		F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */; };
 		F189C50E20168FEF00CEDA44 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */; };
 		F189C5112016DDA500CEDA44 /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5102016DDA500CEDA44 /* Movie.swift */; };
+		F18C86DD2052F6C100CDD5B5 /* SimilarMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C86DC2052F6C100CDD5B5 /* SimilarMovie.swift */; };
 		F196B450204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */; };
 		F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */; };
 		F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */; };
@@ -51,6 +52,7 @@
 		F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
 		F189C5102016DDA500CEDA44 /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		F18C86DC2052F6C100CDD5B5 /* SimilarMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimilarMovie.swift; sourceTree = "<group>"; };
 		F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDefaultPhotosCollectionViewCell.xib; sourceTree = "<group>"; };
 		F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAndCastCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 				F189C5102016DDA500CEDA44 /* Movie.swift */,
 				F1572FF920378D230048C08A /* UserAccount.swift */,
 				F1CF265C205259E4008D4A60 /* Cast.swift */,
+				F18C86DC2052F6C100CDD5B5 /* SimilarMovie.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -164,7 +167,7 @@
 		F189C50F2016DD8E00CEDA44 /* cell */ = {
 			isa = PBXGroup;
 			children = (
-				F1CF265B2052554C008D4A60 /* movieAndCastCollectionViewCell */,
+				F1CF265B2052554C008D4A60 /* MovieAndCastCollectionViewCell */,
 				F15E7DD020505F3600EAE101 /* movieTableViewCell */,
 				F196B452204F8540009006C1 /* userDefautPhotoCollectionViewCell */,
 			);
@@ -180,13 +183,13 @@
 			path = userDefautPhotoCollectionViewCell;
 			sourceTree = "<group>";
 		};
-		F1CF265B2052554C008D4A60 /* movieAndCastCollectionViewCell */ = {
+		F1CF265B2052554C008D4A60 /* MovieAndCastCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
 				F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */,
 				F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */,
 			);
-			name = movieAndCastCollectionViewCell;
+			name = MovieAndCastCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		F90CEA4EF5E1CC0A363FA57D /* Frameworks */ = {
@@ -356,6 +359,7 @@
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,
 				F1572FFA20378D230048C08A /* UserAccount.swift in Sources */,
 				F10E6F4A20153401007AA679 /* My_Entertainments.xcdatamodeld in Sources */,
+				F18C86DD2052F6C100CDD5B5 /* SimilarMovie.swift in Sources */,
 				F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */,
 				F196B450204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift in Sources */,
 				F10E6F4220153401007AA679 /* AppDelegate.swift in Sources */,
