@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="MovieAndCastCollectionViewCell" customModule="My_Entertainments" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="133" height="240"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="133" height="240"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MEX-4G-RYb">
+                        <rect key="frame" x="0.0" y="6" width="133" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="unt-Fa-4PB"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.29999999999999999" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SiO-fK-diB">
+                        <rect key="frame" x="0.0" y="209" width="133" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="SMV-GG-xI8"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="SiO-fK-diB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="6oG-ZD-3hN"/>
+                <constraint firstItem="MEX-4G-RYb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="9MU-H9-qon"/>
+                <constraint firstAttribute="bottom" secondItem="SiO-fK-diB" secondAttribute="bottom" constant="4" id="PpZ-rj-Uqh"/>
+                <constraint firstAttribute="trailing" secondItem="SiO-fK-diB" secondAttribute="trailing" id="TDM-sI-Bxg"/>
+                <constraint firstAttribute="trailing" secondItem="MEX-4G-RYb" secondAttribute="trailing" id="a9x-Kw-mia"/>
+                <constraint firstItem="MEX-4G-RYb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="qt5-wF-3ug"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="movieOrCastImageView" destination="MEX-4G-RYb" id="hc7-7O-9Sr"/>
+                <outlet property="movieOrCastNameLabel" destination="SiO-fK-diB" id="uSF-wh-vgz"/>
+            </connections>
+            <point key="canvasLocation" x="33.5" y="65"/>
+        </collectionViewCell>
+    </objects>
+</document>

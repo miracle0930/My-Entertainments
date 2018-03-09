@@ -272,19 +272,15 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func downloadMovieCellImage(movieId id: String, movieCell cell: MovieTableViewCell, imageUrl path: String) {
-        if path == "N/A" {
-            cell.movieImageView.image = UIImage(named: "noimg")
+        if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
+            cell.movieImageView.image = UIImage(data: cachedImage)
         } else {
-            if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
-                cell.movieImageView.image = UIImage(data: cachedImage)
+            let url = URL(string: path)
+            if let data = try? Data(contentsOf: url!) {
+                cell.movieImageView.image = UIImage(data: data)
+                movieImageCache.setObject(data as NSData, forKey: id as NSString)
             } else {
-                let url = URL(string: path)
-                if let data = try? Data(contentsOf: url!) {
-                    cell.movieImageView.image = UIImage(data: data)
-                    movieImageCache.setObject(data as NSData, forKey: id as NSString)
-                } else {
-                    cell.movieImageView.image = UIImage(named: "noimg")
-                }
+                cell.movieImageView.image = UIImage(named: "noimg")
             }
         }
     }
