@@ -664,6 +664,7 @@
                     </tableView>
                     <connections>
                         <outlet property="castCollectionView" destination="TpD-GK-cnE" id="uap-bF-AKt"/>
+                        <outlet property="castTableViewCell" destination="9j6-5X-m9L" id="8Vz-Yn-CMl"/>
                         <outlet property="movieContent" destination="RhN-el-b6n" id="VNj-tc-sEc"/>
                         <outlet property="movieImage" destination="dnb-li-Cun" id="r3q-I5-Pbz"/>
                         <outlet property="movieName" destination="U4m-ov-3zE" id="0Lh-TK-pH3"/>
@@ -672,6 +673,7 @@
                         <outlet property="movieRuntime" destination="Af0-4O-0az" id="1NT-Nw-ov0"/>
                         <outlet property="movieStatus" destination="O8U-ho-zoj" id="mMN-wM-zkZ"/>
                         <outlet property="similarCollectionView" destination="cIQ-Na-nmz" id="2R7-Xl-6id"/>
+                        <outlet property="similarTableViewCell" destination="JTF-Eg-eH7" id="ef5-NA-YB2"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uhn-A6-jWm" userLabel="First Responder" sceneMemberID="firstResponder"/>

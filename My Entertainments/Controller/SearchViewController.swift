@@ -23,10 +23,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var sideMenuShowUp = false
     var currentUser: UserAccount?
     var tapGesture: UITapGestureRecognizer?
+    var page = 1
 
 
     let realm = try! Realm()
     let userDefault = UserDefaults.standard
+
     
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
@@ -199,27 +201,33 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         SVProgressHUD.show()
-        var name = searchBar.text!
+        movies = [Movie]()
+        page = 1
+        loadMovies(page: page)
+    }
+    
+    func loadMovies(page: Int) {
+        var name = movieSearchBar.text!
         name = name.trimmingCharacters(in: NSCharacterSet.whitespaces)
         name = name.replacingOccurrences(of: " ", with: "%20")
-        let url = "https://api.themoviedb.org/3/search/movie?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&query=\(name)&page=1&include_adult=false"
-        print(url)
+        let url = "https://api.themoviedb.org/3/search/movie?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&query=\(name)&page=\(page)&include_adult=false"
         if name != "" {
             Alamofire.request(url, method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
                     let movieData: JSON = JSON(response.result.value!)
                     self.updateMovies(with: movieData)
+                    self.page += 1
                 } else {
                     SVProgressHUD.dismiss()
                     self.errorPop(errorMessage: "English supported only at this time :)")
                 }
             }
         }
-        searchBar.endEditing(true)
+        movieSearchBar.endEditing(true)
     }
+    
 
     func updateMovies(with jsonData: JSON) {
-        movies = [Movie]()
         if jsonData["total_results"] == 0 {
             errorPop(errorMessage: "Any typo?")
         } else {
@@ -296,19 +304,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             cell.movieImageView.image = UIImage(named: "noimg")
         }
-        
-        
-//        if let cachedImage = movieImageCache.object(forKey: id as NSString) as Data?{
-//            cell.movieImageView.image = UIImage(data: cachedImage)
-//        } else {
-//            let url = URL(string: path)
-//            if let data = try? Data(contentsOf: url!) {
-//                cell.movieImageView.image = UIImage(data: data)
-//                movieImageCache.setObject(data as NSData, forKey: id as NSString)
-//            } else {
-//                cell.movieImageView.image = UIImage(named: "noimg")
-//            }
-//        }
+
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -323,6 +319,14 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: movieTableView.bounds.size.width, height: 5))
         headerView.backgroundColor = UIColor.clear
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        
+        let end = movies.count - 7
+        if indexPath.section == end {
+            loadMovies(page: page)
+        }
     }
     
     

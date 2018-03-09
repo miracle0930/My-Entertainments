@@ -29,16 +29,20 @@ class MovieDetailTableTableViewController: UITableViewController {
     var casts = [Cast]()
     var similars = [SimilarMovie]()
 
+    @IBOutlet var castTableViewCell: UITableViewCell!
+    @IBOutlet var similarTableViewCell: UITableViewCell!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMovieInfo()
         loadCastInfo()
         loadSimilarMovieInfo()
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .horizontal
-        castCollectionView.collectionViewLayout = layout
-        similarCollectionView.collectionViewLayout = layout
+        let castLayout = UICollectionViewFlowLayout()
+        castLayout.scrollDirection = .horizontal
+        castCollectionView.collectionViewLayout = castLayout
+        let similarLayout = UICollectionViewFlowLayout()
+        similarLayout.scrollDirection = .horizontal
+        similarCollectionView.collectionViewLayout = similarLayout
         castCollectionView.delegate = self
         castCollectionView.dataSource = self
         similarCollectionView.delegate = self
@@ -57,14 +61,22 @@ class MovieDetailTableTableViewController: UITableViewController {
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let rawSimilarData: JSON = JSON(response.result.value!)
+                if rawSimilarData["total_results"].stringValue == "0" {
+                    self.similarTableViewCell.backgroundView = UIImageView(image: UIImage(named: "notAvailable"))
+                    self.similarTableViewCell.backgroundView!.contentMode = .scaleAspectFit
+                    self.similarTableViewCell.contentView.backgroundColor = UIColor.clear
+                    self.similarTableViewCell.contentView.subviews.first?.backgroundColor = UIColor.clear
+                    return
+                }
                 for (_, similarData) : (String, JSON) in rawSimilarData["results"] {
                     let similarMovie = SimilarMovie()
                     similarMovie.similarName = similarData["title"].stringValue
                     similarMovie.similarId = similarData["id"].stringValue
                     similarMovie.similarImageUrl = "https://image.tmdb.org/t/p/w154\(similarData["poster_path"].stringValue)"
                     self.similars.append(similarMovie)
-                    self.similarCollectionView.reloadData()
                 }
+                self.similarCollectionView.reloadData()
+                self.similarCollectionView.collectionViewLayout.invalidateLayout()
             } else {
                 print("error")
             }
@@ -77,14 +89,22 @@ class MovieDetailTableTableViewController: UITableViewController {
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let rawCastData: JSON = JSON(response.result.value!)
+                if rawCastData["casts"].count == 0 {
+                    self.castTableViewCell.backgroundView = UIImageView(image: UIImage(named: "notAvailable"))
+                    self.castTableViewCell.backgroundView!.contentMode = .scaleAspectFit
+                    self.castTableViewCell.contentView.backgroundColor = UIColor.clear
+                    self.castTableViewCell.contentView.subviews.first?.backgroundColor = UIColor.clear
+                    return
+                }
                 for (_, castData) : (String, JSON) in rawCastData["cast"] {
                     let cast = Cast()
                     cast.castName = castData["name"].stringValue
                     cast.castId = castData["id"].stringValue
                     cast.castImageUrl = "https://image.tmdb.org/t/p/w154\(castData["profile_path"].stringValue)"
                     self.casts.append(cast)
-                    self.castCollectionView.reloadData()
                 }
+                self.castCollectionView.reloadData()
+                self.castCollectionView.collectionViewLayout.invalidateLayout()
             } else {
                 print("error")
             }
