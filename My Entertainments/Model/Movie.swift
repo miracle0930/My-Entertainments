@@ -9,10 +9,11 @@
 import Foundation
 
 class Movie {
-    var movieImageUrl: String?
+    var moviePosterUrl: String?
+    var movieBackdropUrl: String?
+    var movieTagline: String?
     var movieName: String?
     var movieReleased: String?
-    var movieRated: String?
     var movieRating: String?
     var movieGenre: String?
     var searchContent: String?

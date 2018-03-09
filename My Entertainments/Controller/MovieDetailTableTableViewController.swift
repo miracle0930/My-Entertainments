@@ -13,14 +13,13 @@ import SwiftyJSON
 class MovieDetailTableTableViewController: UITableViewController {
     
     var movieId: String?
-    var baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&i="
     @IBOutlet var movieImage: UIImageView!
     @IBOutlet var movieName: UILabel!
     @IBOutlet var movieReleased: UILabel!
-    @IBOutlet var movieGenre: UILabel!
     @IBOutlet var movieRating: UILabel!
-    @IBOutlet var contentCell: UITableViewCell!
     @IBOutlet var movieContent: UITextView!
+    @IBOutlet var movieRuntime: UILabel!
+    @IBOutlet var movieStatus: UILabel!
     var movieImageCache = NSCache<NSString, NSData>()
 
     
@@ -35,16 +34,19 @@ class MovieDetailTableTableViewController: UITableViewController {
 
     
     func loadMovieInfo() {
-        let url = baseUrl + movieId!
+        
+        let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
                 let movieData: JSON = JSON(response.result.value!)
-                self.movieName.text = movieData["Title"].stringValue
-                self.movieReleased.text = "Year: " + movieData["Released"].stringValue + ",  Rated: " + movieData["Rated"].stringValue
-                self.movieGenre.text = "Genre: " + movieData["Genre"].stringValue
-                self.movieRating.text = "Rating: " + movieData["imdbRating"].stringValue
-                self.movieContent.text = movieData["Plot"].stringValue
-                self.getMovieImage(from: movieData["Poster"].stringValue)
+                self.movieName.text = movieData["title"].stringValue
+                self.movieReleased.text = "Year: \(movieData["release_date"].stringValue)"
+                self.movieRating.text = "Average Rating: \(movieData["vote_average"].stringValue)"
+                self.movieRuntime.text = "Runtime: \(movieData["runtime"]) minutes"
+                self.movieStatus.text = "Status: \(movieData["status"])"
+                self.movieContent.text = movieData["overview"].stringValue
+                let posterUrl = "https://image.tmdb.org/t/p/w154\(movieData["poster_path"])"
+                self.getMovieImage(from: posterUrl)
                 
             } else {
                 print("error")
@@ -65,9 +67,7 @@ class MovieDetailTableTableViewController: UITableViewController {
                     movieImageCache.setObject(data as NSData, forKey: movieId! as NSString)
                 } else {
                     movieImage.image = UIImage(named: "noimg")
-
                 }
-                
             }
         }
     }
@@ -79,16 +79,20 @@ class MovieDetailTableTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
+        return 5
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 || section == 2 {
-            return 1
-        } else {
-            return 4
-        }
+        return 1
     }
+    
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+//        if indexPath.section == 0 {
+//            cell.fram
+//        }
+//    }
+    
 
 
 }

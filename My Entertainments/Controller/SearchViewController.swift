@@ -25,7 +25,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var tapGesture: UITapGestureRecognizer?
 
 
-    let baseUrl = "http://www.omdbapi.com/?apikey=4d6fcc6c&s="
     let realm = try! Realm()
     let userDefault = UserDefaults.standard
     
@@ -203,7 +202,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         var name = searchBar.text!
         name = name.trimmingCharacters(in: NSCharacterSet.whitespaces)
         name = name.replacingOccurrences(of: " ", with: "%20")
-        let url = baseUrl + name
+        let url = "https://api.themoviedb.org/3/search/movie?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US&query=\(name)&page=1&include_adult=false"
+        print(url)
         if name != "" {
             Alamofire.request(url, method: .get).responseJSON { (response) in
                 if response.result.isSuccess {
@@ -220,21 +220,21 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 
     func updateMovies(with jsonData: JSON) {
         movies = [Movie]()
-        if jsonData["Response"] == "False" {
+        if jsonData["total_results"] == 0 {
             errorPop(errorMessage: "Any typo?")
         } else {
-            for (_, movieData) : (String, JSON) in jsonData["Search"] {
+            for (_, movieData) : (String, JSON) in jsonData["results"] {
                 let movie = Movie()
-                var movieName = movieData["Title"].stringValue
+                var movieName = movieData["title"].stringValue
                 movieName = movieName.replacingOccurrences(of: ".", with: " ")
                 movieName = movieName.replacingOccurrences(of: "#", with: " ")
                 movieName = movieName.replacingOccurrences(of: "$", with: " ")
                 movieName = movieName.replacingOccurrences(of: "[", with: "{")
                 movieName = movieName.replacingOccurrences(of: "]", with: "}")
                 movie.movieName = movieName
-                movie.movieReleased = movieData["Year"].stringValue
-                movie.movieImageUrl = movieData["Poster"].stringValue
-                movie.movieId = movieData["imdbID"].stringValue
+                movie.movieReleased = movieData["release_date"].stringValue
+                movie.moviePosterUrl = "https://image.tmdb.org/t/p/w92\(movieData["poster_path"])"
+                movie.movieId = movieData["id"].stringValue
                 movies.append(movie)
             }
         }
@@ -266,7 +266,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
         cell.layer.masksToBounds = true
         cell.movieNameLabel.text = movies[indexPath.section].movieName
         cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
-        let path = self.movies[indexPath.section].movieImageUrl!
+        let path = self.movies[indexPath.section].moviePosterUrl!
         downloadMovieCellImage(movieId: movies[indexPath.section].movieId!, movieCell: cell, imageUrl: path)
         return cell
     }
