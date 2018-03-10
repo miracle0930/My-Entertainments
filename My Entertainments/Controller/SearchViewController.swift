@@ -338,7 +338,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "movieDetail" {
-            let destination = segue.destination as! MovieDetailTableTableViewController
+            let destination = segue.destination as! MovieDetailTableViewController
             if let indexPath = movieTableView.indexPathForSelectedRow {
                 destination.movieId = movies[indexPath.section].movieId!
             }

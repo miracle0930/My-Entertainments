@@ -16,7 +16,7 @@
 		F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F58201553DA007AA679 /* SignUpViewController.swift */; };
 		F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F5D20159C31007AA679 /* ProtocolFile.swift */; };
 		F1572FFA20378D230048C08A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1572FF920378D230048C08A /* UserAccount.swift */; };
-		F15EF68C201C4A4F0054683C /* MovieDetailTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableTableViewController.swift */; };
+		F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */; };
 		F15EF694201EDB660054683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15EF693201EDB650054683C /* Assets.xcassets */; };
 		F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5062016531500CEDA44 /* SearchViewController.swift */; };
 		F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */; };
@@ -46,7 +46,7 @@
 		F10E6F58201553DA007AA679 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		F10E6F5D20159C31007AA679 /* ProtocolFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolFile.swift; sourceTree = "<group>"; };
 		F1572FF920378D230048C08A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
-		F15EF68B201C4A4F0054683C /* MovieDetailTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableTableViewController.swift; sourceTree = "<group>"; };
+		F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableViewController.swift; sourceTree = "<group>"; };
 		F15EF693201EDB650054683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F189C5062016531500CEDA44 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
@@ -120,7 +120,7 @@
 				F10E6F4320153401007AA679 /* LogInViewController.swift */,
 				F10E6F58201553DA007AA679 /* SignUpViewController.swift */,
 				F189C5062016531500CEDA44 /* SearchViewController.swift */,
-				F15EF68B201C4A4F0054683C /* MovieDetailTableTableViewController.swift */,
+				F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -354,7 +354,7 @@
 				F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */,
 				F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */,
 				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,
-				F15EF68C201C4A4F0054683C /* MovieDetailTableTableViewController.swift in Sources */,
+				F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */,
 				F1CF265D205259E4008D4A60 /* Cast.swift in Sources */,
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,
 				F1572FFA20378D230048C08A /* UserAccount.swift in Sources */,

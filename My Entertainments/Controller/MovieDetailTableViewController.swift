@@ -11,7 +11,7 @@ import Alamofire
 import SwiftyJSON
 import SVProgressHUD
 
-class MovieDetailTableTableViewController: UITableViewController {
+class MovieDetailTableViewController: UITableViewController {
     
     var movieId: String?
     @IBOutlet var movieImage: UIImageView!
@@ -21,6 +21,8 @@ class MovieDetailTableTableViewController: UITableViewController {
     @IBOutlet var movieContent: UITextView!
     @IBOutlet var movieRuntime: UILabel!
     @IBOutlet var movieStatus: UILabel!
+    @IBOutlet var movieGenres: UILabel!
+    @IBOutlet var movieTagline: UILabel!
     @IBOutlet var castCollectionView: UICollectionView!
     @IBOutlet var similarCollectionView: UICollectionView!
     var movieImageCache = NSCache<NSString, NSData>()
@@ -51,6 +53,8 @@ class MovieDetailTableTableViewController: UITableViewController {
         castCollectionView.register(UINib(nibName: "MovieAndCastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "castCollectionViewCell")
         similarCollectionView.register(UINib(nibName: "MovieAndCastCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: "similarCollectionViewCell")
         tableView.backgroundColor = UIColor.clear
+        movieContent.layer.cornerRadius = 10
+        movieContent.layer.borderWidth = 1
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -128,6 +132,12 @@ class MovieDetailTableTableViewController: UITableViewController {
                 self.movieRuntime.text = "Runtime: \(movieData["runtime"]) minutes"
                 self.movieStatus.text = "Status: \(movieData["status"])"
                 self.movieContent.text = movieData["overview"].stringValue
+                self.movieTagline.text = "'\(movieData["tagline"].stringValue)'"
+                var genre = "Genre: "
+                for (_, genreData) : (String, JSON) in movieData["genres"] {
+                    genre += "\(genreData["name"].stringValue), "
+                }
+                self.movieGenres.text = String(genre.prefix(genre.count - 2))
                 let posterUrl = "https://image.tmdb.org/t/p/w154\(movieData["poster_path"])"
                 let backdropUrl = "https://image.tmdb.org/t/p/w780\(movieData["backdrop_path"])"
                 self.getMovieImage(posterUrl: posterUrl, backdropUrl: backdropUrl)
@@ -187,7 +197,7 @@ class MovieDetailTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 100
+            return 80
         }
         return 20
     }
@@ -201,7 +211,7 @@ class MovieDetailTableTableViewController: UITableViewController {
     }
 }
 
-extension MovieDetailTableTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MovieDetailTableViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == castCollectionView {
@@ -210,6 +220,16 @@ extension MovieDetailTableTableViewController: UICollectionViewDelegate, UIColle
             return similars.count
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == similarCollectionView {
+            let vc = storyboard?.instantiateViewController(withIdentifier: "movieDetailTableViewController") as! MovieDetailTableViewController
+            vc.movieId = similars[indexPath.section].similarId!
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
+    
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
