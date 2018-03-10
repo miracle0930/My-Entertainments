@@ -15,8 +15,9 @@ class UserAccount: Object {
     @objc dynamic var userNickname = ""
     @objc dynamic var userIntro = ""
     @objc dynamic var userPhoto = Data()
-    var userStoredMovies = List<String>()
-    var userStoredMusics = List<String>()
+    var userStoredMovies = List<UserStoredMovie>()
+    var userStoredMoviesName = List<String>()
+    
     
     override static func primaryKey() -> String? {
         return "userId"

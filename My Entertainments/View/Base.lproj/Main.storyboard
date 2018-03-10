@@ -411,7 +411,7 @@
                                                         <constraint firstAttribute="height" constant="210" id="yVZ-Ek-bqG"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4m-ov-3zE">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4m-ov-3zE">
                                                     <rect key="frame" x="0.0" y="11" width="375" height="35"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="35" id="jgs-Gh-tuo"/>
@@ -440,6 +440,9 @@
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="24" id="prn-EG-v6t"/>
                                                             </constraints>
                                                             <state key="normal" image="unlike"/>
+                                                            <connections>
+                                                                <action selector="likedButtonPressed:" destination="H7J-9r-sQV" eventType="touchUpInside" id="Ilk-OG-BEK"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -693,6 +696,7 @@
                     <connections>
                         <outlet property="castCollectionView" destination="TpD-GK-cnE" id="uap-bF-AKt"/>
                         <outlet property="castTableViewCell" destination="9j6-5X-m9L" id="8Vz-Yn-CMl"/>
+                        <outlet property="likedButtonView" destination="KrO-0P-ikG" id="ykg-vF-8jF"/>
                         <outlet property="movieContent" destination="RhN-el-b6n" id="VNj-tc-sEc"/>
                         <outlet property="movieGenres" destination="P6s-fn-q5i" id="yvL-QC-dS8"/>
                         <outlet property="movieImage" destination="dnb-li-Cun" id="r3q-I5-Pbz"/>
@@ -1133,7 +1137,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="G8T-z3-GbA" kind="relationship" relationship="viewControllers" id="FJD-0X-sbW"/>
-                        <segue destination="TqA-wf-UR3" kind="relationship" relationship="viewControllers" id="eY8-oB-QFP"/>
+                        <segue destination="TqA-wf-UR3" kind="relationship" relationship="viewControllers" id="Kip-2g-PXw"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zws-eG-ghG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1167,11 +1171,11 @@
             </objects>
             <point key="canvasLocation" x="4283.1999999999998" y="-428.18590704647681"/>
         </scene>
-        <!--Profile-->
+        <!--My Movies-->
         <scene sceneID="uwP-dK-Z4I">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TqA-wf-UR3" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" image="profileIcon" selectedImage="profileIcon" id="fbt-YH-ibd"/>
+                    <tabBarItem key="tabBarItem" title="My Movies" image="boxClose" selectedImage="boxOpen" id="fbt-YH-ibd"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="e0l-bp-o5z">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -1182,19 +1186,57 @@
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="8Xo-7t-Kaj" kind="relationship" relationship="rootViewController" id="VAA-Di-Car"/>
+                    </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NHs-D0-73b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2728" y="2054.5727136431788"/>
+            <point key="canvasLocation" x="2729" y="1547"/>
+        </scene>
+        <!--User Stored Movie Table View Controller-->
+        <scene sceneID="Wgi-MD-o5h">
+            <objects>
+                <tableViewController id="8Xo-7t-Kaj" customClass="UserStoredMovieTableViewController" customModule="My_Entertainments" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="l6h-5G-ym6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="fZ3-nj-jcW">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="userStoredMovieTableviewCell" id="vAi-fc-K5w">
+                                <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vAi-fc-K5w" id="Gql-mm-pEk">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="8Xo-7t-Kaj" id="I0N-Kd-M0o"/>
+                            <outlet property="delegate" destination="8Xo-7t-Kaj" id="8Db-3r-sXo"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="402-BM-vYh"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8Q8-N4-Fzl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3834" y="1547"/>
         </scene>
     </scenes>
     <resources>
         <image name="background" width="320" height="480"/>
+        <image name="boxClose" width="32" height="32"/>
+        <image name="boxOpen" width="32" height="32"/>
         <image name="clear" width="32" height="32"/>
         <image name="edit" width="32" height="32"/>
         <image name="exit" width="21" height="21"/>
         <image name="menu" width="21" height="21"/>
-        <image name="profileIcon" width="32" height="32"/>
         <image name="searchIcon" width="32" height="32"/>
         <image name="unlike" width="21" height="21"/>
     </resources>

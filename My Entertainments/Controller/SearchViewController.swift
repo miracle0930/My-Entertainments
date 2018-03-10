@@ -95,6 +95,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                                     userAccount.userIntro = self.userIntroTextView.text
                                     userAccount.userPhoto = imageData!
                                     self.realm.add(userAccount)
+                                    self.currentUser = self.realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
                                 }
                             } catch {
                                 print(error)
@@ -341,6 +342,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             let destination = segue.destination as! MovieDetailTableViewController
             if let indexPath = movieTableView.indexPathForSelectedRow {
                 destination.movieId = movies[indexPath.section].movieId!
+                destination.currentUser = currentUser!
             }
         }
     }

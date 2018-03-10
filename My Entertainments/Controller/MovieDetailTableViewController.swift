@@ -10,10 +10,13 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 import SVProgressHUD
+import RealmSwift
 
 class MovieDetailTableViewController: UITableViewController {
     
     var movieId: String?
+    let realm = try! Realm()
+    var currentUser: UserAccount?
     @IBOutlet var movieImage: UIImageView!
     @IBOutlet var movieName: UILabel!
     @IBOutlet var movieReleased: UILabel!
@@ -31,9 +34,11 @@ class MovieDetailTableViewController: UITableViewController {
     var casts = [Cast]()
     var similars = [SimilarMovie]()
     var page = 1
+    var liked: Bool?
 
     @IBOutlet var castTableViewCell: UITableViewCell!
     @IBOutlet var similarTableViewCell: UITableViewCell!
+    @IBOutlet var likedButtonView: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +64,16 @@ class MovieDetailTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        liked = currentUser!.userStoredMovies.filter("movieId == %@", movieId!).count != 0
+        setButtonViewImage(liked: liked!)
+    }
+    
+    func setButtonViewImage(liked: Bool) {
+        if liked {
+            likedButtonView.setImage(UIImage(named: "like"), for: .normal)
+        } else {
+            likedButtonView.setImage(UIImage(named: "unlike"), for: .normal)
+        }
     }
     
     func loadSimilarMovieInfo(page: Int) {
@@ -122,6 +137,7 @@ class MovieDetailTableViewController: UITableViewController {
 
     
     func loadMovieInfo() {
+        
         let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
         Alamofire.request(url, method: .get).responseJSON { (response) in
             if response.result.isSuccess {
@@ -180,7 +196,49 @@ class MovieDetailTableViewController: UITableViewController {
             }
         }
     }
-
+    
+    @IBAction func likedButtonPressed(_ sender: UIButton) {
+        
+        
+        let userStoredMovie = UserStoredMovie()
+        userStoredMovie.movieId = movieId!
+        userStoredMovie.movieName = movieName.text!
+        userStoredMovie.movieReleased = movieReleased.text!
+        userStoredMovie.movieRating = movieRating.text!
+        userStoredMovie.movieRunTime = movieRuntime.text!
+        userStoredMovie.movieStatus = movieStatus.text!
+        userStoredMovie.movieGenre = movieGenres.text!
+        userStoredMovie.movieContent = movieContent.text!
+        userStoredMovie.moviePoster = movieImageCache.object(forKey: movieId! as NSString)! as Data
+        userStoredMovie.movieBackdrop = movieImageCache.object(forKey: "\(self.movieId!)/backdrop" as NSString)! as Data
+        if !liked! {
+            do {
+                try realm.write {
+                    self.currentUser!.userStoredMovies.append(userStoredMovie)
+                    self.currentUser!.userStoredMoviesName.append(userStoredMovie.movieName)
+                }
+            } catch {
+                print(error)
+            }
+        } else {
+            do {
+                try realm.write {
+                    let index = self.currentUser!.userStoredMoviesName.index(of: userStoredMovie.movieName)
+                    self.currentUser!.userStoredMovies.remove(at: index!)
+                    self.currentUser!.userStoredMoviesName.remove(at: index!)
+                }
+            } catch {
+                print(error)
+            }
+        }
+        
+        
+        
+        
+        liked! = !liked!
+        setButtonViewImage(liked: liked!)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -188,7 +246,7 @@ class MovieDetailTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 5
+        return 3
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -239,6 +297,8 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             }
         }
     }
+    
+    
     
     
     
