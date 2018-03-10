@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="AvenirNext.ttc">
+            <string>AvenirNext-DemiBold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="PeopleCollectionViewCell" customModule="My_Entertainments" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="133" height="274"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="133" height="274"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rxp-B7-jaw">
+                        <rect key="frame" x="0.0" y="6" width="133" height="200"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="200" id="zLd-g7-bLK"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="movieName" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Erf-6j-hZe">
+                        <rect key="frame" x="0.0" y="209" width="133" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="avh-Fz-FpU"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Character" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ee-ha-iGd">
+                        <rect key="frame" x="0.0" y="239" width="133" height="27"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="27" id="hB8-u1-CNd"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="16"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="2Ee-ha-iGd" firstAttribute="top" secondItem="Erf-6j-hZe" secondAttribute="bottom" constant="3" id="EdU-PF-0AS"/>
+                <constraint firstAttribute="trailing" secondItem="2Ee-ha-iGd" secondAttribute="trailing" id="PbM-st-SOc"/>
+                <constraint firstItem="Rxp-B7-jaw" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Rye-JE-1GY"/>
+                <constraint firstItem="Erf-6j-hZe" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="UTL-6z-Xod"/>
+                <constraint firstItem="2Ee-ha-iGd" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="XK5-4Y-4Qx"/>
+                <constraint firstItem="Rxp-B7-jaw" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="YWQ-ZW-Fpd"/>
+                <constraint firstAttribute="trailing" secondItem="Rxp-B7-jaw" secondAttribute="trailing" id="ZTb-LF-rO8"/>
+                <constraint firstAttribute="trailing" secondItem="Erf-6j-hZe" secondAttribute="trailing" id="jfY-xG-00V"/>
+                <constraint firstItem="Erf-6j-hZe" firstAttribute="top" secondItem="Rxp-B7-jaw" secondAttribute="bottom" constant="3" id="pdj-ZF-1zu"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <connections>
+                <outlet property="characterLabel" destination="2Ee-ha-iGd" id="9ur-Xu-KZI"/>
+                <outlet property="movieNameLabel" destination="Erf-6j-hZe" id="dJd-Iv-odN"/>
+                <outlet property="peopleImageView" destination="Rxp-B7-jaw" id="eRX-Sm-XbJ"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="54"/>
+        </collectionViewCell>
+    </objects>
+</document>

@@ -224,8 +224,19 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == similarCollectionView {
             let vc = storyboard?.instantiateViewController(withIdentifier: "movieDetailTableViewController") as! MovieDetailTableViewController
-            vc.movieId = similars[indexPath.section].similarId!
+            vc.movieId = similars[indexPath.row].similarId!
             self.navigationController?.pushViewController(vc, animated: true)
+        } else {
+            performSegue(withIdentifier: "fromMovieToPeople", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromMovieToPeople" {
+            let destination = segue.destination as! PeopleTableViewController
+            if let indexPath = castCollectionView.indexPathsForSelectedItems!.first {
+                destination.personId = casts[indexPath.row].castId!
+            }
         }
     }
     
