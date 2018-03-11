@@ -42,6 +42,7 @@ class MovieDetailTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        likedButtonView.isEnabled = false
         loadMovieInfo()
         loadCastInfo()
         loadSimilarMovieInfo(page: page)
@@ -153,6 +154,7 @@ class MovieDetailTableViewController: UITableViewController {
             tableView.backgroundView = UIImageView(image: UIImage(data: movie!.movieBackdrop))
             tableView.backgroundView?.contentMode = .scaleAspectFill
             movieImageCache.setObject(movie!.movieBackdrop as NSData, forKey: "\(movieId!)/backdrop" as NSString)
+            self.likedButtonView.isEnabled = true
         } else {
             let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
             Alamofire.request(url, method: .get).responseJSON { (response) in
@@ -172,7 +174,10 @@ class MovieDetailTableViewController: UITableViewController {
                     self.movieGenres.text = String(genre.prefix(genre.count - 2))
                     let posterUrl = "https://image.tmdb.org/t/p/w154\(movieData["poster_path"])"
                     let backdropUrl = "https://image.tmdb.org/t/p/w780\(movieData["backdrop_path"])"
-                    self.getMovieImage(posterUrl: posterUrl, backdropUrl: backdropUrl)
+                    self.getMovieImage(posterUrl: posterUrl, backdropUrl: backdropUrl, completion: {
+                        self.likedButtonView.isEnabled = true
+                    })
+                    
                 } else {
                     print("error")
                 }
@@ -180,7 +185,7 @@ class MovieDetailTableViewController: UITableViewController {
         }
     }
     
-    func getMovieImage(posterUrl: String, backdropUrl: String) {
+    func getMovieImage(posterUrl: String, backdropUrl: String, completion: () -> Void) {
         DispatchQueue.global().async {
             let url = URL(string: posterUrl)
             if let data = try? Data(contentsOf: url!) {
@@ -212,6 +217,7 @@ class MovieDetailTableViewController: UITableViewController {
                 }
             }
         }
+        completion()
     }
     
     func setImageToCacheWithCompletionHandler(cache: NSCache<NSString, NSData>, data: NSData, key: NSString, completion: () -> Void) {
@@ -299,6 +305,7 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
         if collectionView == similarCollectionView {
             let vc = storyboard?.instantiateViewController(withIdentifier: "movieDetailTableViewController") as! MovieDetailTableViewController
             vc.movieId = similars[indexPath.row].similarId!
+            vc.currentUser = currentUser!
             self.navigationController?.pushViewController(vc, animated: true)
         } else {
             performSegue(withIdentifier: "fromMovieToPeople", sender: self)
@@ -310,6 +317,7 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             let destination = segue.destination as! PeopleTableViewController
             if let indexPath = castCollectionView.indexPathsForSelectedItems!.first {
                 destination.personId = casts[indexPath.row].castId!
+                destination.currentUser = currentUser!
             }
         }
     }
@@ -317,8 +325,6 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == castCollectionView {

@@ -14,6 +14,7 @@ import SVProgressHUD
 class PeopleTableViewController: UITableViewController {
     
     var personId: String?
+    var currentUser: UserAccount?
     @IBOutlet var personName: UILabel!
     @IBOutlet var personImageView: UIImageView!
     @IBOutlet var birthdayLabel: UILabel!
@@ -185,6 +186,7 @@ extension PeopleTableViewController: UICollectionViewDelegate, UICollectionViewD
             let destination = segue.destination as! MovieDetailTableViewController
             if let indexPath = moviesCollectionView.indexPathsForSelectedItems!.first {
                 destination.movieId = relatedMovies[indexPath.row].movieId!
+                destination.currentUser = currentUser!
             }
         }
     }

@@ -24,13 +24,6 @@ class UserStoredMovieTableViewController: UITableViewController {
         userStoredMovies = currentUser!.userStoredMovies.sorted(byKeyPath: "movieName")
         tableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "userStoredMovieTableviewCell")
         tableView.rowHeight = 100
-        
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -71,7 +64,6 @@ class UserStoredMovieTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 1
     }
 }
