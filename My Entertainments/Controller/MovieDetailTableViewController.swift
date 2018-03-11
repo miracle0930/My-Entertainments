@@ -165,41 +165,44 @@ class MovieDetailTableViewController: UITableViewController {
     
     func getMovieImage(posterUrl: String, backdropUrl: String) {
         DispatchQueue.global().async {
-            if self.movieImageCache.object(forKey: self.movieId! as NSString) as Data! == nil {
-                let url = URL(string: posterUrl)
-                if let data = try? Data(contentsOf: url!) {
-                    self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: self.movieId! as NSString, completion: {
-                        DispatchQueue.main.sync {
-                            if let cachedImage = self.movieImageCache.object(forKey: self.movieId! as NSString) as Data? {
-                                self.movieImage.image = UIImage(data: cachedImage)
-                            } else {
-                                self.movieImage.image = UIImage(named: "noimg")
-                            }
-                        }
-                    })
+            let url = URL(string: posterUrl)
+            if let data = try? Data(contentsOf: url!) {
+                self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: self.movieId! as NSString, completion: {
+                    DispatchQueue.main.sync {
+                        self.movieImage.image = UIImage(data: data)
+                    }
+                })
+            } else {
+                DispatchQueue.main.sync {
+                    self.movieImage.image = UIImage(named: "noimg")
+                    self.movieImageCache.setObject(UIImageJPEGRepresentation(UIImage(named: "noimg")!, 1)! as NSData, forKey: self.movieId! as NSString)
                 }
             }
         }
         DispatchQueue.global().async {
-            if self.movieImageCache.object(forKey: "\(self.movieId!)/backdrop" as NSString) as Data! == nil {
-                let url = URL(string: backdropUrl)
-                if let data = try? Data(contentsOf: url!) {
-                    self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: "\(self.movieId!)/backdrop" as NSString, completion: {
-                        DispatchQueue.main.sync {
-                            if let cachedImage = self.movieImageCache.object(forKey: "\(self.movieId!)/backdrop" as NSString) as Data? {
-                                self.tableView.backgroundView = UIImageView(image: UIImage(data: cachedImage))
-                                self.tableView.backgroundView!.contentMode = .scaleAspectFill
-                            }
-                        }
-                    })
+            let url = URL(string: backdropUrl)
+            if let data = try? Data(contentsOf: url!) {
+                self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, data: data as NSData, key: "\(self.movieId!)/backdrop" as NSString, completion: {
+                    DispatchQueue.main.sync {
+                        self.tableView.backgroundView = UIImageView(image: UIImage(data: data))
+                        self.tableView.backgroundView!.contentMode = .scaleAspectFill
+                    }
+                })
+            } else {
+                DispatchQueue.main.sync {
+                    self.tableView.backgroundView = UIImageView(image: UIImage(named: "noimg"))
+                    self.movieImageCache.setObject(UIImageJPEGRepresentation(UIImage(named: "noimg")!, 1)! as NSData, forKey: "\(self.movieId!)/backdrop" as NSString)
                 }
             }
         }
     }
     
+    func setImageToCacheWithCompletionHandler(cache: NSCache<NSString, NSData>, data: NSData, key: NSString, completion: () -> Void) {
+        cache.setObject(data as NSData, forKey: key)
+        completion()
+    }
+    
     @IBAction func likedButtonPressed(_ sender: UIButton) {
-        
-        
         let userStoredMovie = UserStoredMovie()
         userStoredMovie.movieId = movieId!
         userStoredMovie.movieName = movieName.text!
@@ -231,10 +234,6 @@ class MovieDetailTableViewController: UITableViewController {
                 print(error)
             }
         }
-        
-        
-        
-        
         liked! = !liked!
         setButtonViewImage(liked: liked!)
     }
@@ -297,22 +296,14 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             }
         }
     }
-    
-    
-    
-    
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func setImageToCacheWithCompletionHandler(cache: NSCache<NSString, NSData>, data: NSData, key: NSString, completion: () -> Void) {
-        cache.setObject(data as NSData, forKey: key)
-        completion()
-    }
+    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         if collectionView == castCollectionView {
             let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "castCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
             cell.movieAndCastNameLabel.text = casts[indexPath.row].castName!
@@ -378,8 +369,5 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             }
         }
     }
-    
-    
-    
 }
 
