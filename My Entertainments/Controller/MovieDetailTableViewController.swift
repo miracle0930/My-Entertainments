@@ -139,7 +139,6 @@ class MovieDetailTableViewController: UITableViewController {
     func loadMovieInfo() {
         let result = currentUser!.userStoredMovies.filter("movieId == %@", movieId!)
         if result.count != 0 {
-            print("here")
             let movie = result.first
             movieName.text = movie!.movieName
             movieReleased.text = movie!.movieReleased
@@ -154,7 +153,6 @@ class MovieDetailTableViewController: UITableViewController {
             tableView.backgroundView = UIImageView(image: UIImage(data: movie!.movieBackdrop))
             tableView.backgroundView?.contentMode = .scaleAspectFill
             movieImageCache.setObject(movie!.movieBackdrop as NSData, forKey: "\(movieId!)/backdrop" as NSString)
-            
         } else {
             let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
             Alamofire.request(url, method: .get).responseJSON { (response) in

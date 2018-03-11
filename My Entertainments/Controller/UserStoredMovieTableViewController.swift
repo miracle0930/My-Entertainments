@@ -55,6 +55,20 @@ class UserStoredMovieTableViewController: UITableViewController {
         cell.movieImageView.image = UIImage(data: userStoredMovies![indexPath.section].moviePoster)
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "fromStoredToMovie", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "fromStoredToMovie" {
+            let destinationVC = segue.destination as! MovieDetailTableViewController
+            if let indexPath = tableView.indexPathForSelectedRow {
+                destinationVC.movieId = userStoredMovies![indexPath.section].movieId
+                destinationVC.currentUser = currentUser!
+            }
+        }
+    }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
