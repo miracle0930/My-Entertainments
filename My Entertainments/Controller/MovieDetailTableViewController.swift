@@ -137,28 +137,47 @@ class MovieDetailTableViewController: UITableViewController {
 
     
     func loadMovieInfo() {
-        
-        let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
-        Alamofire.request(url, method: .get).responseJSON { (response) in
-            if response.result.isSuccess {
-                let movieData: JSON = JSON(response.result.value!)
-                self.movieName.text = movieData["title"].stringValue
-                self.movieReleased.text = "Year: \(movieData["release_date"].stringValue)"
-                self.movieRating.text = "Average Rating: \(movieData["vote_average"].stringValue)"
-                self.movieRuntime.text = "Runtime: \(movieData["runtime"]) minutes"
-                self.movieStatus.text = "Status: \(movieData["status"])"
-                self.movieContent.text = movieData["overview"].stringValue
-                self.movieTagline.text = "'\(movieData["tagline"].stringValue)'"
-                var genre = "Genre: "
-                for (_, genreData) : (String, JSON) in movieData["genres"] {
-                    genre += "\(genreData["name"].stringValue), "
+        let result = currentUser!.userStoredMovies.filter("movieId == %@", movieId!)
+        if result.count != 0 {
+            print("here")
+            let movie = result.first
+            movieName.text = movie!.movieName
+            movieReleased.text = movie!.movieReleased
+            movieRating.text = movie!.movieRating
+            movieRuntime.text = movie!.movieRunTime
+            movieStatus.text = movie!.movieStatus
+            movieContent.text = movie!.movieContent
+            movieTagline.text = movie!.movieTagline
+            movieGenres.text = movie!.movieGenre
+            movieImage.image = UIImage(data: movie!.moviePoster)
+            movieImageCache.setObject(movie!.moviePoster as NSData, forKey: movieId! as NSString)
+            tableView.backgroundView = UIImageView(image: UIImage(data: movie!.movieBackdrop))
+            tableView.backgroundView?.contentMode = .scaleAspectFill
+            movieImageCache.setObject(movie!.movieBackdrop as NSData, forKey: "\(movieId!)/backdrop" as NSString)
+            
+        } else {
+            let url = "https://api.themoviedb.org/3/movie/\(movieId!)?api_key=236e7ef2c5b84703488c464d8d131d0c&language=en-US"
+            Alamofire.request(url, method: .get).responseJSON { (response) in
+                if response.result.isSuccess {
+                    let movieData: JSON = JSON(response.result.value!)
+                    self.movieName.text = movieData["title"].stringValue
+                    self.movieReleased.text = "Year: \(movieData["release_date"].stringValue)"
+                    self.movieRating.text = "Average Rating: \(movieData["vote_average"].stringValue)"
+                    self.movieRuntime.text = "Runtime: \(movieData["runtime"]) minutes"
+                    self.movieStatus.text = "Status: \(movieData["status"])"
+                    self.movieContent.text = movieData["overview"].stringValue
+                    self.movieTagline.text = "'\(movieData["tagline"].stringValue)'"
+                    var genre = "Genre: "
+                    for (_, genreData) : (String, JSON) in movieData["genres"] {
+                        genre += "\(genreData["name"].stringValue), "
+                    }
+                    self.movieGenres.text = String(genre.prefix(genre.count - 2))
+                    let posterUrl = "https://image.tmdb.org/t/p/w154\(movieData["poster_path"])"
+                    let backdropUrl = "https://image.tmdb.org/t/p/w780\(movieData["backdrop_path"])"
+                    self.getMovieImage(posterUrl: posterUrl, backdropUrl: backdropUrl)
+                } else {
+                    print("error")
                 }
-                self.movieGenres.text = String(genre.prefix(genre.count - 2))
-                let posterUrl = "https://image.tmdb.org/t/p/w154\(movieData["poster_path"])"
-                let backdropUrl = "https://image.tmdb.org/t/p/w780\(movieData["backdrop_path"])"
-                self.getMovieImage(posterUrl: posterUrl, backdropUrl: backdropUrl)
-            } else {
-                print("error")
             }
         }
     }
