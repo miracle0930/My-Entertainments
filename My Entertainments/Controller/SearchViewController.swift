@@ -17,6 +17,7 @@ import SDWebImage
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
+    var sideButtons = SideButtonGenerator.generateSideButtons()
     var databaseRef: DatabaseReference!
     var storageRef: StorageReference!
     var movieImageCache = NSCache<NSString, NSData>()
@@ -34,14 +35,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet weak var movieTableView: UITableView!
     
     @IBOutlet var sideMenuView: UIView!
+    @IBOutlet var userInfoStackView: UIStackView!
+    @IBOutlet var sideMenuButtonsTableView: UITableView!
+    
     @IBOutlet var sideMenuLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var sideMenuTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet var userInfoStackViewTrailing: NSLayoutConstraint!
+
     @IBOutlet var userPhotoImageView: UIImageView!
-    @IBOutlet var userPhotoTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet var userButtonView: UIStackView!
-    @IBOutlet var userInfoTrailingConstraint: NSLayoutConstraint!
-    @IBOutlet var userInfoView: UIStackView!
-    @IBOutlet var userButtonTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userIntroTextView: UITextView!
     
@@ -61,12 +62,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         let screenWidth = UIScreen.main.bounds.width
         sideMenuTrailingConstraint.constant = -screenWidth
         sideMenuLeadingConstraint.constant = -screenWidth
-        userPhotoTrailingConstraint.constant = (screenWidth / 2 - userPhotoImageView.frame.width) / 2
-        userInfoTrailingConstraint.constant = (screenWidth / 2 - userInfoView.frame.width) / 2
-        userButtonTrailingConstraint.constant = (screenWidth / 2 - userButtonView.frame.width) / 2
+        userInfoStackViewTrailing.constant = (2 * screenWidth / 3 - userPhotoImageView.frame.width) / 3
         userPhotoImageView.layer.cornerRadius = 10
         userPhotoImageView.layer.borderWidth = 1
         userPhotoImageView.layer.masksToBounds = true
+        sideMenuButtonsTableView.delegate = self
+        sideMenuButtonsTableView.dataSource = self
+        sideMenuButtonsTableView.register(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "sideMenuButtonCell")
         if let user = currentUser {
             userPhotoImageView.image = UIImage(data: user.userPhoto)
             userNameLabel.text = user.userNickname
@@ -123,7 +125,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         view.addGestureRecognizer(tapGesture!)
         view.addGestureRecognizer(swipeLeft)
         view.addGestureRecognizer(swipeRight)
-
     }
     
     @objc func swipeGestureDetected(gesture: UISwipeGestureRecognizer) {
@@ -160,8 +161,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func showSideMenu() {
-        self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 2
-        self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 2
+        self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
+        self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
+        sideMenuButtonsTableView.updateFocusIfNeeded()
         tapGesture!.cancelsTouchesInView = true
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
@@ -269,17 +271,25 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
-        cell.layer.cornerRadius = 10
-        cell.layer.borderWidth = 1
-        cell.selectionStyle = .none
-        cell.backgroundView = UIImageView(image: UIImage(named: "cellBackground"))
-        cell.layer.masksToBounds = true
-        cell.movieNameLabel.text = movies[indexPath.section].movieName
-        cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
-        let path = self.movies[indexPath.section].moviePosterUrl!
-        downloadMovieCellImage(movieId: movies[indexPath.section].movieId!, movieCell: cell, imageUrl: path)
-        return cell
+        if tableView == movieTableView {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as! MovieTableViewCell
+            cell.layer.cornerRadius = 10
+            cell.layer.borderWidth = 1
+            cell.selectionStyle = .none
+            cell.backgroundView = UIImageView(image: UIImage(named: "cellBackground"))
+            cell.layer.masksToBounds = true
+            cell.movieNameLabel.text = movies[indexPath.section].movieName
+            cell.movieReleasedLabel.text = "Released: " + movies[indexPath.row].movieReleased!
+            let path = self.movies[indexPath.section].moviePosterUrl!
+            downloadMovieCellImage(movieId: movies[indexPath.section].movieId!, movieCell: cell, imageUrl: path)
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "sideMenuButtonCell", for: indexPath) as! SideMenuTableViewCell
+            cell.sideButtonImage.image = sideButtons[indexPath.section].sideButtonImage
+            cell.sideButtonLabel.text = sideButtons[indexPath.section].sideButtonLabel
+            return cell
+        }
+        
     }
     
     func setImageToCacheWithCompletionHandler(data: NSData, key: NSString, completion: () -> Void) {
@@ -326,14 +336,31 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return movies.count
+        if tableView == movieTableView {
+            return movies.count
+        } else {
+            return sideButtons.count
+        }
     }
     
 
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if tableView == movieTableView {
+            performSegue(withIdentifier: "movieDetail", sender: self)
+        } else {
+            if indexPath.section == 1 {
+                do {
+                    try Auth.auth().signOut()
+                    userDefault.set(false, forKey: "login")
+                    performSegue(withIdentifier: "userlogout", sender: self)
+                } catch {
+                    print("error")
+                }
+            }
+            print("select on sidemenu tableview")
+        }
         
-        performSegue(withIdentifier: "movieDetail", sender: self)
         
     }
     

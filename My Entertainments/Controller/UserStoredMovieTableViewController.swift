@@ -16,8 +16,6 @@ class UserStoredMovieTableViewController: UITableViewController {
     var currentUser: UserAccount?
     var userStoredMovies: Results<UserStoredMovie>?
     
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
@@ -35,7 +33,15 @@ class UserStoredMovieTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func sideMenuButtonPressed(_ sender: UIBarButtonItem) {
+        
+        
+        
+        
+        
+        
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return userStoredMovies!.count
