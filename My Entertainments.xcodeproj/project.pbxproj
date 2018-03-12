@@ -18,6 +18,7 @@
 		F13BB2D520562A1500646678 /* SideMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB2D320562A1500646678 /* SideMenuTableViewCell.swift */; };
 		F13BB2D620562A1500646678 /* SideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F13BB2D420562A1500646678 /* SideMenuTableViewCell.xib */; };
 		F13BB2D92056FA5C00646678 /* SideMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB2D82056FA5C00646678 /* SideMenuButton.swift */; };
+		F13BB2E12057094300646678 /* UserStoredMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */; };
 		F1572FFA20378D230048C08A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1572FF920378D230048C08A /* UserAccount.swift */; };
 		F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */; };
 		F15EF694201EDB660054683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15EF693201EDB650054683C /* Assets.xcassets */; };
@@ -30,7 +31,6 @@
 		F18C86E3205385F100CDD5B5 /* PeopleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C86E1205385F100CDD5B5 /* PeopleCollectionViewCell.swift */; };
 		F18C86E4205385F100CDD5B5 /* PeopleCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F18C86E2205385F100CDD5B5 /* PeopleCollectionViewCell.xib */; };
 		F18C86E62053903C00CDD5B5 /* RelatedMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C86E52053903C00CDD5B5 /* RelatedMovie.swift */; };
-		F18C86E820545C8500CDD5B5 /* UserStoredMovieTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C86E720545C8500CDD5B5 /* UserStoredMovieTableViewController.swift */; };
 		F18C86EA20545F1500CDD5B5 /* UserStoredMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */; };
 		F196B450204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */; };
 		F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */; };
@@ -57,6 +57,7 @@
 		F13BB2D320562A1500646678 /* SideMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewCell.swift; sourceTree = "<group>"; };
 		F13BB2D420562A1500646678 /* SideMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuTableViewCell.xib; sourceTree = "<group>"; };
 		F13BB2D82056FA5C00646678 /* SideMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuButton.swift; sourceTree = "<group>"; };
+		F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoredMovieViewController.swift; sourceTree = "<group>"; };
 		F1572FF920378D230048C08A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableViewController.swift; sourceTree = "<group>"; };
 		F15EF693201EDB650054683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		F18C86E1205385F100CDD5B5 /* PeopleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleCollectionViewCell.swift; sourceTree = "<group>"; };
 		F18C86E2205385F100CDD5B5 /* PeopleCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeopleCollectionViewCell.xib; sourceTree = "<group>"; };
 		F18C86E52053903C00CDD5B5 /* RelatedMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RelatedMovie.swift; sourceTree = "<group>"; };
-		F18C86E720545C8500CDD5B5 /* UserStoredMovieTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoredMovieTableViewController.swift; sourceTree = "<group>"; };
 		F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoredMovie.swift; sourceTree = "<group>"; };
 		F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultPhotosCollectionViewCell.swift; sourceTree = "<group>"; };
 		F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDefaultPhotosCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 				F189C5062016531500CEDA44 /* SearchViewController.swift */,
 				F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */,
 				F18C86DE2053836E00CDD5B5 /* PeopleTableViewController.swift */,
-				F18C86E720545C8500CDD5B5 /* UserStoredMovieTableViewController.swift */,
+				F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -396,7 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F18C86E820545C8500CDD5B5 /* UserStoredMovieTableViewController.swift in Sources */,
+				F13BB2E12057094300646678 /* UserStoredMovieViewController.swift in Sources */,
 				F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */,
 				F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */,
 				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,

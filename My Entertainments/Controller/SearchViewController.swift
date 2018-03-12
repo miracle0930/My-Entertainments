@@ -17,7 +17,6 @@ import SDWebImage
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var movies = [Movie]()
-    var sideButtons = SideButtonGenerator.generateSideButtons()
     var databaseRef: DatabaseReference!
     var storageRef: StorageReference!
     var movieImageCache = NSCache<NSString, NSData>()
@@ -30,18 +29,15 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     let realm = try! Realm()
     let userDefault = UserDefaults.standard
 
-    
+    var sideButtons = SideButtonGenerator.generateSideButtons()
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
-    
     @IBOutlet var sideMenuView: UIView!
     @IBOutlet var userInfoStackView: UIStackView!
     @IBOutlet var sideMenuButtonsTableView: UITableView!
-    
     @IBOutlet var sideMenuLeadingConstraint: NSLayoutConstraint!
     @IBOutlet var sideMenuTrailingConstraint: NSLayoutConstraint!
     @IBOutlet var userInfoStackViewTrailing: NSLayoutConstraint!
-
     @IBOutlet var userPhotoImageView: UIImageView!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userIntroTextView: UITextView!
@@ -122,9 +118,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         swipeLeft.direction = .left
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureDetected))
         swipeRight.direction = .right
-        view.addGestureRecognizer(tapGesture!)
-        view.addGestureRecognizer(swipeLeft)
-        view.addGestureRecognizer(swipeRight)
+        movieTableView.addGestureRecognizer(tapGesture!)
+        movieTableView.addGestureRecognizer(swipeLeft)
+        movieTableView.addGestureRecognizer(swipeRight)
     }
     
     @objc func swipeGestureDetected(gesture: UISwipeGestureRecognizer) {
@@ -383,8 +379,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             loadMovies(page: page)
         }
     }
-    
-    
     
 }
 
