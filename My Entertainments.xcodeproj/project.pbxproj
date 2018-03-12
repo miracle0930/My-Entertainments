@@ -173,6 +173,24 @@
 			name = SideMenuTableViewCell;
 			sourceTree = "<group>";
 		};
+		F13BB2DE2057064C00646678 /* PeopleCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F18C86E1205385F100CDD5B5 /* PeopleCollectionViewCell.swift */,
+				F18C86E2205385F100CDD5B5 /* PeopleCollectionViewCell.xib */,
+			);
+			name = PeopleCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		F13BB2DF2057066700646678 /* UserDefaultPhotosCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */,
+				F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */,
+			);
+			name = UserDefaultPhotosCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		F15E7DD020505F3600EAE101 /* MovieTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,31 +217,13 @@
 		F189C50F2016DD8E00CEDA44 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				F13BB2DF2057066700646678 /* UserDefaultPhotosCollectionViewCell */,
+				F13BB2DE2057064C00646678 /* PeopleCollectionViewCell */,
 				F13BB2DA205704C500646678 /* SideMenuTableViewCell */,
-				F18C86E0205385CE00CDD5B5 /* PeopleCollectionViewCell */,
 				F1CF265B2052554C008D4A60 /* MovieAndCastCollectionViewCell */,
 				F15E7DD020505F3600EAE101 /* MovieTableViewCell */,
-				F196B452204F8540009006C1 /* UserDefautPhotoCollectionViewCell */,
 			);
 			path = cell;
-			sourceTree = "<group>";
-		};
-		F18C86E0205385CE00CDD5B5 /* PeopleCollectionViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				F18C86E1205385F100CDD5B5 /* PeopleCollectionViewCell.swift */,
-				F18C86E2205385F100CDD5B5 /* PeopleCollectionViewCell.xib */,
-			);
-			path = PeopleCollectionViewCell;
-			sourceTree = "<group>";
-		};
-		F196B452204F8540009006C1 /* UserDefautPhotoCollectionViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				F196B44E204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift */,
-				F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */,
-			);
-			path = UserDefautPhotoCollectionViewCell;
 			sourceTree = "<group>";
 		};
 		F1CF265B2052554C008D4A60 /* MovieAndCastCollectionViewCell */ = {
