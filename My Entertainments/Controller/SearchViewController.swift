@@ -56,6 +56,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     func configureSideMenuView() {
         let screenWidth = UIScreen.main.bounds.width
+        sideMenuView.layer.cornerRadius = 10
+        sideMenuView.layer.borderWidth = 2
+        sideMenuView.layer.masksToBounds = true
+        sideMenuView.backgroundColor = UIColor(patternImage: UIImage(named: "sideMenuBackground")!)
         sideMenuTrailingConstraint.constant = -screenWidth
         sideMenuLeadingConstraint.constant = -screenWidth
         userInfoStackViewTrailing.constant = (2 * screenWidth / 3 - userPhotoImageView.frame.width) / 3
@@ -64,6 +68,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         userPhotoImageView.layer.masksToBounds = true
         sideMenuButtonsTableView.delegate = self
         sideMenuButtonsTableView.dataSource = self
+        sideMenuButtonsTableView.separatorStyle = .none
         sideMenuButtonsTableView.register(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "sideMenuButtonCell")
         if let user = currentUser {
             userPhotoImageView.image = UIImage(data: user.userPhoto)
@@ -123,77 +128,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieTableView.addGestureRecognizer(swipeRight)
     }
     
-    @objc func swipeGestureDetected(gesture: UISwipeGestureRecognizer) {
-        switch gesture.direction {
-        case .left:
-            hideSideMenu()
-            sideMenuShowUp = false
-            break
-        case .right:
-            showSideMenu()
-            sideMenuShowUp = true
-            break
-        default:
-            return
-        }
-    }
-    
-    @IBAction func callSideMenu(_ sender: UIBarButtonItem) {
-        if sideMenuShowUp {
-            hideSideMenu()
-        } else {
-            showSideMenu()
-        }
-        sideMenuShowUp = !sideMenuShowUp
-    }
-    
-    func hideSideMenu() {
-        sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width
-        sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width
-        tapGesture!.cancelsTouchesInView = false
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    func showSideMenu() {
-        self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
-        self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
-        sideMenuButtonsTableView.updateFocusIfNeeded()
-        tapGesture!.cancelsTouchesInView = true
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    
-    
-    @IBAction func sideMenuButtonPressed(_ sender: UIButton) {
-        switch sender.tag {
-        case 0:
-            break
-        case 1:
-            movies = [Movie]()
-            movieTableView.reloadData()
-            break
-        case 2:
-            do {
-                try Auth.auth().signOut()
-                userDefault.set(false, forKey: "login")
-                performSegue(withIdentifier: "userlogout", sender: self)
-            } catch {
-                print("error")
-            }
-            break
-        default:
-            return
-        }
-    }
-    
-    
     // MARK: - SearchBar Implements
     @objc func tableViewTapped() {
         movieSearchBar.endEditing(true)
         hideSideMenu()
+        sideMenuShowUp = false
+
     }
     
     
@@ -263,6 +203,51 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
 }
 
+// MARK: - SideMenu Method
+extension SearchViewController {
+    @objc func swipeGestureDetected(gesture: UISwipeGestureRecognizer) {
+        switch gesture.direction {
+        case .left:
+            hideSideMenu()
+            sideMenuShowUp = false
+            break
+        case .right:
+            showSideMenu()
+            sideMenuShowUp = true
+            break
+        default:
+            return
+        }
+    }
+    
+    @IBAction func callSideMenu(_ sender: UIBarButtonItem) {
+        if sideMenuShowUp {
+            hideSideMenu()
+        } else {
+            showSideMenu()
+        }
+        sideMenuShowUp = !sideMenuShowUp
+    }
+    
+    func hideSideMenu() {
+        sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width
+        sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width
+        tapGesture!.cancelsTouchesInView = false
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    func showSideMenu() {
+        self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
+        self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
+        tapGesture!.cancelsTouchesInView = true
+        UIView.animate(withDuration: 0.2) {
+            self.view.layoutIfNeeded()
+        }
+    }
+}
+
 // MARK: - TableView Delegate and Datasource Implements
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     
@@ -283,6 +268,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = tableView.dequeueReusableCell(withIdentifier: "sideMenuButtonCell", for: indexPath) as! SideMenuTableViewCell
             cell.sideButtonImage.image = sideButtons[indexPath.section].sideButtonImage
             cell.sideButtonLabel.text = sideButtons[indexPath.section].sideButtonLabel
+            cell.selectionStyle = .none
             return cell
         }
         
@@ -321,13 +307,21 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 5
+        if tableView == movieTableView {
+            return 5
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: movieTableView.bounds.size.width, height: 5))
-        headerView.backgroundColor = UIColor.clear
-        return headerView
+        if tableView == movieTableView {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: movieTableView.bounds.size.width, height: 5))
+            headerView.backgroundColor = UIColor.clear
+            return headerView
+        } else {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: sideMenuView.bounds.size.width, height: 10))
+            return headerView
+        }
     }
     
     

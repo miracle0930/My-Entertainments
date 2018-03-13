@@ -33,6 +33,7 @@ class UserStoredMovieViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.title = "My Movies"
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
         userStoredMovies = currentUser!.userStoredMovies.sorted(byKeyPath: "movieName")
         configureSideMenuTableView()
@@ -47,8 +48,13 @@ class UserStoredMovieViewController: UIViewController {
         userPhotoImageView.layer.cornerRadius = 10
         userPhotoImageView.layer.borderWidth = 1
         userPhotoImageView.layer.masksToBounds = true
+        sideMenuView.layer.cornerRadius = 10
+        sideMenuView.layer.borderWidth = 2
+        sideMenuView.layer.masksToBounds = true
+        sideMenuView.backgroundColor = UIColor(patternImage: UIImage(named: "sideMenuBackground")!)
         sideButtonsTableView.delegate = self
         sideButtonsTableView.dataSource = self
+        sideButtonsTableView.separatorStyle = .none
         sideButtonsTableView.register(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "sideMenuButtonCell")
         userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
         userNameLabel.text = currentUser!.userNickname
@@ -64,6 +70,7 @@ class UserStoredMovieViewController: UIViewController {
         userStoredMovieTableView.delegate = self
         userStoredMovieTableView.dataSource = self
         userStoredMovieTableView.rowHeight = 100
+        userStoredMovieTableView.separatorStyle = .none
         userStoredMovieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
         userStoredMovieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "userStoredMovieTableViewCell")
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
@@ -120,6 +127,7 @@ class UserStoredMovieViewController: UIViewController {
     // MARK: - SearchBar Implements
     @objc func tableViewTapped() {
         hideSideMenu()
+        sideMenuShowUp = false
     }
     
 
@@ -137,6 +145,11 @@ extension UserStoredMovieViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == userStoredMovieTableView {
             let cell = tableView.dequeueReusableCell(withIdentifier: "userStoredMovieTableViewCell", for: indexPath) as! MovieTableViewCell
+            cell.layer.cornerRadius = 10
+            cell.layer.borderWidth = 1
+            cell.selectionStyle = .none
+            cell.backgroundView = UIImageView(image: UIImage(named: "cellBackground"))
+            cell.layer.masksToBounds = true
             cell.movieNameLabel.text = userStoredMovies![indexPath.section].movieName
             cell.movieReleasedLabel.text = userStoredMovies![indexPath.section].movieReleased
             cell.movieImageView.image = UIImage(data: userStoredMovies![indexPath.section].moviePoster)
@@ -161,6 +174,24 @@ extension UserStoredMovieViewController: UITableViewDelegate, UITableViewDataSou
                 destinationVC.movieId = userStoredMovies![indexPath.section].movieId
                 destinationVC.currentUser = currentUser!
             }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if tableView == userStoredMovieTableView {
+            return 5
+        }
+        return 0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if tableView == userStoredMovieTableView {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: userStoredMovieTableView.bounds.size.width, height: 5))
+            headerView.backgroundColor = UIColor.clear
+            return headerView
+        } else {
+            let headerView = UIView(frame: CGRect(x: 0, y: 0, width: sideMenuView.bounds.size.width, height: 10))
+            return headerView
         }
     }
     
