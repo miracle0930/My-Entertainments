@@ -22,7 +22,7 @@ class UserStoredMovie: Object {
     @objc dynamic var movieContent = ""
     @objc dynamic var moviePoster = Data()
     @objc dynamic var movieBackdrop = Data()
-    var dataHolder = LinkingObjects(fromType: UserAccount.self, property: "userStoredMovies")
+    var storedMoviesDataHolder = LinkingObjects(fromType: UserAccount.self, property: "userStoredMovies")
     
    
     

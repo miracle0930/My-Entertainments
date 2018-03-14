@@ -40,6 +40,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var userInfoStackViewTrailing: NSLayoutConstraint!
     @IBOutlet var userPhotoImageView: UIImageView!
     @IBOutlet var userNameLabel: UILabel!
+    @IBOutlet var userEmailLabel: UILabel!
     @IBOutlet var userIntroTextView: UITextView!
     
     override func viewDidLoad() {
@@ -74,6 +75,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             userPhotoImageView.image = UIImage(data: user.userPhoto)
             userNameLabel.text = user.userNickname
             userIntroTextView.text = user.userIntro
+            userEmailLabel.text = user.userEmail
         } else {
             // When a new app installed, no data stored in local Realm, so we need to download data from firebase and store into Realm
             let user = Auth.auth().currentUser!
@@ -81,6 +83,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             databaseRef.child("Users").child(user.uid).child("Account").observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = JSON(snapshot.value!)
                 self.userNameLabel.text = value["userNickname"].stringValue
+                self.userEmailLabel.text = value["userEmail"].stringValue
                 self.userIntroTextView.text = value["userIntro"].stringValue
                 let imagePath = value["userPhoto"].stringValue
                 let pathReference = Storage.storage().reference(forURL: imagePath)
@@ -95,6 +98,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                                     let userAccount = UserAccount()
                                     userAccount.userId = Auth.auth().currentUser!.uid
                                     userAccount.userNickname = self.userNameLabel.text!
+                                    userAccount.userEmail = self.userEmailLabel.text!
                                     userAccount.userIntro = self.userIntroTextView.text
                                     userAccount.userPhoto = imageData!
                                     self.realm.add(userAccount)

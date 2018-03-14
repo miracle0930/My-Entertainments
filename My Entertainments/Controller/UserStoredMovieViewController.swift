@@ -25,6 +25,7 @@ class UserStoredMovieViewController: UIViewController {
     @IBOutlet var userPhotoImageView: UIImageView!
     @IBOutlet var userNameLabel: UILabel!
     @IBOutlet var userIntroTextView: UITextView!
+    @IBOutlet var userEmailLabel: UILabel!
     @IBOutlet var sideMenuLeading: NSLayoutConstraint!
     @IBOutlet var sideMenuTrailing: NSLayoutConstraint!
     @IBOutlet var userInfoTrailing: NSLayoutConstraint!
@@ -59,6 +60,7 @@ class UserStoredMovieViewController: UIViewController {
         userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
         userNameLabel.text = currentUser!.userNickname
         userIntroTextView.text = currentUser!.userIntro
+        userEmailLabel.text = currentUser!.userEmail
         self.view.layoutIfNeeded()
     }
     

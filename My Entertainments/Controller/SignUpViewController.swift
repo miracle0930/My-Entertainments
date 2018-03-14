@@ -118,9 +118,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 userAccount.userId = id
                 userAccount.userNickname = self.nicknameTextField.text!
                 userAccount.userIntro = "I love movies!"
+                userAccount.userEmail = self.emailTextField.text!
                 userAccount.userPhoto = imageData
                 self.realm.add(userAccount)
-                print(userAccount)
             }
         } catch {
             print(error)
@@ -165,7 +165,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 if error == nil {
                     let userInfo = [
                         "userNickname": self.nicknameTextField.text!,
-                        "userIntro": "I love movies!"
+                        "userIntro": "I love movies!",
+                        "userEmail": self.emailTextField.text!
                     ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")

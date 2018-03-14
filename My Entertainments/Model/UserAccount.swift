@@ -14,10 +14,11 @@ class UserAccount: Object {
     @objc dynamic var userId = UUID().uuidString
     @objc dynamic var userNickname = ""
     @objc dynamic var userIntro = ""
+    @objc dynamic var userEmail = ""
     @objc dynamic var userPhoto = Data()
+    var userContacts = List<UserContact>()
     var userStoredMovies = List<UserStoredMovie>()
     var userStoredMoviesName = List<String>()
-    
     
     override static func primaryKey() -> String? {
         return "userId"

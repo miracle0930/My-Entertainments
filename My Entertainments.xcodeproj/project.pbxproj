@@ -19,6 +19,11 @@
 		F13BB2D620562A1500646678 /* SideMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F13BB2D420562A1500646678 /* SideMenuTableViewCell.xib */; };
 		F13BB2D92056FA5C00646678 /* SideMenuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB2D82056FA5C00646678 /* SideMenuButton.swift */; };
 		F13BB2E12057094300646678 /* UserStoredMovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */; };
+		F13BB32B2058EDBA00646678 /* ContactsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB3292058EDBA00646678 /* ContactsTableViewCell.swift */; };
+		F13BB32C2058EDBA00646678 /* ContactsTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F13BB32A2058EDBA00646678 /* ContactsTableViewCell.xib */; };
+		F13BB32E2058EF0700646678 /* UserContact.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB32D2058EF0700646678 /* UserContact.swift */; };
+		F13BB3302058F11A00646678 /* ContactsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB32F2058F11A00646678 /* ContactsTableViewController.swift */; };
+		F13BB3322058F4CC00646678 /* NewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F13BB3312058F4CC00646678 /* NewContactViewController.swift */; };
 		F1572FFA20378D230048C08A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1572FF920378D230048C08A /* UserAccount.swift */; };
 		F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */; };
 		F15EF694201EDB660054683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15EF693201EDB650054683C /* Assets.xcassets */; };
@@ -58,6 +63,11 @@
 		F13BB2D420562A1500646678 /* SideMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuTableViewCell.xib; sourceTree = "<group>"; };
 		F13BB2D82056FA5C00646678 /* SideMenuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuButton.swift; sourceTree = "<group>"; };
 		F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStoredMovieViewController.swift; sourceTree = "<group>"; };
+		F13BB3292058EDBA00646678 /* ContactsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewCell.swift; sourceTree = "<group>"; };
+		F13BB32A2058EDBA00646678 /* ContactsTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactsTableViewCell.xib; sourceTree = "<group>"; };
+		F13BB32D2058EF0700646678 /* UserContact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserContact.swift; sourceTree = "<group>"; };
+		F13BB32F2058F11A00646678 /* ContactsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsTableViewController.swift; sourceTree = "<group>"; };
+		F13BB3312058F4CC00646678 /* NewContactViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewContactViewController.swift; sourceTree = "<group>"; };
 		F1572FF920378D230048C08A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableViewController.swift; sourceTree = "<group>"; };
 		F15EF693201EDB650054683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,6 +151,8 @@
 				F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */,
 				F18C86DE2053836E00CDD5B5 /* PeopleTableViewController.swift */,
 				F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */,
+				F13BB32F2058F11A00646678 /* ContactsTableViewController.swift */,
+				F13BB3312058F4CC00646678 /* NewContactViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -191,6 +203,15 @@
 			name = UserDefaultPhotosCollectionViewCell;
 			sourceTree = "<group>";
 		};
+		F13BB3282058ED9700646678 /* ContactsTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F13BB3292058EDBA00646678 /* ContactsTableViewCell.swift */,
+				F13BB32A2058EDBA00646678 /* ContactsTableViewCell.xib */,
+			);
+			name = ContactsTableViewCell;
+			sourceTree = "<group>";
+		};
 		F15E7DD020505F3600EAE101 /* MovieTableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +229,7 @@
 				F18C86DC2052F6C100CDD5B5 /* SimilarMovie.swift */,
 				F18C86E52053903C00CDD5B5 /* RelatedMovie.swift */,
 				F1572FF920378D230048C08A /* UserAccount.swift */,
+				F13BB32D2058EF0700646678 /* UserContact.swift */,
 				F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */,
 				F13BB2D82056FA5C00646678 /* SideMenuButton.swift */,
 			);
@@ -217,6 +239,7 @@
 		F189C50F2016DD8E00CEDA44 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				F13BB3282058ED9700646678 /* ContactsTableViewCell */,
 				F13BB2DF2057066700646678 /* UserDefaultPhotosCollectionViewCell */,
 				F13BB2DE2057064C00646678 /* PeopleCollectionViewCell */,
 				F13BB2DA205704C500646678 /* SideMenuTableViewCell */,
@@ -309,6 +332,7 @@
 				F18C86E4205385F100CDD5B5 /* PeopleCollectionViewCell.xib in Resources */,
 				F189C50E20168FEF00CEDA44 /* MovieTableViewCell.xib in Resources */,
 				F1CF265A2052553D008D4A60 /* MovieAndCastCollectionViewCell.xib in Resources */,
+				F13BB32C2058EDBA00646678 /* ContactsTableViewCell.xib in Resources */,
 				F10E6F57201535C3007AA679 /* GoogleService-Info.plist in Resources */,
 				F10E6F4720153401007AA679 /* Main.storyboard in Resources */,
 				F13BB2D620562A1500646678 /* SideMenuTableViewCell.xib in Resources */,
@@ -396,6 +420,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F13BB32B2058EDBA00646678 /* ContactsTableViewCell.swift in Sources */,
 				F13BB2E12057094300646678 /* UserStoredMovieViewController.swift in Sources */,
 				F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */,
 				F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */,
@@ -406,8 +431,11 @@
 				F18C86EA20545F1500CDD5B5 /* UserStoredMovie.swift in Sources */,
 				F1CF265D205259E4008D4A60 /* Cast.swift in Sources */,
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,
+				F13BB3322058F4CC00646678 /* NewContactViewController.swift in Sources */,
 				F1572FFA20378D230048C08A /* UserAccount.swift in Sources */,
+				F13BB32E2058EF0700646678 /* UserContact.swift in Sources */,
 				F10E6F4A20153401007AA679 /* My_Entertainments.xcdatamodeld in Sources */,
+				F13BB3302058F11A00646678 /* ContactsTableViewController.swift in Sources */,
 				F18C86DD2052F6C100CDD5B5 /* SimilarMovie.swift in Sources */,
 				F10E6F59201553DA007AA679 /* SignUpViewController.swift in Sources */,
 				F196B450204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.swift in Sources */,
