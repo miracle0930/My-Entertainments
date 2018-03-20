@@ -15,18 +15,33 @@ class SystemInfoTableViewCell: UITableViewCell {
     var acceptButtonPressedCallback: (() -> ())?
     var ignoreButtonPressedCallback: (() -> ())?
     
+    @IBOutlet var acceptButton: UIButton!
+    @IBOutlet var ignoreButton: UIButton!
+    @IBOutlet var statusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        acceptButton.layer.cornerRadius = 10
+        acceptButton.layer.borderWidth = 1
+        ignoreButton.layer.cornerRadius = 10
+        ignoreButton.layer.borderWidth = 1
+
     }
     
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
+        acceptButton.isEnabled = false
+        ignoreButton.isEnabled = false
+        statusLabel.text = "Accepted"
+        statusLabel.backgroundColor = UIColor.green
         acceptButtonPressedCallback!()
     }
     
     
     @IBAction func ignoreButtonPressed(_ sender: UIButton) {
+        acceptButton.isEnabled = false
+        ignoreButton.isEnabled = false
+        statusLabel.text = "Ignored"
+        statusLabel.backgroundColor = UIColor.gray
         ignoreButtonPressedCallback!()
     }
     

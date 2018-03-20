@@ -13,32 +13,44 @@
         <array key="TimesNewRoman.ttf">
             <string>TimesNewRomanPSMT</string>
         </array>
+        <array key="TimesNewRomanBoldItalic.ttf">
+            <string>TimesNewRomanPS-BoldItalicMT</string>
+        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="SystemInfoTableViewCell" customModule="My_Entertainments" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="o1s-uO-xik">
-                        <rect key="frame" x="16" y="4" width="60" height="60"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o1s-uO-xik">
+                        <rect key="frame" x="16" y="24" width="60" height="60"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="60" id="Um1-u9-EXm"/>
+                            <constraint firstAttribute="width" constant="60" id="p2F-Rh-Zhn"/>
+                        </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O1u-kr-dBr">
-                        <rect key="frame" x="84" y="11" width="220" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O1u-kr-dBr">
+                        <rect key="frame" x="84" y="31" width="186" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="CJ7-xx-bPV"/>
+                            <constraint firstAttribute="width" constant="186" id="Ci4-a5-VSp"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAM-pe-lmP">
-                        <rect key="frame" x="100" y="40" width="70" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dAM-pe-lmP">
+                        <rect key="frame" x="84" y="60" width="70" height="24"/>
                         <color key="backgroundColor" red="0.45009386540000001" green="0.98132258650000004" blue="0.4743030667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="GYR-SJ-SEk"/>
+                            <constraint firstAttribute="width" constant="70" id="dFR-Yn-wWk"/>
+                        </constraints>
                         <state key="normal" title="Accept">
                             <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
@@ -51,10 +63,13 @@
                             <action selector="acceptButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="vsx-9d-36A"/>
                         </connections>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9nw-Qm-aJO">
-                        <rect key="frame" x="205" y="40" width="70" height="24"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9nw-Qm-aJO">
+                        <rect key="frame" x="200" y="60" width="70" height="24"/>
                         <color key="backgroundColor" white="0.4982910156" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="0SY-UV-RKS"/>
+                            <constraint firstAttribute="width" constant="70" id="Dgx-de-pVc"/>
+                        </constraints>
                         <state key="normal" title="Ignore">
                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </state>
@@ -62,10 +77,48 @@
                             <action selector="ignoreButtonPressed:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="BQF-Nv-TjA"/>
                         </connections>
                     </button>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New Friend Request" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iaz-nw-18l">
+                        <rect key="frame" x="16" y="2" width="102" height="14"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="102" id="Jp8-3T-8c0"/>
+                            <constraint firstAttribute="height" constant="14" id="nor-Lu-3b1"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPS-BoldItalicMT" family="Times New Roman" pointSize="12"/>
+                        <color key="textColor" white="0.4982910156" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JS4-US-2vU">
+                        <rect key="frame" x="273" y="39" width="37" height="12"/>
+                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="I8p-Mq-pxk"/>
+                            <constraint firstAttribute="width" constant="37" id="iTp-nL-wIH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="9nw-Qm-aJO" secondAttribute="bottom" constant="5.5" id="0Lm-k5-pcT"/>
+                    <constraint firstItem="O1u-kr-dBr" firstAttribute="top" secondItem="Iaz-nw-18l" secondAttribute="bottom" constant="15" id="3if-iM-yZs"/>
+                    <constraint firstItem="o1s-uO-xik" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Dxq-3K-4Bv"/>
+                    <constraint firstItem="JS4-US-2vU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Efa-Fr-Pv5"/>
+                    <constraint firstItem="Iaz-nw-18l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="Ekz-lM-XnM"/>
+                    <constraint firstItem="O1u-kr-dBr" firstAttribute="leading" secondItem="o1s-uO-xik" secondAttribute="trailing" constant="8" id="K4x-qc-JBu"/>
+                    <constraint firstAttribute="trailing" secondItem="JS4-US-2vU" secondAttribute="trailing" constant="10" id="KdY-fu-noq"/>
+                    <constraint firstItem="dAM-pe-lmP" firstAttribute="leading" secondItem="o1s-uO-xik" secondAttribute="trailing" constant="8" id="eeL-EO-rsK"/>
+                    <constraint firstAttribute="bottom" secondItem="dAM-pe-lmP" secondAttribute="bottom" constant="5.5" id="gC5-82-eTM"/>
+                    <constraint firstAttribute="bottom" secondItem="o1s-uO-xik" secondAttribute="bottom" constant="5.5" id="i09-57-xI4"/>
+                    <constraint firstItem="9nw-Qm-aJO" firstAttribute="leading" secondItem="dAM-pe-lmP" secondAttribute="trailing" constant="46" id="nvU-IV-Djj"/>
+                    <constraint firstItem="Iaz-nw-18l" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="tUM-Ke-pmK"/>
+                </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="acceptButton" destination="dAM-pe-lmP" id="IF5-DN-uHP"/>
+                <outlet property="ignoreButton" destination="9nw-Qm-aJO" id="M0A-f1-HaD"/>
+                <outlet property="statusLabel" destination="JS4-US-2vU" id="T01-0a-Lfg"/>
                 <outlet property="systemInfoImageView" destination="o1s-uO-xik" id="1aF-aa-uu7"/>
                 <outlet property="systemInfoLabel" destination="O1u-kr-dBr" id="zaB-t3-P03"/>
             </connections>

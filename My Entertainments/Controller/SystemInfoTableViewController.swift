@@ -17,7 +17,7 @@ class SystemInfoTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = 70
+        tableView.rowHeight = 90
         tableView.register(UINib(nibName: "SystemInfoTableViewCell", bundle: nil), forCellReuseIdentifier: "systemInfoTableViewCell")
         systemInfos = currentUser!.userSystemRequests
     }
@@ -40,6 +40,7 @@ class SystemInfoTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "systemInfoTableViewCell", for: indexPath) as! SystemInfoTableViewCell
+        cell.selectionStyle = .none
         cell.systemInfoLabel.text = systemInfos![indexPath.row].requestMsg
         cell.systemInfoImageView.image = UIImage(data: systemInfos![indexPath.row].requestImage)
         cell.acceptButtonPressedCallback = {

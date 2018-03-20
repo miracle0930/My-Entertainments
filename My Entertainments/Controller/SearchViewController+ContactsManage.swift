@@ -23,7 +23,7 @@ extension SearchViewController {
                 do {
                     try self.realm.write {
                         let friendRequest = UserSystemRequest()
-                        friendRequest.requestMsg = "New friend request from '\(requestSender["userNickname"].stringValue)'."
+                        friendRequest.requestMsg = "Hi, I'm '\(requestSender["userNickname"].stringValue)'."
                         if let dataImage = try? Data(contentsOf: URL(string: requestSender["userPhoto"].stringValue)!) {
                             friendRequest.requestImage = dataImage
                         }
