@@ -10,24 +10,29 @@ import Foundation
 import Firebase
 import RealmSwift
 import SwiftyJSON
+import SDWebImage
 
 extension SearchViewController {
     
     func newFriendRequestReceived() {
         Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).observe(.childChanged) { (snapshot) in
-            let data = JSON(snapshot.value!)
-            self.tabBarController?.tabBar.items![3].badgeValue = "1"
-            do {
-                try self.realm.write {
-                    let friendRequest = UserSystemRequest()
-                    friendRequest.requestMsg = "New Friend Request from \(data)."
-                    friendRequest.requestImage = UIImageJPEGRepresentation(UIImage(named: "noimg")!, 1)!
-                    self.currentUser!.userSystemRequests.append(friendRequest)
+            let data = JSON(snapshot.value!).stringValue
+            Database.database().reference().child("Users").child(self.emailFormatModifier(email: data)).observeSingleEvent(of: .value) { (snapshot) in
+                let requestSender = JSON(snapshot.value!)
+                self.tabBarController?.tabBar.items![3].badgeValue = String(self.currentUser!.userSystemRequests.count + 1)
+                do {
+                    try self.realm.write {
+                        let friendRequest = UserSystemRequest()
+                        friendRequest.requestMsg = "New friend request from '\(requestSender["userNickname"].stringValue)'."
+                        if let dataImage = try? Data(contentsOf: URL(string: requestSender["userPhoto"].stringValue)!) {
+                            friendRequest.requestImage = dataImage
+                        }
+                        self.currentUser!.userSystemRequests.insert(friendRequest, at: 0)
+                    }
+                } catch {
+                    print(error)
                 }
-            } catch {
-                print(error)
             }
-            
         }
     }
     

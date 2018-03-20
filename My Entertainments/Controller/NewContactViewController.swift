@@ -16,14 +16,13 @@ class NewContactViewController: UIViewController {
     var newContactIntro: String?
     var newContactImageUrl: String?
     var newContactEmail: String?
+    var currentUser: UserAccount?
     let storageRef = Storage.storage()
     let databaseRef = Database.database().reference()
     
 
     @IBOutlet var newContactImageView: UIImageView!
-    
     @IBOutlet var newContactNameLabel: UILabel!
-    
     @IBOutlet var newContactIntroTextView: UITextView!
     
     override func viewDidLoad() {
@@ -40,8 +39,9 @@ class NewContactViewController: UIViewController {
     
     @IBAction func sendRequestButtonPressed(_ sender: UIButton) {
         
-        
         databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: newContactEmail!)).updateChildValues(["from": Auth.auth().currentUser!.email!])
+        databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!))
+            .updateChildValues(["fromNum": currentUser!.userSystemRequests.count + 1])
         dismiss(animated: true, completion: nil)
     }
     

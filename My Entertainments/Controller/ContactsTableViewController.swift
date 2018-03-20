@@ -67,6 +67,7 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
             destination.newContactIntro = newContactJSON["userIntro"].stringValue
             destination.newContactImageUrl = newContactJSON["userPhoto"].stringValue
             destination.newContactEmail = self.searchField.text!
+            destination.currentUser = currentUser!
         } else if segue.identifier == "showSystemMessages" {
             let destination = segue.destination as! SystemInfoTableViewController
             destination.currentUser = currentUser!
