@@ -53,6 +53,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         storageRef = Storage.storage().reference()
         configureMovieTableView()
         configureSideMenuView()
+        newFriendRequestReceived()
     }
     
     func configureSideMenuView() {
@@ -80,7 +81,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             // When a new app installed, no data stored in local Realm, so we need to download data from firebase and store into Realm
             let user = Auth.auth().currentUser!
             var imageData: Data?
-            databaseRef.child("Users").child(user.uid).child("Account").observeSingleEvent(of: .value, with: { (snapshot) in
+            databaseRef.child("Users").child(self.emailFormatModifier(email: user.email!)).observeSingleEvent(of: .value, with: { (snapshot) in
                 let value = JSON(snapshot.value!)
                 self.userNameLabel.text = value["userNickname"].stringValue
                 self.userEmailLabel.text = value["userEmail"].stringValue
@@ -113,6 +114,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             })
         }
         self.view.layoutIfNeeded()
+    }
+    
+    func emailFormatModifier(email: String) -> String {
+        let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
+        return modifiedEmail
     }
     
     func configureMovieTableView() {

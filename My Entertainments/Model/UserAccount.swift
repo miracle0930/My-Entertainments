@@ -9,7 +9,6 @@
 import Foundation
 import RealmSwift
 
-
 class UserAccount: Object {
     @objc dynamic var userId = UUID().uuidString
     @objc dynamic var userNickname = ""
@@ -18,6 +17,7 @@ class UserAccount: Object {
     @objc dynamic var userPhoto = Data()
     var userContacts = List<UserContact>()
     var userStoredMovies = List<UserStoredMovie>()
+    var userSystemRequests = List<UserSystemRequest>()
     var userStoredMoviesName = List<String>()
     
     override static func primaryKey() -> String? {

@@ -120,6 +120,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 userAccount.userIntro = "I love movies!"
                 userAccount.userEmail = self.emailTextField.text!
                 userAccount.userPhoto = imageData
+                let systemContact = UserContact()
+                systemContact.contactName = "System"
+                systemContact.contactImage = UIImageJPEGRepresentation(UIImage(named: "settings")!, 1)!
+                userAccount.userContacts.append(systemContact)
                 self.realm.add(userAccount)
             }
         } catch {
@@ -135,7 +139,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
         storageRef.child(imagePath).putData(imageData, metadata: metaData) { (metaData, error) in
             if error == nil {
                 let downloadURL = metaData!.downloadURL()!.absoluteString
-                self.databaseRef.child("Users").child(id).child("Account").updateChildValues(["userPhoto": downloadURL])
+                self.databaseRef.child("Users").child(self.emailFormatModifier(email: self.emailTextField.text!)).updateChildValues(["userPhoto": downloadURL])
             } else {
                 print(error!)
             }
@@ -168,11 +172,18 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         "userIntro": "I love movies!",
                         "userEmail": self.emailTextField.text!
                     ]
+                    let friendRequestInfo = [
+                        "from": "NoRequest",
+                        "fromNum": "0",
+                        "to": "NoRequest",
+                        "toNum": "0"
+                    ]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")
                     self.userDefault.set(user!.uid, forKey: "userId")
                     self.userDefault.set(true, forKey: "login")
-                    self.databaseRef.child("Users").child(user!.uid).child("Account").setValue(userInfo)
+                    self.databaseRef.child("Users").child(self.emailFormatModifier(email: self.emailTextField.text!)).setValue(userInfo)
+                    self.databaseRef.child("NewFriendRequest").child(self.emailFormatModifier(email: self.emailTextField.text!)).setValue(friendRequestInfo)
                     self.writeToRealm(id: user!.uid, image: userPhoto)
                     self.writeToStorage(id: user!.uid, image: userPhoto)
                     self.performSegue(withIdentifier: "newLogIn", sender: self)
@@ -187,6 +198,13 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
             dismiss(animated: true, completion: nil)
         }
     }
+    
+    func emailFormatModifier(email: String) -> String {
+        let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
+        return modifiedEmail
+    }
+    
+    
 }
 
 extension SignUpViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {

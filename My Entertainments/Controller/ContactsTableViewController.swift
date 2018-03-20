@@ -14,15 +14,27 @@ import Alamofire
 
 class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     
+    let realm = try! Realm()
+    let databaseRef = Database.database().reference()
+    
     var searchField: UITextField!
+    var newContactJSON: JSON!
+    
+    var currentUser: UserAccount?
+    var userContacts: List<UserContact>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = 70
+        tableView.register(UINib(nibName: "ContactsTableViewCell", bundle: nil), forCellReuseIdentifier: "contactsTableViewCell")
+        currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
+        userContacts = currentUser!.userContacts
     }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func addNewFriendButtonPressed(_ sender: UIBarButtonItem) {
@@ -31,79 +43,71 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
             self.searchField = textField
             self.searchField.delegate = self
         }
-//        let confirm = UIAlertAction(title: "Search", style: .default) { (action) in
-//            <#code#>
-//        }
         
+        let search = UIAlertAction(title: "Search", style: .default) { (action) in
+            self.databaseRef.child("Users").child(self.emailFormatModifier(email: self.searchField.text!)).observeSingleEvent(of: .value, with: { (snapshot) in
+                let rawValue = JSON(snapshot.value!)
+                if rawValue != JSON.null {
+                    self.newContactJSON = rawValue
+                    self.performSegue(withIdentifier: "findNewContact", sender: self)
+                }
+            })
+        }
         
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        alert.addAction(search)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "findNewContact" {
+            let destination = segue.destination as! NewContactViewController
+            destination.newContactName = newContactJSON["userNickname"].stringValue
+            destination.newContactIntro = newContactJSON["userIntro"].stringValue
+            destination.newContactImageUrl = newContactJSON["userPhoto"].stringValue
+            destination.newContactEmail = self.searchField.text!
+        } else if segue.identifier == "showSystemMessages" {
+            let destination = segue.destination as! SystemInfoTableViewController
+            destination.currentUser = currentUser!
+        }
+    }
+    
+    func emailFormatModifier(email: String) -> String {
+        if email == "" {
+            return " "
+        }
+        let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
+        return modifiedEmail
     }
     
 
     // MARK: - Table view data source
-
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return userContacts!.count
     }
-
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "contactsTableViewCell", for: indexPath) as! ContactsTableViewCell
+        cell.contactImageView.image = UIImage(data: userContacts![indexPath.row].contactImage)
+        cell.contactNameLabel.text = userContacts![indexPath.row].contactName
+        if indexPath.row == 0 {
+            
+        }
         return cell
     }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            performSegue(withIdentifier: "showSystemMessages", sender: self)
+        }
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
+    
 }

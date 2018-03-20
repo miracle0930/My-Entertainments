@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F10319F32060531700430FD4 /* SearchViewController+ContactsManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10319F22060531700430FD4 /* SearchViewController+ContactsManage.swift */; };
+		F10319F72061738600430FD4 /* SystemInfoTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10319F62061738600430FD4 /* SystemInfoTableViewController.swift */; };
+		F10319FB206173CA00430FD4 /* SystemInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10319F9206173CA00430FD4 /* SystemInfoTableViewCell.swift */; };
+		F10319FC206173CA00430FD4 /* SystemInfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F10319FA206173CA00430FD4 /* SystemInfoTableViewCell.xib */; };
+		F1031A0120617EC100430FD4 /* UserSystemRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1031A0020617EC100430FD4 /* UserSystemRequest.swift */; };
 		F10E6F4220153401007AA679 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4120153401007AA679 /* AppDelegate.swift */; };
 		F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10E6F4320153401007AA679 /* LogInViewController.swift */; };
 		F10E6F4720153401007AA679 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F10E6F4520153401007AA679 /* Main.storyboard */; };
@@ -49,6 +54,11 @@
 		58B52C0FF4EC7C215322765B /* Pods-My Entertainments.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Entertainments.release.xcconfig"; path = "Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments.release.xcconfig"; sourceTree = "<group>"; };
 		71C7F1C40E083AFAE57BB13A /* Pods_My_Entertainments.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_My_Entertainments.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		922EC5430F09E6A604EBA2C0 /* Pods-My Entertainments.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-My Entertainments.debug.xcconfig"; path = "Pods/Target Support Files/Pods-My Entertainments/Pods-My Entertainments.debug.xcconfig"; sourceTree = "<group>"; };
+		F10319F22060531700430FD4 /* SearchViewController+ContactsManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+ContactsManage.swift"; sourceTree = "<group>"; };
+		F10319F62061738600430FD4 /* SystemInfoTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInfoTableViewController.swift; sourceTree = "<group>"; };
+		F10319F9206173CA00430FD4 /* SystemInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemInfoTableViewCell.swift; sourceTree = "<group>"; };
+		F10319FA206173CA00430FD4 /* SystemInfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemInfoTableViewCell.xib; sourceTree = "<group>"; };
+		F1031A0020617EC100430FD4 /* UserSystemRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSystemRequest.swift; sourceTree = "<group>"; };
 		F10E6F3E20153401007AA679 /* My Entertainments.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Entertainments.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F10E6F4120153401007AA679 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F10E6F4320153401007AA679 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +119,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F10319F8206173A100430FD4 /* SystemInfoTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				F10319F9206173CA00430FD4 /* SystemInfoTableViewCell.swift */,
+				F10319FA206173CA00430FD4 /* SystemInfoTableViewCell.xib */,
+			);
+			name = SystemInfoTableViewCell;
+			sourceTree = "<group>";
+		};
 		F10E6F3520153401007AA679 = {
 			isa = PBXGroup;
 			children = (
@@ -148,11 +167,13 @@
 				F10E6F4320153401007AA679 /* LogInViewController.swift */,
 				F10E6F58201553DA007AA679 /* SignUpViewController.swift */,
 				F189C5062016531500CEDA44 /* SearchViewController.swift */,
+				F10319F22060531700430FD4 /* SearchViewController+ContactsManage.swift */,
 				F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */,
 				F18C86DE2053836E00CDD5B5 /* PeopleTableViewController.swift */,
 				F13BB2E02057094300646678 /* UserStoredMovieViewController.swift */,
 				F13BB32F2058F11A00646678 /* ContactsTableViewController.swift */,
 				F13BB3312058F4CC00646678 /* NewContactViewController.swift */,
+				F10319F62061738600430FD4 /* SystemInfoTableViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -231,6 +252,7 @@
 				F1572FF920378D230048C08A /* UserAccount.swift */,
 				F13BB32D2058EF0700646678 /* UserContact.swift */,
 				F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */,
+				F1031A0020617EC100430FD4 /* UserSystemRequest.swift */,
 				F13BB2D82056FA5C00646678 /* SideMenuButton.swift */,
 			);
 			path = Model;
@@ -239,6 +261,7 @@
 		F189C50F2016DD8E00CEDA44 /* cell */ = {
 			isa = PBXGroup;
 			children = (
+				F10319F8206173A100430FD4 /* SystemInfoTableViewCell */,
 				F13BB3282058ED9700646678 /* ContactsTableViewCell */,
 				F13BB2DF2057066700646678 /* UserDefaultPhotosCollectionViewCell */,
 				F13BB2DE2057064C00646678 /* PeopleCollectionViewCell */,
@@ -336,6 +359,7 @@
 				F10E6F57201535C3007AA679 /* GoogleService-Info.plist in Resources */,
 				F10E6F4720153401007AA679 /* Main.storyboard in Resources */,
 				F13BB2D620562A1500646678 /* SideMenuTableViewCell.xib in Resources */,
+				F10319FC206173CA00430FD4 /* SystemInfoTableViewCell.xib in Resources */,
 				F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */,
 				F15EF694201EDB660054683C /* Assets.xcassets in Resources */,
 			);
@@ -372,6 +396,7 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
@@ -385,6 +410,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
@@ -432,6 +458,7 @@
 				F1CF265D205259E4008D4A60 /* Cast.swift in Sources */,
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,
 				F13BB3322058F4CC00646678 /* NewContactViewController.swift in Sources */,
+				F10319F32060531700430FD4 /* SearchViewController+ContactsManage.swift in Sources */,
 				F1572FFA20378D230048C08A /* UserAccount.swift in Sources */,
 				F13BB32E2058EF0700646678 /* UserContact.swift in Sources */,
 				F10E6F4A20153401007AA679 /* My_Entertainments.xcdatamodeld in Sources */,
@@ -443,6 +470,9 @@
 				F13BB2D92056FA5C00646678 /* SideMenuButton.swift in Sources */,
 				F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */,
 				F13BB2D520562A1500646678 /* SideMenuTableViewCell.swift in Sources */,
+				F1031A0120617EC100430FD4 /* UserSystemRequest.swift in Sources */,
+				F10319FB206173CA00430FD4 /* SystemInfoTableViewCell.swift in Sources */,
+				F10319F72061738600430FD4 /* SystemInfoTableViewController.swift in Sources */,
 				F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */,
 				F18C86E62053903C00CDD5B5 /* RelatedMovie.swift in Sources */,
 			);

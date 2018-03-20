@@ -13,35 +13,35 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="ContactsTableViewCell" customModule="My_Entertainments" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="45"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="44.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oG2-p0-LrS">
-                        <rect key="frame" x="79" y="11" width="225" height="21"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nhh-C1-KyC">
+                        <rect key="frame" x="16" y="4" width="60" height="60"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="225" id="8mM-t9-wrA"/>
-                            <constraint firstAttribute="height" constant="21" id="BcO-bt-QTl"/>
+                            <constraint firstAttribute="width" constant="60" id="LS6-u4-gbc"/>
+                            <constraint firstAttribute="height" constant="60" id="jg5-JY-Bgb"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name(e.g. Tom)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oG2-p0-LrS">
+                        <rect key="frame" x="98" y="24" width="206" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="206" id="5BN-wB-Yuq"/>
+                            <constraint firstAttribute="height" constant="21" id="7nh-pl-8hP"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nhh-C1-KyC">
-                        <rect key="frame" x="16" y="2" width="40" height="40"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="40" id="PZh-u6-Zzb"/>
-                            <constraint firstAttribute="height" constant="40" id="vdH-2q-TYQ"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="Nhh-C1-KyC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="bYe-mX-XBF"/>
-                    <constraint firstItem="oG2-p0-LrS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rvu-aI-5LV"/>
-                    <constraint firstItem="oG2-p0-LrS" firstAttribute="leading" secondItem="Nhh-C1-KyC" secondAttribute="trailing" constant="23" id="s7q-Um-ls8"/>
-                    <constraint firstItem="Nhh-C1-KyC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xfd-nf-dtf"/>
+                    <constraint firstItem="Nhh-C1-KyC" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Hzk-cR-ASn"/>
+                    <constraint firstItem="Nhh-C1-KyC" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="RXt-nd-3j9"/>
+                    <constraint firstItem="oG2-p0-LrS" firstAttribute="leading" secondItem="Nhh-C1-KyC" secondAttribute="trailing" constant="22" id="SPN-af-VFv"/>
+                    <constraint firstItem="oG2-p0-LrS" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="rpQ-yD-fN7"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -49,7 +49,7 @@
                 <outlet property="contactImageView" destination="Nhh-C1-KyC" id="VZE-dz-A1e"/>
                 <outlet property="contactNameLabel" destination="oG2-p0-LrS" id="pI1-Ht-NbY"/>
             </connections>
-            <point key="canvasLocation" x="34" y="53.5"/>
+            <point key="canvasLocation" x="34" y="53"/>
         </tableViewCell>
     </objects>
 </document>
