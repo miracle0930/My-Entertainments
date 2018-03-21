@@ -53,9 +53,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         storageRef = Storage.storage().reference()
         configureMovieTableView()
         configureSideMenuView()
-        newFriendRequestReceived()
         if let _ = currentUser {
             configureTabItems()
+            newFriendRequestReceived()
+            requestHasBennAccepted()
         }
         
     }
@@ -119,8 +120,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                                     systemContact.contactName = "System"
                                     systemContact.contactImage = UIImageJPEGRepresentation(UIImage(named: "settings")!, 1)!
                                     userAccount.userContacts.append(systemContact)
-                                    self.realm.add(userAccount)
                                     self.configureTabItems()
+                                    self.newFriendRequestReceived()
                                 }
                             } catch {
                                 print(error)

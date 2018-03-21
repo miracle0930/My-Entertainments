@@ -15,7 +15,7 @@ import SDWebImage
 extension SearchViewController {
     
     func newFriendRequestReceived() {
-        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).observe(.childChanged) { (snapshot) in
+        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).child("from").observe(.childAdded) { (snapshot) in
             let data = JSON(snapshot.value!).stringValue
             Database.database().reference().child("Users").child(self.emailFormatModifier(email: data)).observeSingleEvent(of: .value) { (snapshot) in
                 let requestSender = JSON(snapshot.value!)
@@ -35,6 +35,29 @@ extension SearchViewController {
                     print(error)
                 }
             }
+        }
+    }
+    
+    func requestHasBennAccepted() {
+        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).child("to").observe(.childRemoved) { (snapshot) in
+            let data = JSON(snapshot.value!).stringValue
+            Database.database().reference().child("Users").child(self.emailFormatModifier(email: data)).observeSingleEvent(of: .value, with: { (rawData) in
+                let info = JSON(rawData.value!)
+                let userContact = UserContact()
+                userContact.contactNickname = info["userNickname"].stringValue
+                userContact.contactEmail = info["userEmail"].stringValue
+                if let dataImage = try? Data(contentsOf: URL(string: info["userPhoto"].stringValue)!) {
+                    userContact.contactImage = dataImage
+                }
+                do {
+                    try self.realm.write {
+                        self.currentUser!.userContacts.append(userContact)
+                        
+                    }
+                } catch {
+                    print(error)
+                }
+            })
         }
     }
     

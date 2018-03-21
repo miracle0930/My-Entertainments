@@ -21,7 +21,6 @@ class LogInViewController: UIViewController, SignUpProtocol, UITextFieldDelegate
     var currentUser: UserAccount?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         userPhotoImageView.layer.cornerRadius = 10
         userPhotoImageView.layer.masksToBounds = true

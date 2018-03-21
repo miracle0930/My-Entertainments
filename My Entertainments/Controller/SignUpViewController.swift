@@ -173,11 +173,9 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                         "userEmail": self.emailTextField.text!
                     ]
                     let friendRequestInfo = [
-                        "from": "NoRequest",
-                        "fromNum": "0",
-                        "to": "NoRequest",
-                        "toNum": "0"
-                    ]
+                        "from": [],
+                        "to": [],
+                    ] as [String : Any]
                     self.userDefault.set(self.emailTextField.text!, forKey: "username")
                     self.userDefault.set(self.passwordTextField.text!, forKey: "password")
                     self.userDefault.set(user!.uid, forKey: "userId")

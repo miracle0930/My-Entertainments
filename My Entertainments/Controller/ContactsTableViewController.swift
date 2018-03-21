@@ -29,7 +29,6 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        print(currentUser!.userContacts)
         tableView.reloadData()
     }
 
@@ -83,6 +82,7 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
         return modifiedEmail
     }
     
+
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {

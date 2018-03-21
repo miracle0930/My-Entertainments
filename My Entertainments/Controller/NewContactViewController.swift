@@ -38,10 +38,24 @@ class NewContactViewController: UIViewController {
     }
     
     @IBAction func sendRequestButtonPressed(_ sender: UIButton) {
-        
-        databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: newContactEmail!)).updateChildValues(["from": Auth.auth().currentUser!.email!])
-        databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!))
-            .updateChildValues(["fromNum": currentUser!.userSystemRequests.count + 1])
+        databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: newContactEmail!)).observeSingleEvent(of: .value) { (snapshot) in
+            let data = JSON(snapshot.value!)
+            var requestArray = data["from"].arrayObject == nil ? [String]() : data["from"].arrayObject as! [String]
+            if !requestArray.contains(Auth.auth().currentUser!.email!) {
+                requestArray.append(Auth.auth().currentUser!.email!)
+                self.databaseRef.child("NewFriendRequest")
+                    .child(self.emailFormatModifier(email: self.newContactEmail!))
+                    .updateChildValues(["from": requestArray])
+            }
+        }
+        databaseRef.child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).observeSingleEvent(of: .value) { (snapshot) in
+            let data = JSON(snapshot.value!)
+            var requestArray = data["to"].arrayObject == nil ? [String]() : data["to"].arrayObject as! [String]
+            if !requestArray.contains(self.newContactEmail!) {
+                requestArray.append(self.newContactEmail!)
+                self.databaseRef.child("NewFriendRequest").child(self.emailFormatModifier(email: Auth.auth().currentUser!.email!)).updateChildValues(["to": requestArray])
+            }
+        }
         dismiss(animated: true, completion: nil)
     }
     

@@ -8,6 +8,8 @@
 
 import UIKit
 import RealmSwift
+import Firebase
+import SwiftyJSON
 
 class SystemInfoTableViewController: UITableViewController {
     
@@ -45,13 +47,13 @@ class SystemInfoTableViewController: UITableViewController {
         cell.systemInfoImageView.image = UIImage(data: systemInfos![indexPath.row].requestImage)
         cell.newContactName = systemInfos![indexPath.row].requestName
         cell.newContactEmail = systemInfos![indexPath.row].requestEmail
+        
         cell.acceptButtonPressedCallback = {
-            print("accept")
             let userContact = UserContact()
             userContact.contactNickname = cell.newContactName
             userContact.contactEmail = cell.newContactEmail
             userContact.contactImage = self.systemInfos![indexPath.row].requestImage
-            self.saveContactToRealm(userContact: userContact)
+            self.saveContactToRealm(userContact: userContact, index: indexPath.row)
             self.deleteRequestFromSystemRequestQueue(index: indexPath.row)
         }
         cell.ignoreButtonPressedCallback = {
@@ -60,12 +62,11 @@ class SystemInfoTableViewController: UITableViewController {
         return cell
     }
     
-    func saveContactToRealm(userContact: UserContact) {
+    func saveContactToRealm(userContact: UserContact, index: Int) {
+        deleteRequestFromFirebaseQueue(index: index)
         do {
             try realm.write {
-                print("here")
                 currentUser!.userContacts.append(userContact)
-                print(currentUser!.userContacts)
             }
         } catch {
             print(error)
@@ -82,5 +83,36 @@ class SystemInfoTableViewController: UITableViewController {
             print(error)
         }
     }
-
+    
+    func deleteRequestFromFirebaseQueue(index: Int) {
+        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!))
+            .observeSingleEvent(of: .value) { (snapshot) in
+                let data = JSON(snapshot.value!)
+                var fromArray = data["from"].arrayObject as! [String]
+                let from = fromArray[index]
+                Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: from))
+                    .observeSingleEvent(of: .value) { (snapshot) in
+                        let data = JSON(snapshot.value!)
+                        var toArray = data["to"].arrayObject as! [String]
+                        let toIndex = toArray.index(of: Auth.auth().currentUser!.email!)
+                        toArray.remove(at: toIndex!)
+                        Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: from)).updateChildValues(["to": toArray])
+                }
+                fromArray.remove(at: index)
+                Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: Auth.auth().currentUser!.email!)).updateChildValues(["from": fromArray])
+        }
+        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!))
+            .observeSingleEvent(of: .value) { (snapshot) in
+                let data = JSON(snapshot.value!)
+                var requestArray = data["from"].arrayObject as! [String]
+                requestArray.remove(at: index)
+                Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: Auth.auth().currentUser!.email!)).updateChildValues(["from": requestArray])
+        }
+    }
+    
+    func emailFormatModifier(email: String) -> String {
+        let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
+        return modifiedEmail
+    }
+    
 }
