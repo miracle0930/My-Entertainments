@@ -101,13 +101,6 @@ class SystemInfoTableViewController: UITableViewController {
                 fromArray.remove(at: index)
                 Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: Auth.auth().currentUser!.email!)).updateChildValues(["from": fromArray])
         }
-        Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!))
-            .observeSingleEvent(of: .value) { (snapshot) in
-                let data = JSON(snapshot.value!)
-                var requestArray = data["from"].arrayObject as! [String]
-                requestArray.remove(at: index)
-                Database.database().reference().child("NewFriendRequest").child(self.emailFormatModifier(email: Auth.auth().currentUser!.email!)).updateChildValues(["from": requestArray])
-        }
     }
     
     func emailFormatModifier(email: String) -> String {

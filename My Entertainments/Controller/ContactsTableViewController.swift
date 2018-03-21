@@ -53,7 +53,6 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
                 }
             })
         }
-        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(search)
         alert.addAction(cancel)
@@ -103,7 +102,7 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             performSegue(withIdentifier: "showSystemMessages", sender: self)
-        }
+        } 
     }
     
     
