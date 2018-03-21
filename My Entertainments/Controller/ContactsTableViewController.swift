@@ -19,18 +19,19 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     
     var searchField: UITextField!
     var newContactJSON: JSON!
-    
     var currentUser: UserAccount?
-    var userContacts: List<UserContact>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.rowHeight = 70
         tableView.register(UINib(nibName: "ContactsTableViewCell", bundle: nil), forCellReuseIdentifier: "contactsTableViewCell")
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
-        userContacts = currentUser!.userContacts
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        print(currentUser!.userContacts)
+        tableView.reloadData()
+    }
 
 
     override func didReceiveMemoryWarning() {
@@ -85,22 +86,17 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return userContacts!.count
+        return currentUser!.userContacts.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "contactsTableViewCell", for: indexPath) as! ContactsTableViewCell
-        cell.contactImageView.image = UIImage(data: userContacts![indexPath.row].contactImage)
-        cell.contactNameLabel.text = userContacts![indexPath.row].contactName
-        if indexPath.row == 0 {
-            
-        }
+        cell.contactImageView.image = UIImage(data: currentUser!.userContacts[indexPath.row].contactImage)
+        cell.contactNameLabel.text = currentUser!.userContacts[indexPath.row].contactNickname
         return cell
     }
     

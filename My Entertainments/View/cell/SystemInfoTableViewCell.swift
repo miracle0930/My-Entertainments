@@ -12,12 +12,13 @@ class SystemInfoTableViewCell: UITableViewCell {
 
     @IBOutlet var systemInfoImageView: UIImageView!
     @IBOutlet var systemInfoLabel: UILabel!
+    var newContactName = ""
+    var newContactEmail = ""
     var acceptButtonPressedCallback: (() -> ())?
     var ignoreButtonPressedCallback: (() -> ())?
     
     @IBOutlet var acceptButton: UIButton!
     @IBOutlet var ignoreButton: UIButton!
-    @IBOutlet var statusLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -29,19 +30,13 @@ class SystemInfoTableViewCell: UITableViewCell {
     }
     
     @IBAction func acceptButtonPressed(_ sender: UIButton) {
-        acceptButton.isEnabled = false
-        ignoreButton.isEnabled = false
-        statusLabel.text = "Accepted"
-        statusLabel.backgroundColor = UIColor.green
+
         acceptButtonPressedCallback!()
     }
     
     
     @IBAction func ignoreButtonPressed(_ sender: UIButton) {
-        acceptButton.isEnabled = false
-        ignoreButton.isEnabled = false
-        statusLabel.text = "Ignored"
-        statusLabel.backgroundColor = UIColor.gray
+
         ignoreButtonPressedCallback!()
     }
     

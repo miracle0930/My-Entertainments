@@ -54,6 +54,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         configureMovieTableView()
         configureSideMenuView()
         newFriendRequestReceived()
+        if let _ = currentUser {
+            configureTabItems()
+        }
+        
+    }
+    
+    func configureTabItems() {
+        tabBarController?.tabBar.items![3].badgeValue = String(currentUser!.userSystemRequests.count)
+        if tabBarController?.tabBar.items![3].badgeValue == "0" {
+            tabBarController?.tabBar.items![3].badgeValue = nil
+        }
     }
     
     func configureSideMenuView() {
@@ -104,6 +115,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                                     userAccount.userPhoto = imageData!
                                     self.realm.add(userAccount)
                                     self.currentUser = self.realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
+                                    let systemContact = UserContact()
+                                    systemContact.contactName = "System"
+                                    systemContact.contactImage = UIImageJPEGRepresentation(UIImage(named: "settings")!, 1)!
+                                    userAccount.userContacts.append(systemContact)
+                                    self.realm.add(userAccount)
+                                    self.configureTabItems()
                                 }
                             } catch {
                                 print(error)

@@ -43,13 +43,44 @@ class SystemInfoTableViewController: UITableViewController {
         cell.selectionStyle = .none
         cell.systemInfoLabel.text = systemInfos![indexPath.row].requestMsg
         cell.systemInfoImageView.image = UIImage(data: systemInfos![indexPath.row].requestImage)
+        cell.newContactName = systemInfos![indexPath.row].requestName
+        cell.newContactEmail = systemInfos![indexPath.row].requestEmail
         cell.acceptButtonPressedCallback = {
             print("accept")
+            let userContact = UserContact()
+            userContact.contactNickname = cell.newContactName
+            userContact.contactEmail = cell.newContactEmail
+            userContact.contactImage = self.systemInfos![indexPath.row].requestImage
+            self.saveContactToRealm(userContact: userContact)
+            self.deleteRequestFromSystemRequestQueue(index: indexPath.row)
         }
         cell.ignoreButtonPressedCallback = {
             print("ignore")
         }
         return cell
+    }
+    
+    func saveContactToRealm(userContact: UserContact) {
+        do {
+            try realm.write {
+                print("here")
+                currentUser!.userContacts.append(userContact)
+                print(currentUser!.userContacts)
+            }
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteRequestFromSystemRequestQueue(index: Int) {
+        do {
+            try realm.write {
+                currentUser!.userSystemRequests.remove(at: index)
+                self.tableView.reloadData()
+            }
+        } catch {
+            print(error)
+        }
     }
 
 }

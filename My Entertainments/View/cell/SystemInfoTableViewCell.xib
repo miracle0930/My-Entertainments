@@ -87,26 +87,13 @@
                         <color key="textColor" white="0.4982910156" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JS4-US-2vU">
-                        <rect key="frame" x="273" y="39" width="37" height="12"/>
-                        <color key="backgroundColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="12" id="I8p-Mq-pxk"/>
-                            <constraint firstAttribute="width" constant="37" id="iTp-nL-wIH"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="TimesNewRomanPSMT" family="Times New Roman" pointSize="10"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="9nw-Qm-aJO" secondAttribute="bottom" constant="5.5" id="0Lm-k5-pcT"/>
                     <constraint firstItem="O1u-kr-dBr" firstAttribute="top" secondItem="Iaz-nw-18l" secondAttribute="bottom" constant="15" id="3if-iM-yZs"/>
                     <constraint firstItem="o1s-uO-xik" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Dxq-3K-4Bv"/>
-                    <constraint firstItem="JS4-US-2vU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Efa-Fr-Pv5"/>
                     <constraint firstItem="Iaz-nw-18l" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="Ekz-lM-XnM"/>
                     <constraint firstItem="O1u-kr-dBr" firstAttribute="leading" secondItem="o1s-uO-xik" secondAttribute="trailing" constant="8" id="K4x-qc-JBu"/>
-                    <constraint firstAttribute="trailing" secondItem="JS4-US-2vU" secondAttribute="trailing" constant="10" id="KdY-fu-noq"/>
                     <constraint firstItem="dAM-pe-lmP" firstAttribute="leading" secondItem="o1s-uO-xik" secondAttribute="trailing" constant="8" id="eeL-EO-rsK"/>
                     <constraint firstAttribute="bottom" secondItem="dAM-pe-lmP" secondAttribute="bottom" constant="5.5" id="gC5-82-eTM"/>
                     <constraint firstAttribute="bottom" secondItem="o1s-uO-xik" secondAttribute="bottom" constant="5.5" id="i09-57-xI4"/>
@@ -118,7 +105,6 @@
             <connections>
                 <outlet property="acceptButton" destination="dAM-pe-lmP" id="IF5-DN-uHP"/>
                 <outlet property="ignoreButton" destination="9nw-Qm-aJO" id="M0A-f1-HaD"/>
-                <outlet property="statusLabel" destination="JS4-US-2vU" id="T01-0a-Lfg"/>
                 <outlet property="systemInfoImageView" destination="o1s-uO-xik" id="1aF-aa-uu7"/>
                 <outlet property="systemInfoLabel" destination="O1u-kr-dBr" id="zaB-t3-P03"/>
             </connections>

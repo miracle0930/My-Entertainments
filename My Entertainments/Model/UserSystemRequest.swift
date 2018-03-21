@@ -12,5 +12,7 @@ import RealmSwift
 class UserSystemRequest: Object {
     @objc dynamic var requestMsg = ""
     @objc dynamic var requestImage = Data()
+    @objc dynamic var requestName = ""
+    @objc dynamic var requestEmail = ""
     var requestsDataHolder = LinkingObjects(fromType: UserAccount.self, property: "userSystemRequests")
 }
