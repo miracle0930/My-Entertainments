@@ -19,18 +19,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c04-ez-kcZ">
-                        <rect key="frame" x="254" y="4" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="5Qz-xT-RrT"/>
-                            <constraint firstAttribute="height" constant="50" id="OZe-Wi-ehK"/>
-                        </constraints>
-                    </imageView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E63-v5-r5w">
-                        <rect key="frame" x="16" y="4" width="219" height="50"/>
+                        <rect key="frame" x="56" y="4" width="200" height="50"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="QQc-V3-Jyf">
-                                <rect key="frame" x="8" y="8" width="203" height="34"/>
+                                <rect key="frame" x="10" y="8" width="180" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,23 +32,35 @@
                         </subviews>
                         <color key="backgroundColor" red="0.46202266219999999" green="0.83828371759999998" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="QQc-V3-Jyf" firstAttribute="top" secondItem="E63-v5-r5w" secondAttribute="top" constant="8" id="Tfk-Hh-0s6"/>
-                            <constraint firstItem="QQc-V3-Jyf" firstAttribute="leading" secondItem="E63-v5-r5w" secondAttribute="leading" constant="8" id="eNn-Go-GlM"/>
-                            <constraint firstAttribute="bottom" secondItem="QQc-V3-Jyf" secondAttribute="bottom" constant="8" id="hOT-M6-KIb"/>
-                            <constraint firstAttribute="trailing" secondItem="QQc-V3-Jyf" secondAttribute="trailing" constant="8" id="lwM-Ca-4zo"/>
+                            <constraint firstItem="QQc-V3-Jyf" firstAttribute="top" secondItem="E63-v5-r5w" secondAttribute="top" constant="8" id="KA4-OJ-bEt"/>
+                            <constraint firstAttribute="bottom" secondItem="QQc-V3-Jyf" secondAttribute="bottom" constant="8" id="LRZ-rj-6gW"/>
+                            <constraint firstAttribute="trailing" secondItem="QQc-V3-Jyf" secondAttribute="trailing" constant="10" id="NIY-Fj-bSD"/>
+                            <constraint firstItem="QQc-V3-Jyf" firstAttribute="leading" secondItem="E63-v5-r5w" secondAttribute="leading" constant="10" id="r6L-2A-Xll"/>
                         </constraints>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c04-ez-kcZ">
+                        <rect key="frame" x="264" y="4" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="5Qz-xT-RrT"/>
+                            <constraint firstAttribute="height" constant="50" id="OZe-Wi-ehK"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="E63-v5-r5w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="56" id="6ge-V9-y4U"/>
+                    <constraint firstAttribute="bottom" secondItem="E63-v5-r5w" secondAttribute="bottom" constant="5.5" id="Cnm-UL-NrC"/>
                     <constraint firstItem="c04-ez-kcZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="P92-qx-1e8"/>
-                    <constraint firstItem="E63-v5-r5w" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="Rlp-06-HHW"/>
-                    <constraint firstItem="E63-v5-r5w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="TbJ-Fo-7Qx"/>
-                    <constraint firstAttribute="trailing" secondItem="c04-ez-kcZ" secondAttribute="trailing" constant="16" id="bWd-7E-8yS"/>
-                    <constraint firstItem="c04-ez-kcZ" firstAttribute="leading" secondItem="E63-v5-r5w" secondAttribute="trailing" constant="19" id="bw0-ju-Y2e"/>
-                    <constraint firstAttribute="bottom" secondItem="E63-v5-r5w" secondAttribute="bottom" constant="5.5" id="efp-8N-JUu"/>
+                    <constraint firstAttribute="trailing" secondItem="c04-ez-kcZ" secondAttribute="trailing" constant="6" id="bWd-7E-8yS"/>
+                    <constraint firstItem="E63-v5-r5w" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="chP-8E-5km"/>
+                    <constraint firstItem="c04-ez-kcZ" firstAttribute="leading" secondItem="E63-v5-r5w" secondAttribute="trailing" constant="8" id="uED-Dm-N5a"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="userChatContent" destination="QQc-V3-Jyf" id="BWK-ZB-DZ8"/>
+                <outlet property="userChatContentView" destination="E63-v5-r5w" id="hrz-p2-u2W"/>
+                <outlet property="userImageView" destination="c04-ez-kcZ" id="nWU-5i-1wb"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>

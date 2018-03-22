@@ -1525,6 +1525,9 @@
                                             <constraint firstAttribute="width" constant="30" id="ic2-3D-SaZ"/>
                                         </constraints>
                                         <state key="normal" image="voice"/>
+                                        <connections>
+                                            <action selector="voiceButtonPressed:" destination="A1E-IC-adx" eventType="touchUpInside" id="Ag3-dl-d2y"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Itv-C4-BtK">
                                         <rect key="frame" x="337" y="5" width="30" height="30"/>
@@ -1533,6 +1536,9 @@
                                             <constraint firstAttribute="height" constant="30" id="Omc-vL-zwd"/>
                                         </constraints>
                                         <state key="normal" image="moreButton"/>
+                                        <connections>
+                                            <action selector="moreButtonPressed:" destination="A1E-IC-adx" eventType="touchUpInside" id="bVr-OJ-N3X"/>
+                                        </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Jin-pB-cmM">
                                         <rect key="frame" x="46" y="5" width="283" height="30"/>
@@ -1568,7 +1574,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="friendChatTableViewCell" id="DcB-6B-pXA">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="contactChatTableViewCell" id="DcB-6B-pXA">
                                         <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DcB-6B-pXA" id="Oaz-2S-Moc">

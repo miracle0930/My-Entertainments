@@ -51,6 +51,7 @@
 		F1A36B872064279E008A2819 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B862064279E008A2819 /* ChattingViewController.swift */; };
 		F1A36B8920642A44008A2819 /* SearchViewController+InitUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */; };
 		F1A36B8C20644893008A2819 /* SearchViewController+ConfigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */; };
+		F1A36B8E2064508A008A2819 /* UserChattingLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8D2064508A008A2819 /* UserChattingLog.swift */; };
 		F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */; };
 		F1CF265A2052553D008D4A60 /* MovieAndCastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */; };
 		F1CF265D205259E4008D4A60 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF265C205259E4008D4A60 /* Cast.swift */; };
@@ -107,6 +108,7 @@
 		F1A36B862064279E008A2819 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+InitUserAccount.swift"; sourceTree = "<group>"; };
 		F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+ConfigureView.swift"; sourceTree = "<group>"; };
+		F1A36B8D2064508A008A2819 /* UserChattingLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChattingLog.swift; sourceTree = "<group>"; };
 		F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAndCastCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieAndCastCollectionViewCell.xib; sourceTree = "<group>"; };
 		F1CF265C205259E4008D4A60 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -267,6 +269,7 @@
 				F13BB32D2058EF0700646678 /* UserContact.swift */,
 				F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */,
 				F1031A0020617EC100430FD4 /* UserSystemRequest.swift */,
+				F1A36B8D2064508A008A2819 /* UserChattingLog.swift */,
 				F13BB2D82056FA5C00646678 /* SideMenuButton.swift */,
 			);
 			path = Model;
@@ -493,6 +496,7 @@
 				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,
 				F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */,
 				F18C86DF2053836E00CDD5B5 /* PeopleTableViewController.swift in Sources */,
+				F1A36B8E2064508A008A2819 /* UserChattingLog.swift in Sources */,
 				F18C86E3205385F100CDD5B5 /* PeopleCollectionViewCell.swift in Sources */,
 				F18C86EA20545F1500CDD5B5 /* UserStoredMovie.swift in Sources */,
 				F1A36B872064279E008A2819 /* ChattingViewController.swift in Sources */,

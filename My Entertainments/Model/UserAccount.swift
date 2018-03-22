@@ -16,6 +16,7 @@ class UserAccount: Object {
     @objc dynamic var userEmail = ""
     @objc dynamic var userPhoto = Data()
     var userContacts = List<UserContact>()
+    var userChattingLogs = List<UserChattingLog>()
     var userStoredMovies = List<UserStoredMovie>()
     var userSystemRequests = List<UserSystemRequest>()
     var userStoredMoviesName = List<String>()

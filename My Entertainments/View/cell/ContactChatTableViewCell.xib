@@ -19,11 +19,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvD-SX-zDn">
-                        <rect key="frame" x="85" y="4" width="219" height="50"/>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-Ik-jKP">
+                        <rect key="frame" x="6" y="4" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="UzN-gM-1t5"/>
+                            <constraint firstAttribute="height" constant="50" id="sXL-iR-32B"/>
+                        </constraints>
+                    </imageView>
+                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvD-SX-zDn">
+                        <rect key="frame" x="64" y="4" width="200" height="50"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kvD-ar-EWb">
-                                <rect key="frame" x="8" y="8" width="203" height="34"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kvD-ar-EWb">
+                                <rect key="frame" x="8" y="8" width="170" height="34"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -32,30 +39,28 @@
                         </subviews>
                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="kvD-ar-EWb" firstAttribute="leading" secondItem="bvD-SX-zDn" secondAttribute="leading" constant="8" id="4W8-5r-xZw"/>
-                            <constraint firstAttribute="bottom" secondItem="kvD-ar-EWb" secondAttribute="bottom" constant="8" id="7bi-Ws-0K9"/>
-                            <constraint firstAttribute="trailing" secondItem="kvD-ar-EWb" secondAttribute="trailing" constant="8" id="8NJ-2d-XvL"/>
-                            <constraint firstItem="kvD-ar-EWb" firstAttribute="top" secondItem="bvD-SX-zDn" secondAttribute="top" constant="8" id="8tE-9T-lTT"/>
+                            <constraint firstAttribute="bottom" secondItem="kvD-ar-EWb" secondAttribute="bottom" constant="8" id="B2M-jb-4Ic"/>
+                            <constraint firstItem="kvD-ar-EWb" firstAttribute="top" secondItem="bvD-SX-zDn" secondAttribute="top" constant="8" id="MJG-H3-Mfe"/>
+                            <constraint firstAttribute="trailing" secondItem="kvD-ar-EWb" secondAttribute="trailing" constant="10" id="O99-63-dJn"/>
+                            <constraint firstItem="kvD-ar-EWb" firstAttribute="leading" secondItem="bvD-SX-zDn" secondAttribute="leading" constant="10" id="nkA-n0-Hgz"/>
                         </constraints>
                     </view>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-Ik-jKP">
-                        <rect key="frame" x="16" y="4" width="50" height="50"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="50" id="UzN-gM-1t5"/>
-                            <constraint firstAttribute="height" constant="50" id="sXL-iR-32B"/>
-                        </constraints>
-                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="3ba-Ik-jKP" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="E8L-5u-T8a"/>
-                    <constraint firstAttribute="trailing" secondItem="bvD-SX-zDn" secondAttribute="trailing" constant="16" id="Qf5-bI-1V4"/>
-                    <constraint firstItem="bvD-SX-zDn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="b3K-rW-Pls"/>
+                    <constraint firstItem="bvD-SX-zDn" firstAttribute="leading" secondItem="3ba-Ik-jKP" secondAttribute="trailing" constant="8" id="EZi-Ks-HtB"/>
+                    <constraint firstAttribute="trailing" secondItem="bvD-SX-zDn" secondAttribute="trailing" constant="56" id="KZe-ch-cs9"/>
+                    <constraint firstAttribute="bottom" secondItem="bvD-SX-zDn" secondAttribute="bottom" constant="5.5" id="Ps8-IY-GSR"/>
+                    <constraint firstItem="bvD-SX-zDn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="W2g-sq-97J"/>
                     <constraint firstItem="3ba-Ik-jKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mE4-dW-9ag"/>
-                    <constraint firstItem="bvD-SX-zDn" firstAttribute="leading" secondItem="3ba-Ik-jKP" secondAttribute="trailing" constant="19" id="tMU-Uh-m9y"/>
-                    <constraint firstAttribute="bottom" secondItem="bvD-SX-zDn" secondAttribute="bottom" constant="5.5" id="vVM-iC-lif"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="contactChatContent" destination="kvD-ar-EWb" id="gAD-Dc-fRC"/>
+                <outlet property="contactChatContentView" destination="bvD-SX-zDn" id="uE1-rk-Dwk"/>
+                <outlet property="contactImageView" destination="3ba-Ik-jKP" id="epG-oL-gqi"/>
+            </connections>
         </tableViewCell>
     </objects>
 </document>
