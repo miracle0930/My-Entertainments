@@ -56,6 +56,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 self.configureTabItems()
                 self.newFriendRequestReceived()
                 self.requestHasBeenAccepted()
+                self.configureContactsArray()
             })
         } else {
             configureSideMenuView()
@@ -65,58 +66,11 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         }
     }
     
-    func configureTabItems() {
-        tabBarController?.tabBar.items![3].badgeValue = String(currentUser!.userSystemRequests.count)
-        if tabBarController?.tabBar.items![3].badgeValue == "0" {
-            tabBarController?.tabBar.items![3].badgeValue = nil
-        }
-    }
-    
-    func configureSideMenuView() {
-        let screenWidth = UIScreen.main.bounds.width
-        sideMenuView.layer.cornerRadius = 10
-        sideMenuView.layer.borderWidth = 2
-        sideMenuView.layer.masksToBounds = true
-        sideMenuView.backgroundColor = UIColor(patternImage: UIImage(named: "sideMenuBackground")!)
-        sideMenuTrailingConstraint.constant = -screenWidth
-        sideMenuLeadingConstraint.constant = -screenWidth
-        userInfoStackViewTrailing.constant = (2 * screenWidth / 3 - userPhotoImageView.frame.width) / 3
-        userPhotoImageView.layer.cornerRadius = 10
-        userPhotoImageView.layer.borderWidth = 1
-        userPhotoImageView.layer.masksToBounds = true
-        sideMenuButtonsTableView.delegate = self
-        sideMenuButtonsTableView.dataSource = self
-        sideMenuButtonsTableView.separatorStyle = .none
-        sideMenuButtonsTableView.register(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "sideMenuButtonCell")
-        userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
-        userNameLabel.text = currentUser!.userNickname
-        userIntroTextView.text = currentUser!.userIntro
-        userEmailLabel.text = currentUser!.userEmail
-        self.view.layoutIfNeeded()
-        sideMenuButtonsTableView.reloadData()
-    }
-    
     func emailFormatModifier(email: String) -> String {
         let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
         return modifiedEmail
     }
     
-    func configureMovieTableView() {
-        movieTableView.delegate = self
-        movieTableView.dataSource = self
-        movieTableView.rowHeight = 100
-        movieTableView.backgroundView = UIImageView(image: UIImage(named: "movieBackground"))
-        movieTableView.register(UINib(nibName: "MovieTableViewCell", bundle: nil), forCellReuseIdentifier: "MovieTableViewCell")
-        tapGesture = UITapGestureRecognizer(target: self, action: #selector(tableViewTapped))
-        tapGesture!.cancelsTouchesInView = false
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureDetected))
-        swipeLeft.direction = .left
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureDetected))
-        swipeRight.direction = .right
-        movieTableView.addGestureRecognizer(tapGesture!)
-        movieTableView.addGestureRecognizer(swipeLeft)
-        movieTableView.addGestureRecognizer(swipeRight)
-    }
     
     // MARK: - SearchBar Implements
     @objc func tableViewTapped() {

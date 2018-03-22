@@ -50,6 +50,7 @@
 		F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */; };
 		F1A36B872064279E008A2819 /* ChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B862064279E008A2819 /* ChattingViewController.swift */; };
 		F1A36B8920642A44008A2819 /* SearchViewController+InitUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */; };
+		F1A36B8C20644893008A2819 /* SearchViewController+ConfigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */; };
 		F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */; };
 		F1CF265A2052553D008D4A60 /* MovieAndCastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */; };
 		F1CF265D205259E4008D4A60 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF265C205259E4008D4A60 /* Cast.swift */; };
@@ -105,6 +106,7 @@
 		F196B44F204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserDefaultPhotosCollectionViewCell.xib; sourceTree = "<group>"; };
 		F1A36B862064279E008A2819 /* ChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingViewController.swift; sourceTree = "<group>"; };
 		F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+InitUserAccount.swift"; sourceTree = "<group>"; };
+		F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+ConfigureView.swift"; sourceTree = "<group>"; };
 		F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAndCastCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieAndCastCollectionViewCell.xib; sourceTree = "<group>"; };
 		F1CF265C205259E4008D4A60 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				F189C5062016531500CEDA44 /* SearchViewController.swift */,
 				F10319F22060531700430FD4 /* SearchViewController+ContactsManage.swift */,
 				F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */,
+				F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */,
 			);
 			path = SearchViewController;
 			sourceTree = "<group>";
@@ -494,6 +497,7 @@
 				F18C86EA20545F1500CDD5B5 /* UserStoredMovie.swift in Sources */,
 				F1A36B872064279E008A2819 /* ChattingViewController.swift in Sources */,
 				F1CF265D205259E4008D4A60 /* Cast.swift in Sources */,
+				F1A36B8C20644893008A2819 /* SearchViewController+ConfigureView.swift in Sources */,
 				F189C5112016DDA500CEDA44 /* Movie.swift in Sources */,
 				F13BB3322058F4CC00646678 /* NewContactViewController.swift in Sources */,
 				F10319F32060531700430FD4 /* SearchViewController+ContactsManage.swift in Sources */,
