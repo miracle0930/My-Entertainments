@@ -53,8 +53,11 @@ class SystemInfoTableViewController: UITableViewController {
             userContact.contactNickname = cell.newContactName
             userContact.contactEmail = cell.newContactEmail
             userContact.contactImage = self.systemInfos![indexPath.row].requestImage
+            
             self.saveContactToRealm(userContact: userContact, index: indexPath.row)
+            self.saveContactToFirebase(contactEmail: userContact.contactEmail)
             self.deleteRequestFromSystemRequestQueue(index: indexPath.row)
+            self.configureTabItems()
         }
         cell.ignoreButtonPressedCallback = {
             print("ignore")
@@ -70,6 +73,23 @@ class SystemInfoTableViewController: UITableViewController {
             }
         } catch {
             print(error)
+        }
+    }
+    
+    func saveContactToFirebase(contactEmail: String) {
+        Database.database().reference().child("Contacts").observeSingleEvent(of: .value) { (snapshot) in
+            let data = JSON(snapshot.value!)
+            var friendsArray = data[self.emailFormatModifier(email: self.currentUser!.userEmail)].arrayObject == nil ?
+                                    [String]() : data[self.emailFormatModifier(email: self.currentUser!.userEmail)].arrayObject as! [String]
+            friendsArray.append(contactEmail)
+            Database.database().reference().child("Contacts").updateChildValues([self.emailFormatModifier(email: self.currentUser!.userEmail): friendsArray])
+        }
+        Database.database().reference().child("Contacts").observeSingleEvent(of: .value) { (snapshot) in
+            let data = JSON(snapshot.value!)
+            var friendsArray = data[self.emailFormatModifier(email: contactEmail)].arrayObject == nil ?
+                [String]() : data[self.emailFormatModifier(email: contactEmail)].arrayObject as! [String]
+            friendsArray.append(self.currentUser!.userEmail)
+            Database.database().reference().child("Contacts").updateChildValues([self.emailFormatModifier(email: contactEmail): friendsArray])
         }
     }
     
@@ -106,6 +126,13 @@ class SystemInfoTableViewController: UITableViewController {
     func emailFormatModifier(email: String) -> String {
         let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
         return modifiedEmail
+    }
+    
+    func configureTabItems() {
+        tabBarController?.tabBar.items![3].badgeValue = String(currentUser!.userSystemRequests.count)
+        if tabBarController?.tabBar.items![3].badgeValue == "0" {
+            tabBarController?.tabBar.items![3].badgeValue = nil
+        }
     }
     
 }

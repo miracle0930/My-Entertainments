@@ -121,7 +121,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate {
                 userAccount.userEmail = self.emailTextField.text!
                 userAccount.userPhoto = imageData
                 let systemContact = UserContact()
-                systemContact.contactName = "System"
+                systemContact.contactNickname = "System"
                 systemContact.contactImage = UIImageJPEGRepresentation(UIImage(named: "settings")!, 1)!
                 userAccount.userContacts.append(systemContact)
                 self.realm.add(userAccount)

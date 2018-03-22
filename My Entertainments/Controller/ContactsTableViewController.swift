@@ -30,6 +30,7 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+        self.tabBarController?.tabBar.isHidden = false
     }
 
 
@@ -70,6 +71,14 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
         } else if segue.identifier == "showSystemMessages" {
             let destination = segue.destination as! SystemInfoTableViewController
             destination.currentUser = currentUser!
+        } else if segue.identifier == "contactsToChat" {
+            if let indexPath = tableView.indexPathForSelectedRow {
+                let destination = segue.destination as! ChattingViewController
+                destination.currentUser = currentUser!
+                destination.friendName = currentUser!.userContacts[indexPath.row].contactNickname
+                destination.friendPhoto = currentUser!.userContacts[indexPath.row].contactImage
+                destination.friendEmail = currentUser!.userContacts[indexPath.row].contactEmail
+            }
         }
     }
     
@@ -102,7 +111,9 @@ class ContactsTableViewController: UITableViewController, UITextFieldDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             performSegue(withIdentifier: "showSystemMessages", sender: self)
-        } 
+        } else {
+            performSegue(withIdentifier: "contactsToChat", sender: self)
+        }
     }
     
     

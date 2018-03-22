@@ -38,7 +38,7 @@ extension SearchViewController {
         }
     }
     
-    func requestHasBennAccepted() {
+    func requestHasBeenAccepted() {
         Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).child("to").observe(.childRemoved) { (snapshot) in
             let data = JSON(snapshot.value!).stringValue
             Database.database().reference().child("Users").child(self.emailFormatModifier(email: data)).observeSingleEvent(of: .value, with: { (rawData) in
@@ -52,7 +52,6 @@ extension SearchViewController {
                 do {
                     try self.realm.write {
                         self.currentUser!.userContacts.append(userContact)
-                        
                     }
                 } catch {
                     print(error)

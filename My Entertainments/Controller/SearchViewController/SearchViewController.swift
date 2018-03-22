@@ -25,10 +25,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     var tapGesture: UITapGestureRecognizer?
     var page = 1
 
-
     let realm = try! Realm()
     let userDefault = UserDefaults.standard
-
     var sideButtons = SideButtonGenerator.generateSideButtons()
     @IBOutlet weak var movieSearchBar: UISearchBar!
     @IBOutlet weak var movieTableView: UITableView!
@@ -47,18 +45,24 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         super.viewDidLoad()
         view.backgroundColor = UIColor.clear
         navigationItem.title = "Search Movie"
-        currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
         movieSearchBar.delegate = self
         databaseRef = Database.database().reference()
         storageRef = Storage.storage().reference()
         configureMovieTableView()
-        configureSideMenuView()
-        if let _ = currentUser {
+        currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
+        if currentUser == nil {
+            initUserAccountFromFirebase(completion: {
+                self.configureSideMenuView()
+                self.configureTabItems()
+                self.newFriendRequestReceived()
+                self.requestHasBeenAccepted()
+            })
+        } else {
+            configureSideMenuView()
             configureTabItems()
             newFriendRequestReceived()
-            requestHasBennAccepted()
+            requestHasBeenAccepted()
         }
-        
     }
     
     func configureTabItems() {
@@ -84,54 +88,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         sideMenuButtonsTableView.dataSource = self
         sideMenuButtonsTableView.separatorStyle = .none
         sideMenuButtonsTableView.register(UINib(nibName: "SideMenuTableViewCell", bundle: nil), forCellReuseIdentifier: "sideMenuButtonCell")
-        if let user = currentUser {
-            userPhotoImageView.image = UIImage(data: user.userPhoto)
-            userNameLabel.text = user.userNickname
-            userIntroTextView.text = user.userIntro
-            userEmailLabel.text = user.userEmail
-        } else {
-            // When a new app installed, no data stored in local Realm, so we need to download data from firebase and store into Realm
-            let user = Auth.auth().currentUser!
-            var imageData: Data?
-            databaseRef.child("Users").child(self.emailFormatModifier(email: user.email!)).observeSingleEvent(of: .value, with: { (snapshot) in
-                let value = JSON(snapshot.value!)
-                self.userNameLabel.text = value["userNickname"].stringValue
-                self.userEmailLabel.text = value["userEmail"].stringValue
-                self.userIntroTextView.text = value["userIntro"].stringValue
-                let imagePath = value["userPhoto"].stringValue
-                let pathReference = Storage.storage().reference(forURL: imagePath)
-                pathReference.downloadURL(completion: { (url, error) in
-                    if let _ = error {
-                        return
-                    } else {
-                        self.userPhotoImageView.sd_setImage(with: url, completed: { (image, _, _, _) in
-                            imageData = UIImageJPEGRepresentation(image!, 1)!
-                            do {
-                                try self.realm.write {
-                                    let userAccount = UserAccount()
-                                    userAccount.userId = Auth.auth().currentUser!.uid
-                                    userAccount.userNickname = self.userNameLabel.text!
-                                    userAccount.userEmail = self.userEmailLabel.text!
-                                    userAccount.userIntro = self.userIntroTextView.text
-                                    userAccount.userPhoto = imageData!
-                                    self.realm.add(userAccount)
-                                    self.currentUser = self.realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
-                                    let systemContact = UserContact()
-                                    systemContact.contactName = "System"
-                                    systemContact.contactImage = UIImageJPEGRepresentation(UIImage(named: "settings")!, 1)!
-                                    userAccount.userContacts.append(systemContact)
-                                    self.configureTabItems()
-                                    self.newFriendRequestReceived()
-                                }
-                            } catch {
-                                print(error)
-                            }
-                        })
-                    }
-                })
-            })
-        }
+        userPhotoImageView.image = UIImage(data: currentUser!.userPhoto)
+        userNameLabel.text = currentUser!.userNickname
+        userIntroTextView.text = currentUser!.userIntro
+        userEmailLabel.text = currentUser!.userEmail
         self.view.layoutIfNeeded()
+        sideMenuButtonsTableView.reloadData()
     }
     
     func emailFormatModifier(email: String) -> String {
@@ -360,8 +322,6 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
             return sideButtons.count
         }
     }
-    
-
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if tableView == movieTableView {
