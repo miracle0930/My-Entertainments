@@ -19,18 +19,18 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-Ik-jKP">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3ba-Ik-jKP">
                         <rect key="frame" x="6" y="4" width="50" height="50"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="50" id="UzN-gM-1t5"/>
                             <constraint firstAttribute="height" constant="50" id="sXL-iR-32B"/>
                         </constraints>
                     </imageView>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bvD-SX-zDn">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bvD-SX-zDn">
                         <rect key="frame" x="64" y="4" width="200" height="50"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kvD-ar-EWb">
-                                <rect key="frame" x="8" y="8" width="170" height="34"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" textAlignment="justified" translatesAutoresizingMaskIntoConstraints="NO" id="kvD-ar-EWb">
+                                <rect key="frame" x="5" y="5" width="190" height="40"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -39,10 +39,10 @@
                         </subviews>
                         <color key="backgroundColor" red="0.83741801979999997" green="0.83743780850000005" blue="0.83742713930000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="kvD-ar-EWb" secondAttribute="bottom" constant="8" id="B2M-jb-4Ic"/>
-                            <constraint firstItem="kvD-ar-EWb" firstAttribute="top" secondItem="bvD-SX-zDn" secondAttribute="top" constant="8" id="MJG-H3-Mfe"/>
-                            <constraint firstAttribute="trailing" secondItem="kvD-ar-EWb" secondAttribute="trailing" constant="10" id="O99-63-dJn"/>
-                            <constraint firstItem="kvD-ar-EWb" firstAttribute="leading" secondItem="bvD-SX-zDn" secondAttribute="leading" constant="10" id="nkA-n0-Hgz"/>
+                            <constraint firstAttribute="bottom" secondItem="kvD-ar-EWb" secondAttribute="bottom" constant="5" id="B2M-jb-4Ic"/>
+                            <constraint firstItem="kvD-ar-EWb" firstAttribute="top" secondItem="bvD-SX-zDn" secondAttribute="top" constant="5" id="MJG-H3-Mfe"/>
+                            <constraint firstAttribute="trailing" secondItem="kvD-ar-EWb" secondAttribute="trailing" constant="5" id="O99-63-dJn"/>
+                            <constraint firstItem="kvD-ar-EWb" firstAttribute="leading" secondItem="bvD-SX-zDn" secondAttribute="leading" constant="5" id="nkA-n0-Hgz"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -52,7 +52,7 @@
                     <constraint firstAttribute="trailing" secondItem="bvD-SX-zDn" secondAttribute="trailing" constant="56" id="KZe-ch-cs9"/>
                     <constraint firstAttribute="bottom" secondItem="bvD-SX-zDn" secondAttribute="bottom" constant="5.5" id="Ps8-IY-GSR"/>
                     <constraint firstItem="bvD-SX-zDn" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="4" id="W2g-sq-97J"/>
-                    <constraint firstItem="3ba-Ik-jKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="mE4-dW-9ag"/>
+                    <constraint firstItem="3ba-Ik-jKP" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="mE4-dW-9ag"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

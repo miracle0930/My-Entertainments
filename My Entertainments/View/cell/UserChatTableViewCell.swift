@@ -19,7 +19,11 @@ class UserChatTableViewCell: UITableViewCell {
         super.awakeFromNib()
         userChatContentView.layer.cornerRadius = 10
         userChatContentView.layer.masksToBounds = true
-        // Initialization code
+        let contentSize = userChatContent.sizeThatFits(userChatContent.bounds.size)
+        var frame = userChatContent.frame
+        frame.size.height = contentSize.height
+        userChatContent.frame = frame
+        self.frame = frame
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
