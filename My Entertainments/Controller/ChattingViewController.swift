@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import RealmSwift
+import SwiftyJSON
 
-class ChattingViewController: UIViewController, UITextViewDelegate {
+class ChattingViewController: UIViewController {
 
     let realm = try! Realm()
     let databaseRef = Database.database().reference()
@@ -23,7 +24,7 @@ class ChattingViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet var msgInputView: UIView!
     @IBOutlet var chattingTableView: UITableView!
-    @IBOutlet var textInputTextView: UITextView!
+    @IBOutlet var textInputTextField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +32,8 @@ class ChattingViewController: UIViewController, UITextViewDelegate {
         navigationItem.title = friendName!
         chattingTableView.delegate = self
         chattingTableView.dataSource = self
-        textInputTextView.layer.cornerRadius = 10
-        textInputTextView.layer.borderWidth = 1
-        textInputTextView.delegate = self
+        chattingTableView.estimatedRowHeight = 60
+        textInputTextField.delegate = self
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
         chattingTableView.register(UINib(nibName: "UserChatTableViewCell", bundle: nil), forCellReuseIdentifier: "userChatTableViewCell")
         chattingTableView.register(UINib(nibName: "ContactChatTableViewCell", bundle: nil), forCellReuseIdentifier: "contactChatTableViewCell")
@@ -69,12 +69,18 @@ class ChattingViewController: UIViewController, UITextViewDelegate {
     }
     
     @objc func hideKeyboard() {
-        textInputTextView.endEditing(true)
+        textInputTextField.endEditing(true)
+    }
+    
+    func emailFormatModifier(email: String) -> String {
+        let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
+        return modifiedEmail
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
 }
 
 extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
@@ -105,6 +111,38 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
     }
+}
+
+extension ChattingViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let time = changeDateToString(date: Date())
+        let userSideMsg = [emailFormatModifier(email: friendEmail!): textField.text!, "time": time]
+        databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).updateChildValues(userSideMsg)
+        databaseRef.child("Chars").child(emailFormatModifier(email: currentUser!.userEmail))
+        let contactSideMsg = [emailFormatModifier(email: currentUser!.userEmail): textField.text!, "time": time]
+        databaseRef.child("Chats").child(emailFormatModifier(email: friendEmail!)).updateChildValues(contactSideMsg)
+        do {
+            try realm.write {
+                let chattingLog = UserChattingLog()
+                chattingLog.content = textField.text!
+                chattingLog.fromUser = true
+                chattingLog.time = time
+                currentUser!.userChattingLogs.append(chattingLog)
+                self.chattingTableView.reloadData()
+            }
+        } catch {
+            print(error)
+        }
+        textField.text = ""
+        return false
+    }
+    
+    func changeDateToString(date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy/MM/dd' 'HH:mm:ss"
+        return formatter.string(from: date)
+    }
+    
 }
 
 

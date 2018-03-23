@@ -13,4 +13,9 @@ import Firebase
 
 extension SearchViewController {
     
+    func newMsgReceived() {
+//        databaseRef.
+    }
+    
+    
 }
