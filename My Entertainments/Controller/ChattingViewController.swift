@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import RealmSwift
 
-class ChattingViewController: UIViewController {
+class ChattingViewController: UIViewController, UITextViewDelegate {
 
     let realm = try! Realm()
     let databaseRef = Database.database().reference()
@@ -19,10 +19,11 @@ class ChattingViewController: UIViewController {
     var friendEmail: String?
     var friendName: String?
     var friendPhoto: Data?
+    var keyboardHeight: CGFloat?
     
     @IBOutlet var msgInputView: UIView!
     @IBOutlet var chattingTableView: UITableView!
-    @IBOutlet var textInputTextField: UITextField!
+    @IBOutlet var textInputTextView: UITextView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,44 +31,46 @@ class ChattingViewController: UIViewController {
         navigationItem.title = friendName!
         chattingTableView.delegate = self
         chattingTableView.dataSource = self
-
+        textInputTextView.layer.cornerRadius = 10
+        textInputTextView.layer.borderWidth = 1
+        textInputTextView.delegate = self
         currentUser = realm.object(ofType: UserAccount.self, forPrimaryKey: Auth.auth().currentUser!.uid)
         chattingTableView.register(UINib(nibName: "UserChatTableViewCell", bundle: nil), forCellReuseIdentifier: "userChatTableViewCell")
         chattingTableView.register(UINib(nibName: "ContactChatTableViewCell", bundle: nil), forCellReuseIdentifier: "contactChatTableViewCell")
-//        chattingTableView.rowHeight = 60
         chattingTableView.separatorStyle = .none
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        chattingTableView.addGestureRecognizer(tapGesture)
     }
     
     @IBAction func voiceButtonPressed(_ sender: UIButton) {
-        do {
-            try realm.write {
-                let friendChatting = UserChattingLog()
-                friendChatting.fromUser = false
-                friendChatting.content = "Welcome from your friend!"
-                currentUser!.userChattingLogs.append(friendChatting)
-            }
-        } catch {
-            print(error)
-        }
-        chattingTableView.reloadData()
     }
     
     @IBAction func moreButtonPressed(_ sender: UIButton) {
-        
-        do {
-            try realm.write {
-                let userChatting = UserChattingLog()
-                userChatting.fromUser = true
-                userChatting.content = "Welcom from me! Welcom from me! Welcom from me! Welcom from me! Welcom from me! Welcom from me! Welcom from me! Welcom from me!"
-                currentUser!.userChattingLogs.append(userChatting)
-            }
-        } catch {
-            print(error)
-        }
-        chattingTableView.reloadData()
-
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func keyboardWillShow(notification: NSNotification) {
+        self.view.frame.origin.y = 0
+        let keyboardSize = (notification.userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.size
+        keyboardHeight = keyboardSize.height
+        self.view.frame.origin.y -= keyboardHeight!
+        view.layoutIfNeeded()
+    }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        self.view.frame.origin.y += keyboardHeight!
+        view.layoutIfNeeded()
+    }
+    
+    @objc func hideKeyboard() {
+        textInputTextView.endEditing(true)
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -92,12 +95,13 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
             let cell = chattingTableView.dequeueReusableCell(withIdentifier: "userChatTableViewCell", for: indexPath) as! UserChatTableViewCell
             cell.userImageView.image = UIImage(data: currentUser!.userPhoto)
             cell.userChatContent.text = currentUser!.userChattingLogs[indexPath.row].content
-            
+            cell.selectionStyle = .none
             return cell
         } else {
             let cell = chattingTableView.dequeueReusableCell(withIdentifier: "contactChatTableViewCell", for: indexPath) as! ContactChatTableViewCell
             cell.contactImageView.image = UIImage(data: friendPhoto!)
             cell.contactChatContent.text = currentUser!.userChattingLogs[indexPath.row].content
+            cell.selectionStyle = .none
             return cell
         }
     }

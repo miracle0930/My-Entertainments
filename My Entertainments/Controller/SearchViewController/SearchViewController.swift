@@ -77,9 +77,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         movieSearchBar.endEditing(true)
         hideSideMenu()
         sideMenuShowUp = false
-
     }
-    
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         SVProgressHUD.show()
