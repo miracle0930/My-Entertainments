@@ -116,11 +116,9 @@ extension ChattingViewController: UITableViewDelegate, UITableViewDataSource {
 extension ChattingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let time = changeDateToString(date: Date())
-        let userSideMsg = [emailFormatModifier(email: friendEmail!): textField.text!, "time": time]
-        databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).updateChildValues(userSideMsg)
-        databaseRef.child("Chars").child(emailFormatModifier(email: currentUser!.userEmail))
-        let contactSideMsg = [emailFormatModifier(email: currentUser!.userEmail): textField.text!, "time": time]
-        databaseRef.child("Chats").child(emailFormatModifier(email: friendEmail!)).updateChildValues(contactSideMsg)
+        let msgLog = ["content": textField.text!, "time": time]
+//        databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).child(emailFormatModifier(email: friendEmail!)).updateChildValues(msgLog)
+        databaseRef.child("Chats").child(emailFormatModifier(email: friendEmail!)).child(emailFormatModifier(email: currentUser!.userEmail)).updateChildValues(msgLog)
         do {
             try realm.write {
                 let chattingLog = UserChattingLog()

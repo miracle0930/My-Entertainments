@@ -12,7 +12,7 @@ import RealmSwift
 import SwiftyJSON
 import SDWebImage
 
-extension SearchViewController {
+extension SearchViewController: SystemMessageDelegate {
     
     func newFriendRequestReceived() {
         Database.database().reference().child("NewFriendRequest").child(emailFormatModifier(email: Auth.auth().currentUser!.email!)).child("from").observe(.childAdded) { (snapshot) in

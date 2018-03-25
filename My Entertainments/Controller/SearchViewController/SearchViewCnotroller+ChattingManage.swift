@@ -14,7 +14,12 @@ import Firebase
 extension SearchViewController {
     
     func newMsgReceived() {
-//        databaseRef.
+        
+        databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).observe(.childChanged) { (snapshot) in
+            print(snapshot)
+        }
+        
+        
     }
     
     
