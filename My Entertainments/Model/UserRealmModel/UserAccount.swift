@@ -15,11 +15,18 @@ class UserAccount: Object {
     @objc dynamic var userIntro = ""
     @objc dynamic var userEmail = ""
     @objc dynamic var userPhoto = Data()
+    @objc dynamic var unreadMsgs = 0
+    
     var userContacts = List<UserContact>()
+    
     var userChattingLogs = List<UserChattingLog>()
+    
     var userStoredMovies = List<UserStoredMovie>()
-    var userSystemRequests = List<UserSystemRequest>()
     var userStoredMoviesName = List<String>()
+
+    var userSystemRequests = List<UserSystemRequest>()
+    
+    var userChattingTargets = List<UserChattingTarget>()
     
     override static func primaryKey() -> String? {
         return "userId"

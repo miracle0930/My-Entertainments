@@ -56,7 +56,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 self.configureTabItems()
                 self.newFriendRequestReceived()
                 self.requestHasBeenAccepted()
-                self.newMsgReceived()
+                self.newMsgReceivedFromNewContact()
+                self.newMsgReceivedFromExistedContact()
                 self.configureContactsArray()
             })
         } else {
@@ -64,7 +65,8 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             configureTabItems()
             newFriendRequestReceived()
             requestHasBeenAccepted()
-            newMsgReceived()
+            newMsgReceivedFromNewContact()
+            newMsgReceivedFromExistedContact()
 
         }
     }

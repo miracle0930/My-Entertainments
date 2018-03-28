@@ -32,6 +32,8 @@
 		F1572FFA20378D230048C08A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1572FF920378D230048C08A /* UserAccount.swift */; };
 		F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */; };
 		F15EF694201EDB660054683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15EF693201EDB650054683C /* Assets.xcassets */; };
+		F18232A1206BF4FE002AB14E /* UserChattingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18232A0206BF4FE002AB14E /* UserChattingTarget.swift */; };
+		F18232A6206BF86F002AB14E /* ChattingMsgDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18232A5206BF86F002AB14E /* ChattingMsgDelegate.swift */; };
 		F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5062016531500CEDA44 /* SearchViewController.swift */; };
 		F189C50D20168FEF00CEDA44 /* MovieTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */; };
 		F189C50E20168FEF00CEDA44 /* MovieTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */; };
@@ -55,7 +57,7 @@
 		F1A36B8920642A44008A2819 /* SearchViewController+InitUserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */; };
 		F1A36B8C20644893008A2819 /* SearchViewController+ConfigureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */; };
 		F1A36B8E2064508A008A2819 /* UserChattingLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B8D2064508A008A2819 /* UserChattingLog.swift */; };
-		F1A36B92206569BB008A2819 /* SearchViewCnotroller+ChattingManage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingManage.swift */; };
+		F1A36B92206569BB008A2819 /* SearchViewCnotroller+ChattingMsgDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingMsgDelegate.swift */; };
 		F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */; };
 		F1CF265A2052553D008D4A60 /* MovieAndCastCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */; };
 		F1CF265D205259E4008D4A60 /* Cast.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1CF265C205259E4008D4A60 /* Cast.swift */; };
@@ -93,6 +95,8 @@
 		F1572FF920378D230048C08A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableViewController.swift; sourceTree = "<group>"; };
 		F15EF693201EDB650054683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F18232A0206BF4FE002AB14E /* UserChattingTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChattingTarget.swift; sourceTree = "<group>"; };
+		F18232A5206BF86F002AB14E /* ChattingMsgDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingMsgDelegate.swift; sourceTree = "<group>"; };
 		F189C5062016531500CEDA44 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		F189C50B20168FEF00CEDA44 /* MovieTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieTableViewCell.swift; sourceTree = "<group>"; };
 		F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieTableViewCell.xib; sourceTree = "<group>"; };
@@ -116,7 +120,7 @@
 		F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+InitUserAccount.swift"; sourceTree = "<group>"; };
 		F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewController+ConfigureView.swift"; sourceTree = "<group>"; };
 		F1A36B8D2064508A008A2819 /* UserChattingLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChattingLog.swift; sourceTree = "<group>"; };
-		F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingManage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewCnotroller+ChattingManage.swift"; sourceTree = "<group>"; };
+		F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingMsgDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchViewCnotroller+ChattingMsgDelegate.swift"; sourceTree = "<group>"; };
 		F1CF26572052553D008D4A60 /* MovieAndCastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieAndCastCollectionViewCell.swift; sourceTree = "<group>"; };
 		F1CF26582052553D008D4A60 /* MovieAndCastCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieAndCastCollectionViewCell.xib; sourceTree = "<group>"; };
 		F1CF265C205259E4008D4A60 /* Cast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cast.swift; sourceTree = "<group>"; };
@@ -286,6 +290,7 @@
 				F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */,
 				F1031A0020617EC100430FD4 /* UserSystemRequest.swift */,
 				F1A36B8D2064508A008A2819 /* UserChattingLog.swift */,
+				F18232A0206BF4FE002AB14E /* UserChattingTarget.swift */,
 			);
 			path = UserRealmModel;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				F10E6F4120153401007AA679 /* AppDelegate.swift */,
 				F1960CAF2068470100EF46E8 /* SystemMessageDelegate.swift */,
 				F1960CB220684E0200EF46E8 /* SideMenuDelegate.swift */,
+				F18232A5206BF86F002AB14E /* ChattingMsgDelegate.swift */,
 			);
 			path = Delegate;
 			sourceTree = "<group>";
@@ -341,7 +347,7 @@
 				F189C5062016531500CEDA44 /* SearchViewController.swift */,
 				F1960CB420684FD600EF46E8 /* SearchViewController+TableViewDelegate.swift */,
 				F10319F22060531700430FD4 /* SearchViewController+SystemMessageDelegate.swift */,
-				F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingManage.swift */,
+				F1A36B91206569BB008A2819 /* SearchViewCnotroller+ChattingMsgDelegate.swift */,
 				F1A36B8820642A44008A2819 /* SearchViewController+InitUserAccount.swift */,
 				F1A36B8B20644893008A2819 /* SearchViewController+ConfigureView.swift */,
 			);
@@ -527,7 +533,7 @@
 				F13BB32B2058EDBA00646678 /* ContactsTableViewCell.swift in Sources */,
 				F13BB2E12057094300646678 /* UserStoredMovieViewController.swift in Sources */,
 				F1CF26592052553D008D4A60 /* MovieAndCastCollectionViewCell.swift in Sources */,
-				F1A36B92206569BB008A2819 /* SearchViewCnotroller+ChattingManage.swift in Sources */,
+				F1A36B92206569BB008A2819 /* SearchViewCnotroller+ChattingMsgDelegate.swift in Sources */,
 				F1A36B8920642A44008A2819 /* SearchViewController+InitUserAccount.swift in Sources */,
 				F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */,
 				F10E6F4420153401007AA679 /* LogInViewController.swift in Sources */,
@@ -535,6 +541,7 @@
 				F18C86DF2053836E00CDD5B5 /* PeopleTableViewController.swift in Sources */,
 				F1A36B8E2064508A008A2819 /* UserChattingLog.swift in Sources */,
 				F18C86E3205385F100CDD5B5 /* PeopleCollectionViewCell.swift in Sources */,
+				F18232A1206BF4FE002AB14E /* UserChattingTarget.swift in Sources */,
 				F1960CB02068470100EF46E8 /* SystemMessageDelegate.swift in Sources */,
 				F18C86EA20545F1500CDD5B5 /* UserStoredMovie.swift in Sources */,
 				F1A36B872064279E008A2819 /* ChattingViewController.swift in Sources */,
@@ -563,6 +570,7 @@
 				F10319F72061738600430FD4 /* SystemInfoTableViewController.swift in Sources */,
 				F10E6F5E20159C31007AA679 /* ProtocolFile.swift in Sources */,
 				F18C86E62053903C00CDD5B5 /* RelatedMovie.swift in Sources */,
+				F18232A6206BF86F002AB14E /* ChattingMsgDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
