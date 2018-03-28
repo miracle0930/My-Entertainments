@@ -43,6 +43,13 @@ class ChattingViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
         tapGesture.cancelsTouchesInView = false
         chattingTableView.addGestureRecognizer(tapGesture)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.reloadTableViewData), name: Notification.Name(rawValue: "load"), object: nil)
+        moveToBottom()
+    }
+    
+    @objc func reloadTableViewData(_ notification: Notification) {
+        chattingTableView.reloadData()
+        moveToBottom()
     }
     
     @IBAction func voiceButtonPressed(_ sender: UIButton) {
@@ -75,6 +82,13 @@ class ChattingViewController: UIViewController {
     func emailFormatModifier(email: String) -> String {
         let modifiedEmail = email.replacingOccurrences(of: ".", with: "*")
         return modifiedEmail
+    }
+    
+    func moveToBottom() {
+        DispatchQueue.main.async {
+            let indexPath = IndexPath(row: self.currentUser!.userChattingLogs.count - 1, section: 0)
+            self.chattingTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -132,6 +146,7 @@ extension ChattingViewController: UITextFieldDelegate {
             print(error)
         }
         textField.text = ""
+        moveToBottom()
         return false
     }
     

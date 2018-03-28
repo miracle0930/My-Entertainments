@@ -15,10 +15,8 @@ extension SearchViewController: ChattingMsgDelegate {
     
     func newMsgReceivedFromExistedContact() {
         databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).observe(.childChanged) { (snapshot) in
-            
             let data = JSON(snapshot.value!)
-            self.writeChattingLogToRealm(data: data)
-            
+            self.writeChattingLogToRealm(data: data)            
         }
     }
     
@@ -38,6 +36,7 @@ extension SearchViewController: ChattingMsgDelegate {
             try realm.write {
                 currentUser!.userChattingLogs.append(chattingLog)
             }
+            NotificationCenter.default.post(name: Notification.Name(rawValue: "load"), object: nil)
         } catch {
             print(error)
         }
