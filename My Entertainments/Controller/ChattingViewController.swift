@@ -131,7 +131,6 @@ extension ChattingViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let time = changeDateToString(date: Date())
         let msgLog = ["content": textField.text!, "time": time]
-//        databaseRef.child("Chats").child(emailFormatModifier(email: currentUser!.userEmail)).child(emailFormatModifier(email: friendEmail!)).updateChildValues(msgLog)
         databaseRef.child("Chats").child(emailFormatModifier(email: friendEmail!)).child(emailFormatModifier(email: currentUser!.userEmail)).updateChildValues(msgLog)
         do {
             try realm.write {
