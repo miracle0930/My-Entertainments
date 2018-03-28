@@ -266,19 +266,35 @@
 			name = MovieTableViewCell;
 			sourceTree = "<group>";
 		};
-		F189C50A20168FA200CEDA44 /* Model */ = {
+		F182329E206BF3E9002AB14E /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				F13BB2D82056FA5C00646678 /* SideMenuButton.swift */,
 				F189C5102016DDA500CEDA44 /* Movie.swift */,
 				F1CF265C205259E4008D4A60 /* Cast.swift */,
 				F18C86DC2052F6C100CDD5B5 /* SimilarMovie.swift */,
 				F18C86E52053903C00CDD5B5 /* RelatedMovie.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		F182329F206BF407002AB14E /* UserRealmModel */ = {
+			isa = PBXGroup;
+			children = (
 				F1572FF920378D230048C08A /* UserAccount.swift */,
 				F13BB32D2058EF0700646678 /* UserContact.swift */,
 				F18C86E920545F1500CDD5B5 /* UserStoredMovie.swift */,
 				F1031A0020617EC100430FD4 /* UserSystemRequest.swift */,
 				F1A36B8D2064508A008A2819 /* UserChattingLog.swift */,
-				F13BB2D82056FA5C00646678 /* SideMenuButton.swift */,
+			);
+			path = UserRealmModel;
+			sourceTree = "<group>";
+		};
+		F189C50A20168FA200CEDA44 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				F182329F206BF407002AB14E /* UserRealmModel */,
+				F182329E206BF3E9002AB14E /* ViewModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";

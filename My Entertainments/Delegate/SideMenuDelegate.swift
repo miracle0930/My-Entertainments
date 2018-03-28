@@ -10,8 +10,14 @@ import Foundation
 
 protocol SideMenuDelegate: class {
     
+    /*
+     business logic when sidemenu shows up
+    */
     func showSideMenu()
     
+    /*
+     business logic when sidemenu hides
+    */
     func hideSideMenu()
     
 }
