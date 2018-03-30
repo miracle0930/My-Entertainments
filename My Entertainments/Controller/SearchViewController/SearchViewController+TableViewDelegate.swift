@@ -42,7 +42,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource {
     func downloadMovieCellImage(movieId id: String, movieCell cell: MovieTableViewCell, imageUrl path: String) {
         
         DispatchQueue.global().async {
-            if self.movieImageCache.object(forKey: id as NSString) as Data! == nil {
+            if self.movieImageCache.object(forKey: id as NSString) as Data? == nil {
                 let url = URL(string: path)
                 if let data = try? Data(contentsOf: url!) {
                     self.setImageToCacheWithCompletionHandler(data: data as NSData, key: id as NSString, completion: {

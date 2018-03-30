@@ -91,7 +91,7 @@ class PeopleTableViewController: UITableViewController {
     
     func getPersonImage(url: String) {
         DispatchQueue.global().async {
-            if self.profileImageCache.object(forKey: self.personId! as NSString) as Data! == nil {
+            if self.profileImageCache.object(forKey: self.personId! as NSString) as Data? == nil {
                 let url = URL(string: url)
                 if let data = try? Data(contentsOf: url!) {
                     self.setImageToCacheWithCompletionHandler(cache: self.profileImageCache, key: self.personId! as NSString, data: data as NSData, completion: {
@@ -139,7 +139,7 @@ extension PeopleTableViewController: UICollectionViewDelegate, UICollectionViewD
         cell.characterLabel.text = "\(relatedMovies[indexPath.row].characterName!)"
         cell.movieNameLabel.text = relatedMovies[indexPath.row].movieName!
         DispatchQueue.global().async {
-            if self.movieImageCache.object(forKey: self.relatedMovies[indexPath.row].movieId! as NSString) as Data! == nil {
+            if self.movieImageCache.object(forKey: self.relatedMovies[indexPath.row].movieId! as NSString) as Data? == nil {
                 let url = URL(string: self.relatedMovies[indexPath.row].movieImageUrl!)
                 if let data = try? Data(contentsOf: url!) {
                     self.setImageToCacheWithCompletionHandler(cache: self.movieImageCache, key: self.relatedMovies[indexPath.row].movieId! as NSString, data: data as NSData, completion: {

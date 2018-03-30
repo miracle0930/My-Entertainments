@@ -44,7 +44,9 @@ class ChattingViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         chattingTableView.addGestureRecognizer(tapGesture)
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadTableViewData), name: Notification.Name(rawValue: "load"), object: nil)
-        moveToBottom()
+        if currentUser!.userChattingLogs.count != 0 {
+            moveToBottom()
+        }
     }
     
     @objc func reloadTableViewData(_ notification: Notification) {

@@ -331,7 +331,7 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             let cell = castCollectionView.dequeueReusableCell(withReuseIdentifier: "castCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
             cell.movieAndCastNameLabel.text = casts[indexPath.row].castName!
             DispatchQueue.global().async {
-                if self.castImageCache.object(forKey: self.casts[indexPath.row].castId! as NSString) as Data! == nil {
+                if self.castImageCache.object(forKey: self.casts[indexPath.row].castId! as NSString) as Data? == nil {
                     let url = URL(string: self.casts[indexPath.row].castImageUrl!)
                     if let data = try? Data(contentsOf: url!) {
                         self.setImageToCacheWithCompletionHandler(cache: self.castImageCache, data: data as NSData, key: self.casts[indexPath.row].castId! as NSString, completion: {
@@ -355,7 +355,7 @@ extension MovieDetailTableViewController: UICollectionViewDelegate, UICollection
             let cell = similarCollectionView.dequeueReusableCell(withReuseIdentifier: "similarCollectionViewCell", for: indexPath) as! MovieAndCastCollectionViewCell
             cell.movieAndCastNameLabel.text = similars[indexPath.row].similarName!
             DispatchQueue.global().async {
-                if self.similarImageCache.object(forKey: self.similars[indexPath.row].similarId! as NSString) as Data! == nil {
+                if self.similarImageCache.object(forKey: self.similars[indexPath.row].similarId! as NSString) as Data? == nil {
                     let url = URL(string: self.similars[indexPath.row].similarImageUrl!)
                     if let data = try? Data(contentsOf: url!) {
                         self.setImageToCacheWithCompletionHandler(cache: self.similarImageCache, data: data as NSData, key: self.similars[indexPath.row].similarId! as NSString, completion: {
