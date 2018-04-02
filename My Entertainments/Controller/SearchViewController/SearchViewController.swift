@@ -180,7 +180,6 @@ extension SearchViewController: SideMenuDelegate {
     func hideSideMenu() {
         sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width
         sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width
-        tapGesture!.cancelsTouchesInView = false
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
@@ -189,10 +188,11 @@ extension SearchViewController: SideMenuDelegate {
     func showSideMenu() {
         self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
         self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
-        tapGesture!.cancelsTouchesInView = true
+        self.view.becomeFirstResponder()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
     }
+    
 }
 
