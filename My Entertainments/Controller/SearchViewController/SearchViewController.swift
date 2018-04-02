@@ -84,12 +84,19 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         sideMenuShowUp = false
     }
     
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        hideSideMenu()
+        sideMenuShowUp = false
+        return true
+    }
+    
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         SVProgressHUD.show()
         movies = [Movie]()
         page = 1
         loadMovies(page: page)
     }
+
     
     func loadMovies(page: Int) {
         var name = movieSearchBar.text!
@@ -188,6 +195,7 @@ extension SearchViewController: SideMenuDelegate {
     func showSideMenu() {
         self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
         self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
+        
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }
