@@ -2,7 +2,8 @@
 Build your movie database and meet more friends.
 
 ## Animations
-
+### Search Movie
+<p align="center"><img src="https://github.com/miracle0930/My-Entertainments/blob/master/Screenshots/movieSearchDemo.gif" /></p>
 
 ## Features
 - Search movies according movies title, buntches of movies will show up.
