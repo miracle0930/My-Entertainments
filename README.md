@@ -5,7 +5,7 @@ Build your movie database and meet more friends.
 ### Search Movie
 <p align="center"><img src="https://github.com/miracle0930/My-Entertainments/blob/master/Screenshots/movieSearchDemo.gif" /></p>
 ### Movie Detail
-<p align="center"><img src="https://github.com/miracle0930/My-Entertainments/blob/master/Screenshots/movieDetailDemo.gif" /><\p>
+<p align="center"><img src="https://github.com/miracle0930/My-Entertainments/blob/master/Screenshots/movieDetailDemo.gif" /></p>
 ### Chatting
 <p align="center"><img src="https://github.com/miracle0930/My-Entertainments/blob/master/Screenshots/chattingDemo.gif" /></p>
 
