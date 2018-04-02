@@ -1,6 +1,9 @@
 # My-Entertainments
 Build your movie database and meet more friends.
 
+## Animations
+
+
 ## Features
 - Search movies according movies title, buntches of movies will show up.
 - Favorite list, for users to build their personal movie databases.

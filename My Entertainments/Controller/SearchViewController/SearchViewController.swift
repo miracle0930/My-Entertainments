@@ -188,7 +188,6 @@ extension SearchViewController: SideMenuDelegate {
     func showSideMenu() {
         self.sideMenuTrailingConstraint.constant = -UIScreen.main.bounds.width / 3
         self.sideMenuLeadingConstraint.constant = -UIScreen.main.bounds.width / 3
-        self.view.becomeFirstResponder()
         UIView.animate(withDuration: 0.2) {
             self.view.layoutIfNeeded()
         }

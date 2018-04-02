@@ -32,6 +32,9 @@
 		F1572FFA20378D230048C08A /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1572FF920378D230048C08A /* UserAccount.swift */; };
 		F15EF68C201C4A4F0054683C /* MovieDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */; };
 		F15EF694201EDB660054683C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F15EF693201EDB650054683C /* Assets.xcassets */; };
+		F172223B207287740084C3EC /* chattingDemo.gif in Resources */ = {isa = PBXBuildFile; fileRef = F1722238207287720084C3EC /* chattingDemo.gif */; };
+		F172223C207287740084C3EC /* movieSearchDemo.gif in Resources */ = {isa = PBXBuildFile; fileRef = F1722239207287730084C3EC /* movieSearchDemo.gif */; };
+		F172223D207287740084C3EC /* movieDetailDemo.gif in Resources */ = {isa = PBXBuildFile; fileRef = F172223A207287740084C3EC /* movieDetailDemo.gif */; };
 		F18232A1206BF4FE002AB14E /* UserChattingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18232A0206BF4FE002AB14E /* UserChattingTarget.swift */; };
 		F18232A6206BF86F002AB14E /* ChattingMsgDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F18232A5206BF86F002AB14E /* ChattingMsgDelegate.swift */; };
 		F189C5072016531500CEDA44 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F189C5062016531500CEDA44 /* SearchViewController.swift */; };
@@ -95,6 +98,9 @@
 		F1572FF920378D230048C08A /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		F15EF68B201C4A4F0054683C /* MovieDetailTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailTableViewController.swift; sourceTree = "<group>"; };
 		F15EF693201EDB650054683C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F1722238207287720084C3EC /* chattingDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chattingDemo.gif; sourceTree = "<group>"; };
+		F1722239207287730084C3EC /* movieSearchDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = movieSearchDemo.gif; sourceTree = "<group>"; };
+		F172223A207287740084C3EC /* movieDetailDemo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = movieDetailDemo.gif; sourceTree = "<group>"; };
 		F18232A0206BF4FE002AB14E /* UserChattingTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserChattingTarget.swift; sourceTree = "<group>"; };
 		F18232A5206BF86F002AB14E /* ChattingMsgDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChattingMsgDelegate.swift; sourceTree = "<group>"; };
 		F189C5062016531500CEDA44 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -159,6 +165,7 @@
 		F10E6F3520153401007AA679 = {
 			isa = PBXGroup;
 			children = (
+				F1722237207287410084C3EC /* Screenshots */,
 				F10E6F4020153401007AA679 /* My Entertainments */,
 				F10E6F3F20153401007AA679 /* Products */,
 				A2AFB5BEFF5F09C3A8B52102 /* Pods */,
@@ -268,6 +275,16 @@
 				F189C50C20168FEF00CEDA44 /* MovieTableViewCell.xib */,
 			);
 			name = MovieTableViewCell;
+			sourceTree = "<group>";
+		};
+		F1722237207287410084C3EC /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				F1722238207287720084C3EC /* chattingDemo.gif */,
+				F172223A207287740084C3EC /* movieDetailDemo.gif */,
+				F1722239207287730084C3EC /* movieSearchDemo.gif */,
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 		F182329E206BF3E9002AB14E /* ViewModel */ = {
@@ -442,10 +459,13 @@
 				F13BB32C2058EDBA00646678 /* ContactsTableViewCell.xib in Resources */,
 				F10E6F57201535C3007AA679 /* GoogleService-Info.plist in Resources */,
 				F10E6F4720153401007AA679 /* Main.storyboard in Resources */,
+				F172223B207287740084C3EC /* chattingDemo.gif in Resources */,
 				F13BB2D620562A1500646678 /* SideMenuTableViewCell.xib in Resources */,
 				F10319FC206173CA00430FD4 /* SystemInfoTableViewCell.xib in Resources */,
 				F196B451204F3241009006C1 /* UserDefaultPhotosCollectionViewCell.xib in Resources */,
+				F172223C207287740084C3EC /* movieSearchDemo.gif in Resources */,
 				F15EF694201EDB660054683C /* Assets.xcassets in Resources */,
+				F172223D207287740084C3EC /* movieDetailDemo.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
